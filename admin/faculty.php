@@ -75,6 +75,14 @@ include "../dbcon.php";
                                     Looks good!
                                   </div>
                                 </div>
+                                <div class="col-md-12 mb-2">
+                                  <label for="validationCustom01">Department</label>
+                                  <input type="text" class="form-control" id="validationCustom01" name="course_abb"
+                                    placeholder="Enter Department" required>
+                                  <div class="valid-feedback">
+                                    Looks good!
+                                  </div>
+                                </div>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
@@ -105,6 +113,7 @@ include "../dbcon.php";
                       <th>Faculty ID</th>
                       <th>Name</th>
                       <th>Course Abbreviation</th>
+                      <th>Department</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -124,6 +133,9 @@ include "../dbcon.php";
                       </td>
                       <td>
                         <?php echo $result['course_abb']; ?>
+                      </td>
+                      <td>
+                        Department Here
                       </td>
                       <td>
                         <div class="d-grid gap-2 d-md-flex">
@@ -163,6 +175,11 @@ include "../dbcon.php";
                               </div>
                               <div class="form-group">
                                 <label>Course Abbreviation</label>
+                                <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control"
+                                  required>
+                              </div>
+                              <div class="form-group">
+                                <label>Department</label>
                                 <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control"
                                   required>
                               </div>
