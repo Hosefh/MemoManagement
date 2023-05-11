@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+include "../dbcon.php";
 // Include the main TCPDF library (search for installation path).
 require_once('includes/TCPDF/tcpdf.php');
 
@@ -74,6 +75,18 @@ $pdf->SetFont('times', 'B', 12);
 // add a page
 $pdf->AddPage();
 
+$GetData = mysqli_query($conn, "select *, date(`date`) as Edit_Date from memo where id=" . $_GET['id'] . "");
+$Datas = mysqli_fetch_array($GetData);
+
+$memo_no = $Datas['memo_number'];
+$to = $Datas['send_to'];
+$from = $Datas['from'];
+$date = $Datas['Edit_Date'];
+$subject = $Datas['subject'];
+$content = $Datas['content'];
+$additional_info = $Datas['additional_info'];
+$prepared_by = $_SESSION['username'];
+
 $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
@@ -84,13 +97,13 @@ $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 $tbl = <<<EOD
 
 
-<h4>Memorandum No. :</h4>
+<h4>Memorandum No. : $memo_no</h4>
 <h5>Series of 2023</h6>
 
-<h4>TO:</h4></br>
-<h4>FROM:</h4></br>
-<h4>Subject:</h4>
-<h4>Date:</h4></br>
+<h4>TO: $to</h4></br>
+<h4>FROM: $from</h4></br>
+<h4>Subject: $subject</h4>
+<h4>Date: $date</h4></br>
 
 EOD;
 
@@ -101,7 +114,7 @@ $pdf->writeHTML("<hr>", true, false, false, false, '');
 
 $contnt = <<<EOD
 
-<h1 style="text-align: center;">Full Content and additional information here</h1></br>
+<h1 style="text-align: center;">$content $additional_info</h1></br>
 
 
 EOD;
@@ -123,7 +136,7 @@ $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 
 $fotr = <<<EOD
 
-<h4>Prepared By: </h4></br>
+<h4>Prepared By: $prepared_by </h4></br>
 
 
 
