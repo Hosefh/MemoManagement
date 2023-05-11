@@ -1,6 +1,7 @@
 <?php
     $host="localhost:3306";
-    $dbname="mms";
+    //$dbname="mms";
+    $dbname="mms2";
     $username="root";
     $password="password";
 

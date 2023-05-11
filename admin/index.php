@@ -42,10 +42,10 @@ include "../dbcon.php";
                             <div class="card-body">
                                 <h5 class="card-title">Memo Created</h5>
                                 <?php 
-                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memos");
-                                $number = mysqli_fetch_array($query);
+                                // $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memos");
+                                // $number = mysqli_fetch_array($query);
                                 ?>
-                                <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
+                                <h1 class="card-text fw-bold">0</h1>
                                 <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                             </div>
                         </div>
@@ -63,10 +63,10 @@ include "../dbcon.php";
                             <div class="card-body">
                                 <h5 class="card-title">Signed Memo</h5>
                                 <?php 
-                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memos where ready_for_forwarding = 1");
-                                $number = mysqli_fetch_array($query);
+                                // $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memos where ready_for_forwarding = 1");
+                                // $number = mysqli_fetch_array($query);
                                 ?>
-                                <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
+                                <h1 class="card-text fw-bold">0</h1>
                                 <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                             </div>
                         </div>
@@ -82,9 +82,9 @@ include "../dbcon.php";
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Users</h5> <?php 
-                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from users");
-                                $number = mysqli_fetch_array($query);
+                                <h5 class="card-title">Faculty</h5> <?php 
+                                $sql = "SELECT * FROM `faculty`;";
+                                $actresult = mysqli_query($conn, $sql);
                                 ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
                                 <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->

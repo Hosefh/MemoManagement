@@ -53,7 +53,7 @@ include "../dbcon.php";
                               <div class="form-row">
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Faculty ID</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="empid"
+                                  <input type="text" class="form-control" id="validationCustom01" name="facid"
                                     placeholder="Enter  ID" required>
                                   <div class="valid-feedback">
                                     Looks good!
@@ -68,8 +68,8 @@ include "../dbcon.php";
                                   </div>
                                 </div>
                                 <div class="col-md-12 mb-2">
-                                  <label for="validationCustom01">Type</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="type"
+                                  <label for="validationCustom01">Course Abbreviation</label>
+                                  <input type="text" class="form-control" id="validationCustom01" name="course_abb"
                                     placeholder="Enter Type" required>
                                   <div class="valid-feedback">
                                     Looks good!
@@ -82,23 +82,14 @@ include "../dbcon.php";
                               </div>
                             </form>
                             <?php
-                            if (isset($_POST['empid'])) {
-                              if (isset($_POST['isadmin']))
-                              {
-                                $newisadmin = "admin";
-                              }
-                              else
-                              {
-                                $newisadmin = "user";
-                              }
-                              $sql = "INSERT INTO `users` (user_id,`username`,`password`,privilege)
-                                            VALUES ('" . $_POST['empid'] . "','" . $_POST['username'] . "','" . $_POST['password'] . "','".$newisadmin."')";
+                            if (isset($_POST['facid'])) {
+                              $sql = "INSERT INTO `faculty` (faculty_id, `name`, course_abb) VALUES ('" . $_POST['facid'] . "','" . $_POST['name'] . "','" . $_POST['course_abb'] . "');";
                               if ($conn->query($sql) === TRUE) {
-                                echo '<script>alert("User Addedd Successfully!") 
-                                                window.location.href="users.php"</script>';
+                                echo '<script>alert("Faculty Addedd Successfully!") 
+                                                window.location.href="faculty.php"</script>';
                               } else {
-                                echo '<script>alert("Adding User Failed!\n Please Check SQL Connection String!") 
-                                                window.location.href="users.php"</script>';
+                                echo '<script>alert("Adding Faculty Failed!\n Please Check SQL Connection String!") 
+                                                window.location.href="faculty.php"</script>';
                               }
                             }
                             ?>
@@ -113,26 +104,26 @@ include "../dbcon.php";
                     <tr>
                       <th>Faculty ID</th>
                       <th>Name</th>
-                      <th>Type</th>
+                      <th>Course Abbreviation</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                      $sql = "SELECT * FROM `users`;";
+                      $sql = "SELECT * FROM `faculty`;";
                       $actresult = mysqli_query($conn, $sql);
 
                       while ($result = mysqli_fetch_assoc($actresult)) {
                       ?>
                     <tr>
                       <td>
-                        <?php echo $result['user_id']; ?>
+                        <?php echo $result['faculty_id']; ?>
                       </td>
                       <td>
-                        <?php echo $result['username']; ?>
+                        <?php echo $result['name']; ?>
                       </td>
                       <td>
-                        <?php echo $result['privilege']; ?>
+                        <?php echo $result['course_abb']; ?>
                       </td>
                       <td>
                         <div class="d-grid gap-2 d-md-flex">
@@ -157,25 +148,25 @@ include "../dbcon.php";
                             <div class="modal-body">
                               <?php
                                 $id = $result['id'];
-                                $edit = mysqli_query($conn, "select * from users where id='" . $result['id'] . "'");
+                                $edit = mysqli_query($conn, "select * from faculty where id='" . $result['id'] . "'");
                                 $erow = mysqli_fetch_array($edit);
                                 ?>
                               <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control" required>
                               <div class="form-group">
                                 <label>Faculty ID</label>
-                                <input type="text" id="name_u" name="editempid" value="<?php echo $result['user_id']; ?>" class="form-control" required>
+                                <input type="text" id="name_u" name="editempid" value="<?php echo $result['faculty_id']; ?>" class="form-control" required>
                               </div>
                               <div class="form-group">
-                                <label>Username</label>
-                                <input type="text" id="username_u" name="editusername" value="<?php echo $result['username']; ?>" class="form-control"
+                                <label>Name</label>
+                                <input type="text" id="username_u" name="editname" value="<?php echo $result['name']; ?>" class="form-control"
                                   required>
                               </div>
                               <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" id="password_u" name="editpassword" value="<?php echo $result['password']; ?>" class="form-control"
+                                <label>Course Abbreviation</label>
+                                <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control"
                                   required>
                               </div>
-                              <div class="form-check col-md-12 mt-3">
+                              <!-- <div class="form-check col-md-12 mt-3">
                                 
                                   <input class="form-check-input" type="checkbox" name="isadmin" <?php if ($result['privilege']=== "admin")
                                   {
@@ -184,7 +175,7 @@ include "../dbcon.php";
                                   <label class="form-check-label" for="flexCheckIndeterminate">
                                     Admin?
                                   </label>
-                                </div>
+                              </div> -->
                             </div>
                             <div class="modal-footer">
                               <input type="hidden" value="2" name="type">
@@ -193,26 +184,17 @@ include "../dbcon.php";
                             </div>
                           </form>
                           <?php
-                          if (isset($_POST['editusername']))
+                          if (isset($_POST['editempid']))
                           {
-                            if (isset($_POST['isadmin']))
-                            {
-                              $isadmin = "admin";
-                            }
-                            else
-                            {
-                              $isadmin = "user";
-                            }
-                            $sql = "UPDATE `users` SET user_id = '" . $_POST['editempid'] . "', username = '" . $_POST['editusername'] . "',
-                             password = '" . $_POST['editpassword'] . "'
-                             WHERE id='" . $_POST['editid'] . "';";
+                            $sql = "UPDATE `faculty` f SET f.`faculty_id` = '" . $_POST['editempid'] . "', f.`name` = '" . $_POST['editname'] . "', f.`course_abb` = '" . $_POST['editcourse'] . "' 
+                            WHERE f.`id` = ".$_POST['editid'].";";
                             //$sql = "UPDATE `users` SET user_id =12 WHERE id = 1; ";
                             if ($conn->query($sql) === TRUE) {
-                              echo '<script>alert("Users Edit Successful!") 
-                                      window.location.href="users.php"</script>';
+                              echo '<script>alert("Faculty Edit Successful!") 
+                                      window.location.href="faculty.php"</script>';
                             } else {
-                              echo '<script>alert("Editing User Details Failed!\n Please Check SQL Connection String!") 
-                                      window.location.href="users.php"</script>';
+                              echo '<script>alert("Editing Faculty Details Failed!\n Please Check SQL Connection String!") 
+                                      window.location.href="faculty.php"</script>';
                             }
                           }
                           ?>
@@ -235,14 +217,14 @@ include "../dbcon.php";
                           </div>
                           <div class="modal-body">
                             <?php
-                              $del = mysqli_query($conn, "select * from users where id='" . $result['id'] . "'");
+                              $del = mysqli_query($conn, "select * from faculty where id='" . $result['id'] . "'");
                               $drow = mysqli_fetch_array($del);
                             ?>
                             <div class="container-fluid">
                               <h5>
                                 <center>Are you sure to delete <strong>
-                                  <?php echo ucwords($drow['username']); ?>
-                                  </strong> from User list? This method cannot be undone.</center>
+                                  <?php echo ucwords($drow['name']); ?>
+                                  </strong> from Faculty list? This method cannot be undone.</center>
                               </h5>
                             </div>
                           </div>
@@ -256,13 +238,13 @@ include "../dbcon.php";
                             </div>
                             <?php
                               if (isset($_POST['deleteid'])) {
-                                $sql = "DELETE FROM users  WHERE id='" . $_POST['deleteid'] . "'";
+                                $sql = "DELETE FROM faculty  WHERE id='" . $_POST['deleteid'] . "'";
                                 if ($conn->query($sql) === TRUE) {
                                   echo '<script>alert("Deleted Successfully!") 
-                                                window.location.href="users.php"</script>';
+                                                window.location.href="faculty.php"</script>';
                                 } else {
-                                  echo '<script>alert("Deleting Employee Details Failed!\n Please Check SQL Connection String!") 
-                                                window.location.href="users.php"</script>';
+                                  echo '<script>alert("Deleting Faculty Details Failed!\n Please Check SQL Connection String!") 
+                                                window.location.href="faculty.php"</script>';
                                 }
                               }
                             ?>
