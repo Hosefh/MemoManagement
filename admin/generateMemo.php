@@ -1,15 +1,46 @@
 <?php
 
-
 // Include the main TCPDF library (search for installation path).
 require_once('includes/TCPDF/tcpdf.php');
 
-// create new PDF document
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
+// Extend the TCPDF class to create custom Header and Footer
+class MYPDF extends TCPDF {
+
+    //Page header
+    public function Header() {
+        // Logo
+        $image_file = K_PATH_IMAGES.'header_img.png';
+        $this->Image($image_file, 10, 10, 190, '', 'PNG', '', 'C', false, 300, '', false, false, 0, false, false, false);
+        // Set font
+        $this->SetFont('helvetica', 'B', 20);
+        // Title
+        // $this->Cell(0, 15, '<< TCPDF Example 003 >>', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+    }
+
+    // Page footer
+    public function Footer() {
+        // Position at 15 mm from bottom
+        $this->SetY(-15);
+        // Set font
+        $this->SetFont('helvetica', 'I', 8);
+        // Page number
+        $this->Cell(0, 10, 'Page '.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+    }
+}
+
+// create new PDF document
+$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+// // set document information
+// $pdf->SetCreator(PDF_CREATOR);
+// $pdf->SetAuthor('Nicola Asuni');
+// $pdf->SetTitle('TCPDF Example 003');
+// $pdf->SetSubject('TCPDF Tutorial');
+// $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
 // set default header data
-// $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE.' 048', PDF_HEADER_STRING);
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
 // set header and footer fonts
 $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
@@ -19,9 +50,9 @@ $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 
 // set margins
-// $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-// $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-// $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
 
 // set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
@@ -38,38 +69,23 @@ if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('helvetica', 'B', 20);
+$pdf->SetFont('times', 'B', 12);
 
 // add a page
 $pdf->AddPage();
 
-// $pdf->Write(0, 'Memorandum', '', 0, 'L', true, 0, false, false, 0);
-
-$pdf->SetFont('helvetica', '', 12);
-
-// -----------------------------------------------------------------------------
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 
 $tbl = <<<EOD
-<table cellspacing="0" cellpadding="1" border="1">
-    <tr>
-        <td rowspan="4"><img src=\"https://upload.wikimedia.org/wikipedia/en/0/0c/Bohol_Island_State_University.png\" border=0 border=\"0\" /></td>
-        <td col>COL 2 - ROW 1</td>
-        <td>Form No.:</td>
-        <td>Revision No.:</td>
-    </tr>
-    <tr>
-        <td>COL 2 - ROW 2 - COLSPAN 2</td>
-        <td>Effectivity Date:</td>
-        <td>OFFICE MEMORANDUM</td>
-    </tr>
-    <tr>
-       <td>Related Process:</td>
-    </tr>
 
-</table>
 
 <h4>Memorandum No. :</h4>
-<h4>Series of 2023</h4>
+<h5>Series of 2023</h6>
 
 <h4>TO:</h4></br>
 <h4>FROM:</h4></br>
@@ -93,6 +109,17 @@ $pdf->writeHTML($contnt, true, false, false, false, '');
 
 // -----------------------------------------------------------------------------
 
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
+$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 
 $fotr = <<<EOD
 
@@ -109,9 +136,20 @@ $pdf->writeHTML($fotr, true, false, false, false, '');
 // -----------------------------------------------------------------------------
 
 
+// set some text to print
+// $txt = <<<EOD
+// TCPDF Example 003
+
+// Custom page header and footer are defined by extending the TCPDF class and overriding the Header() and Footer() methods.
+// EOD;
+
+// // print a block of text using Write()
+// $pdf->Write(0, $txt, '', 0, 'C', true, 0, false, false, 0);
+
+// ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('example_048.pdf', 'I');
+$pdf->Output('example_003.pdf', 'I');
 
 //============================================================+
 // END OF FILE
