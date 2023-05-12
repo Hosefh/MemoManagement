@@ -83,8 +83,8 @@ include "../dbcon.php";
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Faculty</h5> <?php 
-                                $sql = "SELECT * FROM `faculty`;";
-                                $actresult = mysqli_query($conn, $sql);
+                                $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
+                                $number = mysqli_fetch_array($query);
                                 ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
                                 <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
