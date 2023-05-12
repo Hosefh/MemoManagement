@@ -48,7 +48,7 @@ include "../dbcon.php";
                           Add Memo
                         </button>
                       </div>
-                      <div class="col-sm-2">
+                      <!-- <div class="col-sm-2">
                         <select class="form-select" aria-label="Default select example">
                           <option selected>Department</option>
                           <option value="1">Department 1</option>
@@ -63,11 +63,123 @@ include "../dbcon.php";
                           <option value="2">Two Course</option>
                           <option value="3">Inter Course</option>
                         </select>
-                      </div>
+                      </div> -->
                     </div>
 
+                    <!-- Modal 1 -->
+                    <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Select Department</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+
+                            <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                            <div class="dropdown mb-2">
+                                    <label for="validationCustom01">Select Department:</label>
+                                      <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="to">
+                                        <?php
+                                        $sql = "SELECT * FROM `faculty`;";
+                                        $actresult = mysqli_query($conn, $sql);
+                                        ?>
+                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
+                                            <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                        <?php } ?>
+                                        
+                                        <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
+                                        <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
+                                      </select>
+                                  </div>
+                              <div class="modal-footer">
+                                <input type="reset" class="btn btn-secondary">
+                                <button class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#courseModal">
+                                  Next
+                                </button>
+                              </div>  
+                            </form>
+                            <!-- php code here -->
+                            <?php
+                            if (isset($_POST['memo_number'])) {
+                              $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
+                              VALUES ('" . $_POST['memo_number'] . "','" . $_POST['to'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                              if ($conn->query($sql) === TRUE) {
+                                echo '<script>alert("Memo Addedd Successfully!") 
+                                                window.location.href="memo.php"</script>';
+                              } else {
+                                echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                                                window.location.href="memo.php"</script>';
+                              }
+                            }
+
+                            ?>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End of Modal 1 -->
+
+                    <!-- Modal 2 -->
+                    <div id="courseModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Select Course</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+
+                            <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                            <div class="dropdown mb-2">
+                                    <label for="validationCustom01">Select Course:</label>
+                                      <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="to">
+                                        <?php
+                                        $sql = "SELECT * FROM `faculty`;";
+                                        $actresult = mysqli_query($conn, $sql);
+                                        ?>
+                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
+                                            <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                        <?php } ?>
+                                        
+                                        <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
+                                        <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
+                                      </select>
+                                  </div>
+                              <div class="modal-footer">
+                                <input type="reset" class="btn btn-secondary">
+                                <button class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memoModal">
+                                  Next
+                                </button>
+                              </div>  
+                            </form>
+                            <!-- php code here -->
+                            <?php
+                            if (isset($_POST['memo_number'])) {
+                              $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
+                              VALUES ('" . $_POST['memo_number'] . "','" . $_POST['to'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                              if ($conn->query($sql) === TRUE) {
+                                echo '<script>alert("Memo Addedd Successfully!") 
+                                                window.location.href="memo.php"</script>';
+                              } else {
+                                echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                                                window.location.href="memo.php"</script>';
+                              }
+                            }
+
+                            ?>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- End of Modal 2 -->
+
                     <!-- Modal HTML -->
-                    <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
+                    <div id="memoModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -413,6 +525,41 @@ include "../dbcon.php";
       });
     });
   // }
+  </script>
+  <!-- <script>
+    // function modalOpen(){
+    $(document).ready(function () {
+      $("#department").click(function () {
+        $("#courseModal").modal("toggle");
+      });
+    });
+  // }
+  </script>
+  <script>
+    // function modalOpen(){
+    $(document).ready(function () {
+      $("#course").click(function () {
+        $("#memoModal").modal("toggle");
+      });
+    });
+  // }
+  </script> -->
+
+  <script>
+      Array.from(document.getElementsByClassName('showmodal')).forEach( (e) => {
+  e.addEventListener('click', function(element) {
+    element.preventDefault();
+    if (e.hasAttribute('data-show-modal')) {
+      showModal(e.getAttribute('data-show-modal'));
+    }
+  }); 
+});
+// Show modal dialog
+function showModal(modal) {
+  const mid = document.getElementById(modal);
+  let myModal = new bootstrap.Modal(mid);
+  myModal.show();
+}
   </script>
 
   <script>
