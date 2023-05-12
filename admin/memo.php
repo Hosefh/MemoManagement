@@ -8,6 +8,7 @@ include "../dbcon.php";
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" value="notranslate">
   <title>Memorandum Management</title>
 
   <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
@@ -80,7 +81,7 @@ include "../dbcon.php";
                                       $actresult = mysqli_query($conn, $sql);
                                     ?>
                                     <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
-                                      <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                      <option value=" <?php echo $result['department'] ?>"> <?php echo $result['department'] ?></option>
                                     <?php }?>
                                     
                                     <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
@@ -95,7 +96,7 @@ include "../dbcon.php";
                                       $actresult = mysqli_query($conn, $sql);
                                     ?>
                                     <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
-                                      <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                      <option value=" <?php echo $result['course_abb'] ?>"> <?php echo $result['course_abb'] ?></option>
                                     <?php }?>
                                     
                                     <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
@@ -262,7 +263,41 @@ include "../dbcon.php";
                                     </div>
                                     </div>
                                     <div class="row">
-                                    <div class="dropdown col-md-8 mb-2">
+                                    <div class="dropdown col-md-4 mb-2">
+                                    <label for="validationCustom01">Department:</label>
+                                      <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="edit_to">
+                                        <option value=" <?php echo $erow['send_to'] ?>"> <?php echo $erow['send_to'] ?></option>
+                                        <?php
+                                          $faculty_name = trim($erow['send_to']);
+                                          $sql2 = "SELECT * FROM `faculty` WHERE `name`!='".$faculty_name."';";
+                                          $actresult1 = mysqli_query($conn, $sql2);
+                                        ?>
+                                        <?php while ($result1 = mysqli_fetch_assoc($actresult1)) { ?>
+                                          <option value=" <?php echo $result1['name'] ?>"> <?php echo $result1['name'] ?></option>
+                                        <?php }?>
+                                        
+                                        <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
+                                        <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
+                                      </select>
+                                    </div>
+                                    <div class="dropdown col-md-4 mb-2">
+                                    <label for="validationCustom01">Class:</label>
+                                      <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="edit_to">
+                                        <option value=" <?php echo $erow['send_to'] ?>"> <?php echo $erow['send_to'] ?></option>
+                                        <?php
+                                          $faculty_name = trim($erow['send_to']);
+                                          $sql2 = "SELECT * FROM `faculty` WHERE `name`!='".$faculty_name."';";
+                                          $actresult1 = mysqli_query($conn, $sql2);
+                                        ?>
+                                        <?php while ($result1 = mysqli_fetch_assoc($actresult1)) { ?>
+                                          <option value=" <?php echo $result1['name'] ?>"> <?php echo $result1['name'] ?></option>
+                                        <?php }?>
+                                        
+                                        <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
+                                        <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
+                                      </select>
+                                    </div>
+                                    <div class="dropdown col-md-4 mb-2">
                                     <label for="validationCustom01">To:</label>
                                       <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="edit_to">
                                         <option value=" <?php echo $erow['send_to'] ?>"> <?php echo $erow['send_to'] ?></option>
@@ -279,20 +314,22 @@ include "../dbcon.php";
                                         <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
                                       </select>
                                     </div>
-                                    <div class="col-md-4 mb-2">
+                                    </div>
+                                        <div class="row">
+                                    <div class="col-md-6 mb-2">
                                       <label for="validationCustom01">From:</label>
                                       <input type="text" class="form-control" id="" name="edit_from" value="<?php echo $erow['from'] ?>" required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
                                     </div>
-                                    </div>
-                                    <div class="col-md-12 mb-2">
+                                    <div class="col-md-6 mb-2">
                                       <label for="validationCustom01">Subject:</label>
                                       <input type="text" class="form-control" id="" name="edit_subject" value="<?php echo $erow['subject'] ?>" required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
+                                    </div>
                                     </div>
                                     <div class="col-md-12 mb-2">
                                       <label for="validationCustom01">Content:</label>

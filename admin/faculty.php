@@ -77,7 +77,7 @@ include "../dbcon.php";
                                 </div>
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Department</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="course_abb"
+                                  <input type="text" class="form-control" id="validationCustom01" name="department"
                                     placeholder="Enter Department" required>
                                   <div class="valid-feedback">
                                     Looks good!
@@ -91,7 +91,7 @@ include "../dbcon.php";
                             </form>
                             <?php
                             if (isset($_POST['facid'])) {
-                              $sql = "INSERT INTO `faculty` (faculty_id, `name`, course_abb) VALUES ('" . $_POST['facid'] . "','" . $_POST['name'] . "','" . $_POST['course_abb'] . "');";
+                              $sql = "INSERT INTO `faculty` (faculty_id, `name`, course_abb, department) VALUES ('" . $_POST['facid'] . "','" . $_POST['name'] . "','" . $_POST['course_abb'] . "','" . $_POST['department'] . "');";
                               if ($conn->query($sql) === TRUE) {
                                 echo '<script>alert("Faculty Addedd Successfully!") 
                                                 window.location.href="faculty.php"</script>';
@@ -135,7 +135,7 @@ include "../dbcon.php";
                         <?php echo $result['course_abb']; ?>
                       </td>
                       <td>
-                        Department Here
+                        <?php echo $result['department']; ?>
                       </td>
                       <td>
                         <div class="d-grid gap-2 d-md-flex">
@@ -180,7 +180,7 @@ include "../dbcon.php";
                               </div>
                               <div class="form-group">
                                 <label>Department</label>
-                                <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control"
+                                <input type="text" id="password_u" name="editcourse" value="<?php echo $result['department']; ?>" class="form-control"
                                   required>
                               </div>
                               <!-- <div class="form-check col-md-12 mt-3">
