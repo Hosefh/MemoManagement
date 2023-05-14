@@ -67,7 +67,7 @@ include "../dbcon.php";
                     </div>
 
                     <!-- Modal 1 -->
-                    <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -88,8 +88,6 @@ include "../dbcon.php";
                                             <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
                                         <?php } ?>
                                         
-                                        <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
-                                        <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
                                       </select>
                                   </div>
                               <div class="modal-footer">
@@ -99,9 +97,9 @@ include "../dbcon.php";
                                   Next
                                 </button>
                               </div>  
-                            </form>
+                            </form> -->
                             <!-- php code here -->
-                            <?php
+                            <!-- <?php
                             if (isset($_POST['memo_number'])) {
                               $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
                               VALUES ('" . $_POST['memo_number'] . "','" . $_POST['to'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
@@ -119,11 +117,11 @@ include "../dbcon.php";
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                     <!-- End of Modal 1 -->
 
                     <!-- Modal 2 -->
-                    <div id="courseModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <!-- <div id="courseModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -142,11 +140,11 @@ include "../dbcon.php";
                                         ?>
                                         <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
                                             <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
-                                        <?php } ?>
+                                        <?php } ?> -->
                                         
                                         <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
                                         <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
-                                      </select>
+                                      <!-- </select>
                                   </div>
                               <div class="modal-footer">
                                 <input type="reset" class="btn btn-secondary">
@@ -155,9 +153,9 @@ include "../dbcon.php";
                                   Next
                                 </button>
                               </div>  
-                            </form>
+                            </form> -->
                             <!-- php code here -->
-                            <?php
+                            <!-- <?php
                             if (isset($_POST['memo_number'])) {
                               $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
                               VALUES ('" . $_POST['memo_number'] . "','" . $_POST['to'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
@@ -175,11 +173,11 @@ include "../dbcon.php";
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
                     <!-- End of Modal 2 -->
 
                     <!-- Modal HTML -->
-                    <div id="memoModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
+                    <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
                       <div class="modal-dialog modal-xl">
                         <div class="modal-content">
                           <div class="modal-header">
