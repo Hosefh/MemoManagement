@@ -78,8 +78,13 @@ $pdf->AddPage();
 $GetData = mysqli_query($conn, "select *, date(`date`) as Edit_Date from memo where id=" . $_GET['id'] . "");
 $Datas = mysqli_fetch_array($GetData);
 
+$GetData2 = mysqli_query($conn, "select * from faculty where `name`='" .$Datas['send_to'] . "'");
+$Datas2 = mysqli_fetch_array($GetData2);
+
 $memo_no = $Datas['memo_number'];
 $to = $Datas['send_to'];
+$course = $Datas2['course_abb'];
+$department = $Datas2['department'];
 $from = $Datas['from'];
 $date = $Datas['Edit_Date'];
 $subject = $Datas['subject'];
@@ -100,7 +105,7 @@ $tbl = <<<EOD
 <h4>Memorandum No. : $memo_no</h4>
 <h5>Series of 2023</h6>
 
-<h4>TO: $to</h4></br>
+<h4>TO: $to - $course Faculty</h4></br>
 <h4>FROM: $from</h4></br>
 <h4>Subject: $subject</h4>
 <h4>Date: $date</h4></br>

@@ -200,7 +200,7 @@ include "../dbcon.php";
                                     <label for="validationCustom01">To:</label>
                                       <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="to">
                                         <?php
-                                        $sql = "SELECT * FROM `faculty` where department = '".$_COOKIE['department']."' AND course_abb = '".$_COOKIE['course']."' ;";
+                                        $sql = "SELECT * FROM `faculty`;";
                                         $actresult = mysqli_query($conn, $sql);
                                         ?>
                                         <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
@@ -250,7 +250,7 @@ include "../dbcon.php";
                             <?php
                             if (isset($_POST['memo_number'])) {
                               $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
-                              VALUES ('" . $_POST['memo_number'] . "','" . $_POST['to'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                              VALUES ('" . $_POST['memo_number'] . "','" .trim($_POST['to']). "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
                               if ($conn->query($sql) === TRUE) {
                                 echo '<script>alert("Memo Addedd Successfully!") 
                                                 window.location.href="memo.php"</script>';
