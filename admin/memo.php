@@ -1,4 +1,5 @@
 <?php
+session_start();
 include "../dbcon.php";
 ?>
 <!DOCTYPE html>
@@ -14,6 +15,7 @@ include "../dbcon.php";
   <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
  
 </head>
 
@@ -79,13 +81,14 @@ include "../dbcon.php";
                             <form class="needs-validation" method="POST" enctype="multipart/form-data">
                             <div class="dropdown mb-2">
                                     <label for="validationCustom01">Select Department:</label>
-                                      <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="to">
+                                      <select class="department-select" aria-label="Default select example" name="department">
+                                        <option value=""></option>
                                         <?php
-                                        $sql = "SELECT * FROM `faculty`;";
-                                        $actresult = mysqli_query($conn, $sql);
+                                        $sql = "SELECT DISTINCT(department) as `department` FROM `faculty`;";
+                                        $actresultd = mysqli_query($conn, $sql);
                                         ?>
-                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
-                                            <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                        <?php while ($resultdep = mysqli_fetch_assoc($actresultd)) { ?>
+                                            <option value=" <?php echo $resultdep['department'] ?>"> <?php echo $resultdep['department'] ?></option>
                                         <?php } ?>
                                         
                                         <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
@@ -100,21 +103,14 @@ include "../dbcon.php";
                                 </button>
                               </div>  
                             </form>
-                            <!-- php code here -->
-                            <?php
-                            if (isset($_POST['memo_number'])) {
-                              $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
-                              VALUES ('" . $_POST['memo_number'] . "','" . $_POST['to'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
-                              if ($conn->query($sql) === TRUE) {
-                                echo '<script>alert("Memo Addedd Successfully!") 
-                                                window.location.href="memo.php"</script>';
-                              } else {
-                                echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                                window.location.href="memo.php"</script>';
-                              }
-                            }
-
-                            ?>
+                            <!-- php code here --><script>
+                              $(document).ready(function() {
+                                  $("select.department-select").change(function() {
+                                      let selectedItem = $(this).children("option:selected").val();
+                                      document.cookie = "department="+selectedItem;
+                                    });
+                                });
+                            </script>
 
                           </div>
                         </div>
@@ -135,13 +131,13 @@ include "../dbcon.php";
                             <form class="needs-validation" method="POST" enctype="multipart/form-data">
                             <div class="dropdown mb-2">
                                     <label for="validationCustom01">Select Course:</label>
-                                      <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="to">
+                                      <select class="course-select" aria-label="Default select example" name="course">
                                         <?php
-                                        $sql = "SELECT * FROM `faculty`;";
-                                        $actresult = mysqli_query($conn, $sql);
+                                        $sql = "SELECT DISTINCT (course_abb) as course_abb FROM `faculty` WHERE department = '".$_COOKIE['department']."';";
+                                        $actresultc = mysqli_query($conn, $sql);
                                         ?>
-                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
-                                            <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                        <?php while ($resultcourse = mysqli_fetch_assoc($actresultc)) { ?>
+                                            <option value=" <?php echo $resultcourse['course_abb'] ?>"> <?php echo $resultcourse['course_abb'] ?></option>
                                         <?php } ?>
                                         
                                         <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
@@ -157,21 +153,15 @@ include "../dbcon.php";
                               </div>  
                             </form>
                             <!-- php code here -->
-                            <?php
-                            if (isset($_POST['memo_number'])) {
-                              $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
-                              VALUES ('" . $_POST['memo_number'] . "','" . $_POST['to'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
-                              if ($conn->query($sql) === TRUE) {
-                                echo '<script>alert("Memo Addedd Successfully!") 
-                                                window.location.href="memo.php"</script>';
-                              } else {
-                                echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                                window.location.href="memo.php"</script>';
-                              }
-                            }
-
-                            ?>
-
+                            <script>
+                              $(document).ready(function() {
+                                  $("select.course-select").change(function() {
+                                      let selectedCourse = $(this).children("option:selected").val();
+                                      // alert("You have selected the name - " + selectedCourse);
+                                      document.cookie = "course="+selectedCourse;
+                                    });
+                                });
+                            </script>
                           </div>
                         </div>
                       </div>
@@ -211,7 +201,7 @@ include "../dbcon.php";
                                     <label for="validationCustom01">To:</label>
                                       <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="to">
                                         <?php
-                                        $sql = "SELECT * FROM `faculty`;";
+                                        $sql = "SELECT * FROM `faculty` where department = '".$_COOKIE['department']."' AND course_abb = '".$_COOKIE['course']."' ;";
                                         $actresult = mysqli_query($conn, $sql);
                                         ?>
                                         <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
