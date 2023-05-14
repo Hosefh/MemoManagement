@@ -16,6 +16,12 @@ include "../dbcon.php";
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+<script>
+  $('select').selectpicker();
+</script>
  
 </head>
 
@@ -198,7 +204,7 @@ include "../dbcon.php";
                                 <div class="row">
                                   <div class="dropdown col-md-8 mb-2">
                                     <label for="validationCustom01">To:</label>
-                                      <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="to">
+                                      <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty" aria-label="Default select example" name="to">
                                         <?php
                                         $sql = "SELECT * FROM `faculty`;";
                                         $actresult = mysqli_query($conn, $sql);
@@ -514,6 +520,19 @@ include "../dbcon.php";
       });
     });
   // }
+  </script>
+  <script>
+    $(document).ready(function(){
+    
+    var multipleCancelButton = new Choices('#multiple-checkboxes', {
+       removeItemButton: true,
+      //  maxItemCount:5,
+      //  searchResultLimit:5,
+      //  renderChoiceLimit:5
+     }); 
+    
+    
+});
   </script>
   <!-- <script>
     // function modalOpen(){
