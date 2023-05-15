@@ -474,27 +474,38 @@ include "../dbcon.php";
                             <!-- php code here -->
                             <?php
                             if (isset($_POST['memo_number'])) {
-                              if(isset($_POST['sendtofac']))
+                              $checker = "SELECT * FROM `memo` m WHERE DATE(m.`date`) = DATE('".$_POST['date']."');";
+                              $resultchecker = mysqli_query($con, $checker);
+                              $rowcount = mysqli_num_rows( $resultchecker );
+
+                              if ($rowcount > 0)
                               {
-                                $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
-                                VALUES ('" . $_POST['memo_number'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
-                                if ($conn->query($sql) === TRUE) {
-                                  $GetID = mysqli_query($conn, "SELECT `id` from memo ORDER BY id DESC LIMIT 1;");
-                                  $ID = mysqli_fetch_array($GetID);
-                                  foreach ($_POST['sendtofac'] as $tofac){
-                                    $sqlroute = "INSERT INTO memo_route(memo_id,faculty_name)
-                                    VALUES ('".$ID['id']."','" .$tofac. "')";
-                                    $conn->query($sqlroute);
+                                if(isset($_POST['sendtofac']))
+                                {
+                                  $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
+                                  VALUES ('" . $_POST['memo_number'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                                  if ($conn->query($sql) === TRUE) {
+                                    $GetID = mysqli_query($conn, "SELECT `id` from memo ORDER BY id DESC LIMIT 1;");
+                                    $ID = mysqli_fetch_array($GetID);
+                                    foreach ($_POST['sendtofac'] as $tofac){
+                                      $sqlroute = "INSERT INTO memo_route(memo_id,faculty_name)
+                                      VALUES ('".$ID['id']."','" .$tofac. "')";
+                                      $conn->query($sqlroute);
+                                    }
+                                    echo '<script>alert("Memo Addedd Successfully!") 
+                                                    window.location.href="memo.php"</script>';
+                                  } else {
+                                    echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                                                    window.location.href="memo.php"</script>';
                                   }
-                                  echo '<script>alert("Memo Addedd Successfully!") 
-                                                  window.location.href="memo.php"</script>';
-                                } else {
-                                  echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                                  window.location.href="memo.php"</script>';
                                 }
+                                else
+                                  echo "Select an option first !!";
                               }
-                              else
-                                echo "Select an option first !!";
+                              else{
+                              echo '<script>alert("Date Not Available for Memo Dissemination.") 
+                                              window.location.href="memo.php"</script>';
+                              }
                             }
 
                             ?>
