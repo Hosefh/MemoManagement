@@ -115,7 +115,7 @@ $actresult = mysqli_query($conn, $sqlget);
 while ($result = mysqli_fetch_assoc($actresult)) {
     $to = $result['name'] . " - " . $result['course_abb']." Faculty";
     $tbl2 = <<<EOD
-    <h4> $to</h4>
+    <h4 style="text-align: center"> $to</h4>
     EOD;
 
     $pdf->writeHTML($tbl2, true, false, false, false, '');
@@ -126,6 +126,7 @@ $tbl3 = <<<EOD
 <h4>Subject: $subject</h4>
 <h4>Date: $date</h4></br>
 EOD;
+$pdf->writeHTML($tbl3, true, false, false, false, '');
 
 $pdf->writeHTML("<hr>", true, false, false, false, '');
 
@@ -143,11 +144,6 @@ $pdf->writeHTML($contnt, true, false, false, false, '');
 
 // -----------------------------------------------------------------------------
 
-$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
-$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
-$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
-$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
-$pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 
