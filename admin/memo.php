@@ -190,7 +190,7 @@ include "../dbcon.php";
                   </thead>
                   <tbody style="cursor: pointer" id="myBtn">
                   <?php
-                  $sql = "SELECT * FROM `memo`;";
+                  $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y %H:%i:%s') as `date` FROM `memo`;";
                   $actresult = mysqli_query($conn, $sql);
 
                   while ($result = mysqli_fetch_assoc($actresult)) {
