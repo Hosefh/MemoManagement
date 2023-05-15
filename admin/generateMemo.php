@@ -149,8 +149,6 @@ $pdf->Write(0, '   ', '*', 0, 'C', TRUE, 0, false, false, 0) ;
 
 $fotr = <<<EOD
 
-<h4>Prepared By: </h4></br>
-<h5>$prepared_by</h5>
 
 
 
