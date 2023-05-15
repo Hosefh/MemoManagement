@@ -19,9 +19,9 @@ include "../dbcon.php";
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 
-<script>
+<!-- <script>
   $('select').selectpicker();
-</script>
+</script> -->
  
 </head>
 
@@ -174,110 +174,14 @@ include "../dbcon.php";
                     <!-- End of Modal 2 -->
 
                     <!-- Modal HTML -->
-                    <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
-                      <div class="modal-dialog modal-xl">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Create Memo</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-
-                            <form class="needs-validation" method="POST" enctype="multipart/form-data">
-                              <div class="form-row">
-                                <div class="row">
-                                <div class="col-md-6 mb-2">
-                                  <label for="validationCustom01">Memo Number:</label>
-                                  <input type="number" class="form-control" id="" name="memo_number" required>
-                                  <div class="valid-feedback">
-                                    Looks good!
-                                  </div>
-                                </div>
-                                <div class="col-md-6 mb-2">
-                                  <label for="validationCustom01">Date:</label>
-                                  <input type="date" class="form-control" id="" name="date" required>
-                                  <div class="valid-feedback">
-                                    Looks good!
-                                  </div>
-                                </div>
-                                </div>
-                                <div class="row">
-                                  <div class="dropdown col-md-8 mb-2">
-                                    <label for="validationCustom01">To:</label>
-                                      <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty" aria-label="Default select example" name="to">
-                                        <?php
-                                        $sql = "SELECT * FROM `faculty`;";
-                                        $actresult = mysqli_query($conn, $sql);
-                                        ?>
-                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
-                                            <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
-                                        <?php } ?>
-                                        
-                                        <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
-                                        <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
-                                      </select>
-                                  </div>
-                                  <div class="col-md-4 mb-2">
-                                    <label for="validationCustom01">From:</label>
-                                    <input type="text" class="form-control" id="" name="from" required>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                  </div>
-                                </div>
-                                  <div class="col-md-12 mb-2">
-                                    <label for="validationCustom01">Subject:</label>
-                                    <input type="text" class="form-control" id="" name="subject" required>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                  </div>
-                                <div class="col-md-12 mb-2">
-                                  <label for="validationCustom01">Content:</label>
-                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
-                                  <div class="valid-feedback">
-                                    Looks good!
-                                  </div>
-                                </div>
-                                <div class="col-md-12 mb-2">
-                                  <label for="validationCustom01">Additional Information:</label>
-                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="add_info"></textarea>
-                                    <div class="valid-feedback">
-                                       Looks good!
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="modal-footer">
-                                <input type="reset" class="btn btn-secondary">
-                                <button class="btn btn-primary">Save</button>
-                              </div>  
-                            </form>
-                            <!-- php code here -->
-                            <?php
-                            if (isset($_POST['memo_number'])) {
-                              $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
-                              VALUES ('" . $_POST['memo_number'] . "','" .trim($_POST['to']). "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
-                              if ($conn->query($sql) === TRUE) {
-                                echo '<script>alert("Memo Addedd Successfully!") 
-                                                window.location.href="memo.php"</script>';
-                              } else {
-                                echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                                window.location.href="memo.php"</script>';
-                              }
-                            }
-
-                            ?>
-
-                          </div>
-                        </div>
-                      </div>
+                  
                     </div>
                   </div>
 
                   <thead>
                     <tr>
                       <th>Memo #</th>
-                      <th>To</th>
+                      <!-- <th>To</th> -->
                       <th>From</th>
                       <th>Subject</th>
                       <th>Date Created</th>
@@ -296,9 +200,9 @@ include "../dbcon.php";
                             <td>
                               <?php echo $result['memo_number'] ?>
                             </td>
-                            <td>
+                            <!-- <td>
                               <?php echo $result['send_to'] ?>
-                            </td>
+                            </td> -->
                             <td>
                               <?php echo $result['from'] ?>
                             </td>
@@ -361,7 +265,7 @@ include "../dbcon.php";
                                       <div class="row">
                                         <div class="dropdown col-md-8 mb-2">
                                             <label for="validationCustom01">To:</label>
-                                              <select class="form-select" id="multiple-checkboxes" aria-label="Default select example" name="edit_to">
+                                              <select class="form-select1" id="multiple-checkboxes1" aria-label="Default select example" name="edit_to">
                                                 <option value=" <?php echo $erow['send_to'] ?>"> <?php echo $erow['send_to'] ?></option>
                                                 <?php
                                                 $faculty_name = trim($erow['send_to']);
@@ -414,7 +318,7 @@ include "../dbcon.php";
                                   <!-- php code here -->
                                   <?php
                                   if (isset($_POST['edit_memo_number'])) {
-                                    echo $test;
+                                   //echo $test;
                                     $sql = "UPDATE `memo` SET memo_number = '" . $_POST['edit_memo_number'] . "' ,
                                    send_to = '" . $_POST['edit_to'] . "',
                                    `from` = '" . $_POST['edit_from'] . "',
@@ -491,6 +395,113 @@ include "../dbcon.php";
                   </tbody>
                   <tfoot></tfoot>
                 </table>
+                <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Create Memo</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                          </div>
+                          <div class="modal-body">
+
+                            <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                              <div class="form-row">
+                                <div class="row">
+                                <div class="col-md-6 mb-2">
+                                  <label for="validationCustom01">Memo Number:</label>
+                                  <input type="number" class="form-control" id="" name="memo_number" required>
+                                  <div class="valid-feedback">
+                                    Looks good!
+                                  </div>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                  <label for="validationCustom01">Date:</label>
+                                  <input type="date" class="form-control" id="" name="date" required>
+                                  <div class="valid-feedback">
+                                    Looks good!
+                                  </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                  
+                                  <div class="col-md-4 mb-2">
+                                    <label for="validationCustom01">From:</label>
+                                    <input type="text" class="form-control" id="" name="from" required>
+                                    <div class="valid-feedback">
+                                      Looks good!
+                                    </div>
+                                  </div>
+                                </div>
+                                  <div class="col-md-12 mb-2">
+                                    <label for="validationCustom01">Subject:</label>
+                                    <input type="text" class="form-control" id="" name="subject" required>
+                                    <div class="valid-feedback">
+                                      Looks good!
+                                    </div>
+                                  </div>
+                                <div class="col-md-12 mb-2">
+                                  <label for="validationCustom01">Content:</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+                                  <div class="valid-feedback">
+                                    Looks good!
+                                  </div>
+                                </div>
+                                <div class="col-md-12 mb-2">
+                                  <label for="validationCustom01">Additional Information:</label>
+                                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="add_info"></textarea>
+                                    <div class="valid-feedback">
+                                       Looks good!
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="dropdown col-md-8 mb-2">
+                                    <label for="validationCustom01">To:</label>
+                                    <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty" aria-label="Default select example" name="sendtofac[]">
+                                      <?php
+                                        $sql = "SELECT * FROM `faculty`;";
+                                        $actresult = mysqli_query($conn, $sql);
+                                        ?>
+                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
+                                            <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                              <div class="modal-footer">
+                                <input type="reset" class="btn btn-secondary">
+                                <button class="btn btn-primary">Save</button>
+                              </div>  
+                            </form>
+                            <!-- php code here -->
+                            <?php
+                            if (isset($_POST['memo_number'])) {
+                              if(isset($_POST['sendtofac']))
+                              {
+                                $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
+                                VALUES ('" . $_POST['memo_number'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                                if ($conn->query($sql) === TRUE) {
+                                  $GetID = mysqli_query($conn, "SELECT `id` from memo ORDER BY id DESC LIMIT 1;");
+                                  $ID = mysqli_fetch_array($GetID);
+                                  foreach ($_POST['sendtofac'] as $tofac){
+                                    $sqlroute = "INSERT INTO memo_route(memo_id,faculty_name)
+                                    VALUES ('".$ID['id']."','" .$tofac. "')";
+                                    $conn->query($sqlroute);
+                                  }
+                                  echo '<script>alert("Memo Addedd Successfully!") 
+                                                  window.location.href="memo.php"</script>';
+                                } else {
+                                  echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                                                  window.location.href="memo.php"</script>';
+                                }
+                              }
+                              else
+                                echo "Select an option first !!";
+                            }
+
+                            ?>
+
+                          </div>
+                        </div>
+                      </div>
               </div>
             </div>
           </div>
@@ -554,21 +565,21 @@ include "../dbcon.php";
   </script> -->
 
   <script>
-      Array.from(document.getElementsByClassName('showmodal')).forEach( (e) => {
-  e.addEventListener('click', function(element) {
-    element.preventDefault();
-    if (e.hasAttribute('data-show-modal')) {
-      showModal(e.getAttribute('data-show-modal'));
-    }
-  }); 
-});
-// Show modal dialog
-function showModal(modal) {
-  const mid = document.getElementById(modal);
-  let myModal = new bootstrap.Modal(mid);
-  myModal.show();
-}
-  </script>
+//       Array.from(document.getElementsByClassName('showmodal')).forEach( (e) => {
+//   e.addEventListener('click', function(element) {
+//     element.preventDefault();
+//     if (e.hasAttribute('data-show-modal')) {
+//       showModal(e.getAttribute('data-show-modal'));
+//     }
+//   }); 
+// });
+// // Show modal dialog
+// function showModal(modal) {
+//   const mid = document.getElementById(modal);
+//   let myModal = new bootstrap.Modal(mid);
+//   myModal.show();
+// }
+//   </script>
 
   <script>
      $(document).ready(function() {
