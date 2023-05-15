@@ -422,16 +422,6 @@ include "../dbcon.php";
                                   </div>
                                 </div>
                                 </div>
-                                <div class="row">
-                                  
-                                  <div class="col-md-4 mb-2">
-                                    <label for="validationCustom01">From:</label>
-                                    <input type="text" class="form-control" id="" name="from" required>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                  </div>
-                                </div>
                                   <div class="col-md-12 mb-2">
                                     <label for="validationCustom01">Subject:</label>
                                     <input type="text" class="form-control" id="" name="subject" required>
@@ -454,7 +444,15 @@ include "../dbcon.php";
                                     </div>
                                  </div>
                               </div>
-                              <div class="dropdown col-md-8 mb-2">
+                              <div class="row">
+                                  <div class="col-md-4 mb-2">
+                                    <label for="validationCustom01">From:</label>
+                                    <input type="text" class="form-control" id="" name="from" required>
+                                    <div class="valid-feedback">
+                                      Looks good!
+                                    </div>
+                                  </div>
+                                  <div class="dropdown col-md-8 mb-2">
                                     <label for="validationCustom01">To:</label>
                                     <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty" aria-label="Default select example" name="sendtofac[]">
                                       <?php
@@ -465,6 +463,7 @@ include "../dbcon.php";
                                             <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
                                         <?php } ?>
                                     </select>
+                                  </div>
                                 </div>
                               <div class="modal-footer">
                                 <input type="reset" class="btn btn-secondary">

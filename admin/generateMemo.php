@@ -133,7 +133,9 @@ $pdf->writeHTML("<hr>", true, false, false, false, '');
 
 $contnt = <<<EOD
 
-<h1 style="text-align: center;">$content $additional_info</h1></br>
+<p style="text-indent: 1cm;">$content </p></br>
+
+<p style="text-indent: 1cm;">$additional_info</p>
 
 
 EOD;
