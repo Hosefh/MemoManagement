@@ -75,7 +75,7 @@ $pdf->SetFont('times', 'B', 12);
 // add a page
 $pdf->AddPage();
 
-$GetData = mysqli_query($conn, "select *, date(`date`) as Edit_Date from memo where id=" . $_GET['id'] . "");
+$GetData = mysqli_query($conn, "select *, DATE_FORMAT(`date`, '%M %D, %Y ') as `Edit_Date` from memo where id=" . $_GET['id'] . "");
 $Datas = mysqli_fetch_array($GetData);
 
 $memo_no = $Datas['memo_number'];
