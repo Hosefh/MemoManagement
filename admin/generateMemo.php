@@ -79,6 +79,7 @@ $GetData = mysqli_query($conn, "select *, DATE_FORMAT(`date`, '%M %D, %Y ') as `
 $Datas = mysqli_fetch_array($GetData);
 
 $memo_no = $Datas['memo_number'];
+$to = $Datas['send_to'];
 $from = $Datas['from'];
 $date = $Datas['Edit_Date'];
 $subject = $Datas['subject'];
@@ -108,9 +109,7 @@ EOD;
 
 $pdf->writeHTML($tbl, true, false, false, false, '');
 
-$sqlget = "SELECT f.`name`, f.`department`, f.`course_abb` FROM `memo_route` mr 
-INNER JOIN `faculty` f ON f.`name` = mr.`faculty_name`
-WHERE mr.`memo_id` = ".$Datas['id'].";";
+$sqlget = "SELECT * FROM `faculty` f WHERE f.`department` = '$to';";
 $actresult = mysqli_query($conn, $sqlget);
 while ($result = mysqli_fetch_assoc($actresult)) {
     $to = $result['name'] . " - " . $result['course_abb']." Faculty";
