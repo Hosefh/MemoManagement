@@ -46,13 +46,12 @@ include "../dbcon.php";
                                 // $number = mysqli_fetch_array($query);
                                 ?>
                                 <h1 class="card-text fw-bold">0</h1>
-                                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col">
+            <!-- <div class="col">
                 <div class="card mb-3 shadow-lg" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4" style="background-color: #04293A;">
@@ -67,12 +66,11 @@ include "../dbcon.php";
                                 // $number = mysqli_fetch_array($query);
                                 ?>
                                 <h1 class="card-text fw-bold">0</h1>
-                                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col">
                 <div class="card mb-3 shadow-lg" style="max-width: 540px;">
                     <div class="row g-0">
@@ -87,7 +85,6 @@ include "../dbcon.php";
                                 $number = mysqli_fetch_array($query);
                                 ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
-                                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
                             </div>
                         </div>
                     </div>
