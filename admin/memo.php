@@ -452,8 +452,20 @@ include "../dbcon.php";
                                       Looks good!
                                     </div>
                                   </div>
-                                  <div class="dropdown col-md-8 mb-2">
+                                  <div class="dropdown col-md-4 mb-2">
                                     <label for="validationCustom01">To:</label>
+                                    <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty" aria-label="Default select example" name="sendtofac[]">
+                                      <?php
+                                        $sql = "SELECT * FROM `faculty`;";
+                                        $actresult = mysqli_query($conn, $sql);
+                                        ?>
+                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
+                                            <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                  </div>
+                                  <div class="dropdown col-md-4 mb-2">
+                                    <label for="validationCustom01"> </label>
                                     <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty" aria-label="Default select example" name="sendtofac[]">
                                       <?php
                                         $sql = "SELECT * FROM `faculty`;";
