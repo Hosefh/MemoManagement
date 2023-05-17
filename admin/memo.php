@@ -243,7 +243,7 @@ include "../dbcon.php";
                                         
                                       <input type="number" class="form-control" id="" name="edit_id" value="<?php echo $result['id'];?>" hidden>
                                         <?php
-                                          $getedit = mysqli_query($conn, "select * from memo where id = ".$result['id'].";");
+                                          $getedit = mysqli_query($conn, "select *, date(`date`) as date from memo where id = ".$result['id'].";");
                                           $edit = mysqli_fetch_array($getedit);
                                         ?>
                                       <div class="col-md-6 mb-2">
@@ -255,7 +255,7 @@ include "../dbcon.php";
                                       </div>
                                       <div class="col-md-6 mb-2">
                                         <label for="validationCustom01">Date:</label>
-                                        <input type="date" class="form-control" id="" name="edit_date" required value="<?php echo $edit['date'];?>"></input>
+                                        <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $edit['date'];?>" required></input>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
