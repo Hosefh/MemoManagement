@@ -275,7 +275,7 @@ include "../dbcon.php";
                             </div>
                           </div>
                           <!-- /.modal -->
-                          
+
                           <!-- Start of Edit Modal -->
                           <div id="edit<?php echo $result['id']; ?>" class="modal fade" data-bs-backdrop="static" tabindex="-1">
                             <div class="modal-dialog modal-xl">
@@ -364,7 +364,7 @@ include "../dbcon.php";
                                   if (isset($_POST['edit_memo_number'])) {
                                    //echo $test;
                                     $sql = "UPDATE `memo` SET memo_number = '" . $_POST['edit_memo_number'] . "' ,
-                                   send_to = '" . $_POST['edit_facdepartment'] . "',
+                                   send_to = '" . trim($_POST['edit_facdepartment']) . "',
                                    `from` = '" . $_POST['edit_from'] . "',
                                    `date` = '" . $_POST['edit_date'] . "',
                                    `subject` = '" . $_POST['edit_subject'] . "',
