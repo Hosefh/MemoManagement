@@ -18,6 +18,22 @@ include "../dbcon.php";
 <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type ="text/javascript">
+  $(document).ready(function(){
+    $('#facdep').change(function(){
+      var facdepartment=$(this).val();
+      $.ajax({
+        url:"action.php",
+        method:"post",
+        data:{department:facdepartment},
+        success:function(data){
+          $("#facnames").html(data);
+        }
+      });
+    });
+  });
+  </script>
 
 <!-- <script>
   $('select').selectpicker();
@@ -190,7 +206,7 @@ include "../dbcon.php";
                   </thead>
                   <tbody style="cursor: pointer" id="myBtn">
                   <?php
-                  $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') as `date` FROM `memo`;";
+                  $sql = "SELECT *, DATE_FORMAT(`date`, '%M %d, %Y ') as `date` FROM `memo`;";
                   $actresult = mysqli_query($conn, $sql);
 
                   while ($result = mysqli_fetch_assoc($actresult)) {
@@ -408,7 +424,7 @@ include "../dbcon.php";
                                     $getcount = mysqli_query($conn, "select count(*) as count from memo;");
                                     $count = mysqli_fetch_array($getcount);
                                     $number = $count['count'] + 1;
-                                    $number = "00000".$number;
+                                    $number = "000".$number;
                                   ?>
                                 <div class="col-md-6 mb-2">
                                   <label for="validationCustom01">Memo Number:</label>
@@ -456,15 +472,21 @@ include "../dbcon.php";
                                     </div>
                                   </div>
                                   <div class="dropdown col-md-4 mb-2">
-                                    <label for="validationCustom01">To:</label>
-                                    <select class="form-select" placeholder="Select Faculty" aria-label="Default select example" name="facdepartment">
+                                    <label for="validationCustom01">Department:</label>
+                                    <select class="form-select" placeholder="Select Faculty" aria-label="Default select example" name="facdep" id="facdep">
+                                      <option value="" disabled selected> Select Name</option>
                                       <?php
-                                        $sql = "SELECT distinct(department) as department FROM `faculty`;";
+                                        $sql = "SELECT distinct(`department`) as `department` FROM `faculty`;";
                                         $actresult = mysqli_query($conn, $sql);
                                         ?>
                                         <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
                                             <option value=" <?php echo $result['department'] ?>"> <?php echo $result['department'] ?></option>
                                         <?php } ?>
+                                    </select>
+                                  </div>
+                                  <div class="dropdown col-md-4 mb-2">
+                                    <label for="validationCustom01">To:</label>
+                                    <select class="form-select" multiple placeholder="Select Faculty" aria-label="Default select example" name="facnames[]" id="facnames">
                                     </select>
                                   </div>
                                 </div>
@@ -476,33 +498,61 @@ include "../dbcon.php";
                             <!-- php code here -->
                             <?php
                             if (isset($_POST['memo_number'])) {
-                              echo "asdasdasdadsasd";
+                              // print_r($_POST['facdepartment']);
+                              // foreach ($_POST['facdepartment'] as  $department)
+                              // {
+                              //   echo $department;
+                              //   $sql2 = "INSERT INTO "
+                              // }
                               $checkermemo = "SELECT * FROM `memo` m WHERE m.`memo_number` = ".$_POST['memo_number'].";";
                               $resultcheckermemo = mysqli_query($conn, $checkermemo);
                               $rowcountmemo = mysqli_num_rows( $resultcheckermemo );
                               echo $rowcountmemo;
                               if($rowcountmemo == 0)
                               {
-                              //   $checker = "SELECT * FROM `memo` m WHERE DATE(m.`date`) = DATE('".$_POST['date']."');";
-                              //   $resultchecker = mysqli_query($conn, $checker);
-                              //   $rowcount = mysqli_num_rows( $resultchecker );
+                                $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
+                                     VALUES ('" . $_POST['memo_number'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                                if ($conn->query($sql) === TRUE) {
 
-                              //   if ($rowcount == 0)
-                              //   {
-                                    $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
-                                    VALUES ('" . $_POST['memo_number'] . "','" . trim($_POST['facdepartment']) . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
-                                    if ($conn->query($sql) === TRUE) {
-                                      echo '<script>alert("Memo Addedd Successfully!") 
-                                                      window.location.href="memo.php"</script>';
-                                    } else {
+                                  $getid = "SELECT id FROM `memo` ORDER BY id DESC LIMIT 1;";
+                                  $resultid = mysqli_query($conn, $getid);
+                                  $id = mysqli_fetch_array($resultid);
+                                  echo $id['id'];
+                                  foreach ($_POST['facnames'] as $facname)
+                                  {
+                                    $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
+                                    VALUES (".$id['id'].",'".$facname."');";
+                                    if ($conn->query($sqlroute) === FALSE)
+                                    {
                                       echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                                      window.location.href="memo.php"</script>';
+                                      window.location.href="memo.php"</script>';
                                     }
-                                // }
-                                // else{
-                                // echo '<script>alert("Date Not Available for Memo Dissemination.") 
-                                //                 window.location.href="memo.php"</script>';
-                                // }
+                                  }
+
+                                  echo '<script>alert("Memo Addedd Successfully!") 
+                                                  window.location.href="memo.php"</script>';
+                                  } else {
+                                    echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                                                    window.location.href="memo.php"</script>';
+                                  }
+
+
+                              // //   if ($rowcount == 0)
+                              // //   {
+                              //       $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
+                              //       VALUES ('" . $_POST['memo_number'] . "','" . trim($_POST['facdepartment']) . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                              //       if ($conn->query($sql) === TRUE) {
+                              //         echo '<script>alert("Memo Addedd Successfully!") 
+                              //                         window.location.href="memo.php"</script>';
+                              //       } else {
+                              //         echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                              //                         window.location.href="memo.php"</script>';
+                              //       }
+                              //   // }
+                              //   // else{
+                              //   // echo '<script>alert("Date Not Available for Memo Dissemination.") 
+                              //   //                 window.location.href="memo.php"</script>';
+                              //   // }
                               }
                               else{
                                 echo '<script>alert("Memo number not available.") 
