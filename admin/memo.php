@@ -220,14 +220,62 @@ include "../dbcon.php";
                               <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-primary btn-sm me-md-2" ><span
                               class="me-2"><i class="bi bi-pen"></i></span> Edit</a>
                               ||
-                                <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span
-                                    class="me-2"><i class="bi bi-trash"></i></span> Delete
-                                </a>
+                              <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span
+                                  class="me-2"><i class="bi bi-trash"></i></span> Delete
+                              </a>
                               </div>
                             </td>
                           </tr>
                       
-
+                          <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <center>
+                                    <h4 class="modal-title" id="myModalLabel">Delete</h4>
+                                  </center>
+                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                  <?php
+                                  $del = mysqli_query($conn, "select * from memo where id='" . $result['id'] . "'");
+                                  $drow = mysqli_fetch_array($del);
+                                  ?>
+                                  <div class="container-fluid">
+                                    <h5>
+                                      <center>Are you sure to delete <strong>
+                                        <?php echo ucwords($drow['subject']); ?>
+                                        </strong> from Memo list? This method cannot be undone.</center>
+                                    </h5>
+                                  </div>
+                                </div>
+                                <form method="POST">
+                                  <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>" class="form-control" required>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                                        class="glyphicon glyphicon-remove"></span> Cancel</button>
+                                    <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
+                                      Delete</button>
+                                  </div>
+                                  <?php
+                                  if (isset($_POST['deleteid'])) {
+                                    $sql = "DELETE FROM memo WHERE id='" . $_POST['deleteid'] . "'";
+                                    if ($conn->query($sql) === TRUE) {
+                                      echo '<script>alert("Deleted Successfully!") 
+                                      window.location.href="memo.php"</script>';
+                                    } else {
+                                      echo '<script>alert("Deleting Memo Details Failed!\n Please Check SQL Connection String!") 
+                                      window.location.href="memo.php"</script>';
+                                    }
+                                  }
+                                  ?>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- /.modal -->
+                          
                           <!-- Start of Edit Modal -->
                           <div id="edit<?php echo $result['id']; ?>" class="modal fade" data-bs-backdrop="static" tabindex="-1">
                             <div class="modal-dialog modal-xl">
@@ -339,54 +387,7 @@ include "../dbcon.php";
                           </div>
 
                           <!-- Delete -->
-                          <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <center>
-                                    <h4 class="modal-title" id="myModalLabel">Delete</h4>
-                                  </center>
-                                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                  <?php
-                                  $del = mysqli_query($conn, "select * from memo where id='" . $result['id'] . "'");
-                                  $drow = mysqli_fetch_array($del);
-                                  ?>
-                                  <div class="container-fluid">
-                                    <h5>
-                                      <center>Are you sure to delete <strong>
-                                        <?php echo ucwords($drow['subject']); ?>
-                                        </strong> from Memo list? This method cannot be undone.</center>
-                                    </h5>
-                                  </div>
-                                </div>
-                                <form method="POST">
-                                  <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>" class="form-control" required>
-                                  <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal"><span
-                                        class="glyphicon glyphicon-remove"></span> Cancel</button>
-                                    <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
-                                      Delete</button>
-                                  </div>
-                                  <?php
-                                  if (isset($_POST['deleteid'])) {
-                                    $sql = "DELETE FROM memo WHERE id='" . $_POST['deleteid'] . "'";
-                                    if ($conn->query($sql) === TRUE) {
-                                      echo '<script>alert("Deleted Successfully!") 
-                                      window.location.href="memo.php"</script>';
-                                    } else {
-                                      echo '<script>alert("Deleting Memo Details Failed!\n Please Check SQL Connection String!") 
-                                      window.location.href="memo.php"</script>';
-                                    }
-                                  }
-                                  ?>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- /.modal -->
+                        
                       <?php } ?>
                   </tbody>
                   <tfoot></tfoot>
