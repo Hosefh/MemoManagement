@@ -30,7 +30,7 @@ include "../dbcon.php";
     <!-- Left Sidebar End -->
 
     <main class="mt-5 pt-3 px-4">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col">
                 <div class="card mb-3 shadow-lg" style="max-width: 540px;">
                     <div class="row g-0">
@@ -40,7 +40,7 @@ include "../dbcon.php";
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Memo Created</h5><?php 
+                                <h5 class="card-title">Memo Created</h5><?php
                                 $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `memo`;");
                                 $number = mysqli_fetch_array($query);
                                 ?>
@@ -49,7 +49,7 @@ include "../dbcon.php";
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- <div class="col">
                 <div class="card mb-3 shadow-lg" style="max-width: 540px;">
                     <div class="row g-0">
@@ -60,7 +60,7 @@ include "../dbcon.php";
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Signed Memo</h5>
-                                <?php 
+                                <?php
                                 // $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memos where ready_for_forwarding = 1");
                                 // $number = mysqli_fetch_array($query);
                                 ?>
@@ -70,7 +70,7 @@ include "../dbcon.php";
                     </div>
                 </div>
             </div> -->
-            <div class="col">
+            <!-- <div class="col">
                 <div class="card mb-3 shadow-lg" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4" style="background-color: #04293A;">
@@ -79,7 +79,7 @@ include "../dbcon.php";
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">Faculty</h5> <?php 
+                                <h5 class="card-title">Faculty</h5> <?php
                                 $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
                                 $number = mysqli_fetch_array($query);
                                 ?>
@@ -89,7 +89,23 @@ include "../dbcon.php";
                     </div>
                 </div>
             </div>
+        </div> -->
+
+        <!-- for header -->
+        <div class="card shadow-lg" style="background-color: #04293A; border-radius: 8px;">
+            <div class="card-body" style="background-color: #04293A; border-radius: 8px; ">
+                <div class="row g-0">
+                        <div class="col-md-4" style="background-color: #04293A;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" class="img-fluid"
+                                alt="..." style="width: 50px; height:50px;">
+                        </div>
+                        <div class="col-md-4 fw-bold">
+                            <h4 style="color: white">Memorandum Management</h4>
+                        </div>
+                    </div>
+            </div>
         </div>
+        <!-- end of header -->
 
         <!-- Datatable for memo records -->
         <div class="card shadow-lg">
@@ -104,34 +120,38 @@ include "../dbcon.php";
                                 <tr>
                                 <th>Memo #</th>
                                 <th>From</th>
+                                <th>To</th>
                                 <th>Subject</th>
-                                <th>Date Created</th>
+                                <th>Additional Info</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
-                                $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') as `date` FROM `memo`;";
-                                $actresult = mysqli_query($conn, $sql);
+                            $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') as `date` FROM `memo`;";
+                            $actresult = mysqli_query($conn, $sql);
 
-                                while ($result = mysqli_fetch_assoc($actresult)) {
-                                    ?>
-                                <tr>
-                                <td>
-                              <?php echo $result['memo_number'] ?>
-                                </td>
-                                <!-- <td>
+                            while ($result = mysqli_fetch_assoc($actresult)) {
+                                ?>
+                                                                                                                    <tr>
+                                                                                                                    <td>
+                                                                                                                  <?php echo $result['memo_number'] ?>
+                                                                                                                    </td>
+                                                                                                                    <!-- <td>
                                 <?php echo $result['send_to'] ?>
                                 </td> -->
-                                <td>
-                                <?php echo $result['from'] ?>
-                                </td>
-                                <td>
-                                <?php echo $result['subject'] ?>
-                                </td>
-                                <td>
-                                <?php echo $result['date'] ?>
-                                </td>
-                                </tr>
+                                                                                                                    <td>
+                                                                                                                    <?php echo $result['from'] ?>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                    <?php echo $result['send_to'] ?>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                    <?php echo $result['subject'] ?>
+                                                                                                                    </td>
+                                                                                                                    <td>
+                                                                                                                    <?php echo $result['additional_info'] ?>
+                                                                                                                    </td>
+                                                                                                                    </tr>
                                 <?php } ?>
                             </tbody>
                     </table>

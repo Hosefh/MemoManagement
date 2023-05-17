@@ -95,18 +95,18 @@
                 Others
               </div>
             </li>
-            <!-- <li>
+            <li>
               <a href="./faculty.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-people-fill"></i></span>
                 <span>Faculty</span>
               </a>
-            </li> -->
-            <li>
+            </li>
+            <!-- <li>
               <a href="./users.php" class="nav-link px-3">
                 <span class="me-2"><i class="bi bi-person-plus-fill"></i></span>
                 <span>Users</span>
               </a>
-            </li>
+            </li> -->
           </ul>
         </nav>
       </div>

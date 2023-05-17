@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 include "../dbcon.php";
 ?>
@@ -120,141 +120,139 @@ include "../dbcon.php";
                   </thead>
                   <tbody>
                     <?php
-                      $sql = "SELECT * FROM `faculty`;";
-                      $actresult = mysqli_query($conn, $sql);
+                    $sql = "SELECT * FROM `faculty`;";
+                    $actresult = mysqli_query($conn, $sql);
 
-                      while ($result = mysqli_fetch_assoc($actresult)) {
+                    while ($result = mysqli_fetch_assoc($actresult)) {
                       ?>
-                    <tr>
-                      <td>
-                        <?php echo $result['faculty_id']; ?>
-                      </td>
-                      <td>
-                        <?php echo $result['name']; ?>
-                      </td>
-                      <td>
-                        <?php echo $result['course_abb']; ?>
-                      </td>
-                      <td>
-                        <?php echo $result['department']; ?>
-                      </td>
-                      <td>
-                        <div class="d-grid gap-2 d-md-flex">
-                          <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-primary btn-sm me-md-2"><span
-                              class="me-2"><i class="bi bi-pencil"></i></span> Edit</a> ||
-                          <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span class="me-2"><i
-                                class="bi bi-trash"></i></span>
-                            Delete</a>
-                        </div>
-                      </td>
-                    </tr>
-                    <!-- Start of Edit Modal -->
-                    <!-- Edit Modal HTML -->
-                    <div id="edit<?php echo $result['id']; ?>" class="modal fade">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <form id="update_form" method="POST">
-                            <div class="modal-header">
-                              <h4 class="modal-title">Edit Faculty</h4>
-                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                              <?php
+                      <tr>
+                        <td>
+                          <?php echo $result['id']; ?>
+                        </td>
+                        <td>
+                          <?php echo $result['name']; ?>
+                        </td>
+                        <td>
+                          <?php echo $result['course_abb']; ?>
+                        </td>
+                        <td>
+                          <?php echo $result['department']; ?>
+                        </td>
+                        <td>
+                          <div class="d-grid gap-2 d-md-flex">
+                            <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-primary btn-sm me-md-2"><span
+                                class="me-2"><i class="bi bi-pencil"></i></span> Edit</a> ||
+                            <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span class="me-2"><i
+                                  class="bi bi-trash"></i></span>
+                              Delete</a>
+                          </div>
+                        </td>
+                      </tr>
+                      <!-- Start of Edit Modal -->
+                      <!-- Edit Modal HTML -->
+                      <div id="edit<?php echo $result['id']; ?>" class="modal fade">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <form id="update_form" method="POST">
+                              <div class="modal-header">
+                                <h4 class="modal-title">Edit Faculty</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              </div>
+                              <div class="modal-body">
+                                <?php
                                 $id = $result['id'];
                                 $edit = mysqli_query($conn, "select * from faculty where id='" . $result['id'] . "'");
                                 $erow = mysqli_fetch_array($edit);
                                 ?>
-                              <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control" required>
-                              <div class="form-group">
-                                <label>Faculty ID</label>
-                                <input type="text" id="name_u" name="editempid" value="<?php echo $result['faculty_id']; ?>" class="form-control" required>
-                              </div>
-                              <div class="form-group">
-                                <label>Name</label>
-                                <input type="text" id="username_u" name="editname" value="<?php echo $result['name']; ?>" class="form-control"
-                                  required>
-                              </div>
-                              <div class="form-group">
-                                <label>Course Abbreviation</label>
-                                <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control"
-                                  required>
-                              </div>
-                              <div class="form-group">
-                                <label>Department</label>
-                                <input type="text" id="password_u" name="editcourse" value="<?php echo $result['department']; ?>" class="form-control"
-                                  required>
-                              </div>
-                              <!-- <div class="form-check col-md-12 mt-3">
+                                <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control" required>
+                                <div class="form-group">
+                                  <label>Faculty ID</label>
+                                  <input type="text" id="name_u" name="editempid" value="<?php echo $result['faculty_id']; ?>" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                  <label>Name</label>
+                                  <input type="text" id="username_u" name="editname" value="<?php echo $result['name']; ?>" class="form-control"
+                                    required>
+                                </div>
+                                <div class="form-group">
+                                  <label>Course Abbreviation</label>
+                                  <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control"
+                                    required>
+                                </div>
+                                <div class="form-group">
+                                  <label>Department</label>
+                                  <input type="text" id="password_u" name="editcourse" value="<?php echo $result['department']; ?>" class="form-control"
+                                    required>
+                                </div>
+                                <!-- <div class="form-check col-md-12 mt-3">
                                 
-                                  <input class="form-check-input" type="checkbox" name="isadmin" <?php if ($result['privilege']=== "admin")
-                                  {
+                                  <input class="form-check-input" type="checkbox" name="isadmin" <?php if ($result['privilege'] === "admin") {
                                     echo 'checked=""';
-                                  }?> id="flexCheckIndeterminate">
+                                  } ?> id="flexCheckIndeterminate">
                                   <label class="form-check-label" for="flexCheckIndeterminate">
                                     Admin?
                                   </label>
                               </div> -->
-                            </div>
-                            <div class="modal-footer">
-                              <input type="hidden" value="2" name="type">
-                              <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                              <button class="btn btn-info" id="update">Update</button>
-                            </div>
-                          </form>
-                          <?php
-                          if (isset($_POST['editempid']))
-                          {
-                            $sql = "UPDATE `faculty` f SET f.`faculty_id` = '" . $_POST['editempid'] . "', f.`name` = '" . $_POST['editname'] . "', f.`course_abb` = '" . $_POST['editcourse'] . "' 
-                            WHERE f.`id` = ".$_POST['editid'].";";
-                            //$sql = "UPDATE `users` SET user_id =12 WHERE id = 1; ";
-                            if ($conn->query($sql) === TRUE) {
-                              echo '<script>alert("Faculty Edit Successful!") 
+                              </div>
+                              <div class="modal-footer">
+                                <input type="hidden" value="2" name="type">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                <button class="btn btn-info" id="update">Update</button>
+                              </div>
+                            </form>
+                            <?php
+                            if (isset($_POST['editempid'])) {
+                              $sql = "UPDATE `faculty` f SET f.`faculty_id` = '" . $_POST['editempid'] . "', f.`name` = '" . $_POST['editname'] . "', f.`course_abb` = '" . $_POST['editcourse'] . "' 
+                            WHERE f.`id` = " . $_POST['editid'] . ";";
+                              //$sql = "UPDATE `users` SET user_id =12 WHERE id = 1; ";
+                              if ($conn->query($sql) === TRUE) {
+                                echo '<script>alert("Faculty Edit Successful!") 
                                       window.location.href="faculty.php"</script>';
-                            } else {
-                              echo '<script>alert("Editing Faculty Details Failed!\n Please Check SQL Connection String!") 
+                              } else {
+                                echo '<script>alert("Editing Faculty Details Failed!\n Please Check SQL Connection String!") 
                                       window.location.href="faculty.php"</script>';
+                              }
                             }
-                          }
-                          ?>
+                            ?>
 
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- End of Edit Modal -->
+                      <!-- End of Edit Modal -->
 
-                    <!-- Delete -->
-                    <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                      aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <center>
-                              <h4 class="modal-title" id="myModalLabel">Delete</h4>
-                            </center>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                          </div>
-                          <div class="modal-body">
-                            <?php
+                      <!-- Delete -->
+                      <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <center>
+                                <h4 class="modal-title" id="myModalLabel">Delete</h4>
+                              </center>
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                              <?php
                               $del = mysqli_query($conn, "select * from faculty where id='" . $result['id'] . "'");
                               $drow = mysqli_fetch_array($del);
-                            ?>
-                            <div class="container-fluid">
-                              <h5>
-                                <center>Are you sure to delete <strong>
-                                  <?php echo ucwords($drow['name']); ?>
-                                  </strong> from Faculty list? This method cannot be undone.</center>
-                              </h5>
+                              ?>
+                              <div class="container-fluid">
+                                <h5>
+                                  <center>Are you sure to delete <strong>
+                                    <?php echo ucwords($drow['name']); ?>
+                                    </strong> from Faculty list? This method cannot be undone.</center>
+                                </h5>
+                              </div>
                             </div>
-                          </div>
-                          <form method="POST">
-                            <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>" class="form-control" required>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-default" data-dismiss="modal"><span
-                                  class="glyphicon glyphicon-remove"></span> Cancel</button>
-                              <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
-                                Delete</button>
-                            </div>
-                            <?php
+                            <form method="POST">
+                              <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>" class="form-control" required>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                                    class="glyphicon glyphicon-remove"></span> Cancel</button>
+                                <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
+                                  Delete</button>
+                              </div>
+                              <?php
                               if (isset($_POST['deleteid'])) {
                                 $sql = "DELETE FROM faculty  WHERE id='" . $_POST['deleteid'] . "'";
                                 if ($conn->query($sql) === TRUE) {
@@ -265,13 +263,13 @@ include "../dbcon.php";
                                                 window.location.href="faculty.php"</script>';
                                 }
                               }
-                            ?>
-                          </form>
+                              ?>
+                            </form>
                           
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <!-- /.modal -->
+                      <!-- /.modal -->
 
                     <?php } ?>
                   </tbody>
