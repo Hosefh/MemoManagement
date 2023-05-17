@@ -466,7 +466,7 @@ include "../dbcon.php";
                               <div class="row">
                                   <div class="col-md-4 mb-2">
                                     <label for="validationCustom01">From:</label>
-                                    <input type="text" class="form-control" id="" name="from" required>
+                                    <input type="text" class="form-control" id="" name="from" autocomplete="off" required>
                                     <div class="valid-feedback">
                                       Looks good!
                                     </div>
