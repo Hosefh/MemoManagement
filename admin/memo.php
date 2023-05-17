@@ -296,10 +296,10 @@ include "../dbcon.php";
                                           <select class="form-select" placeholder="Select Faculty" aria-label="Default select example" name="edit_facdepartment">
                                             <option value=" <?php echo $edit['send_to'] ?>"> <?php echo $edit['send_to'] ?></option>
                                             <?php
-                                              $sql = "SELECT distinct(department) as department FROM `faculty` where department != '".$edit['send_to']."';";
-                                              $actresult = mysqli_query($conn, $sql);
+                                              $sql1 = "SELECT distinct(department) as department FROM `faculty` where department != '".$edit['send_to']."';";
+                                              $actresult1 = mysqli_query($conn, $sql1);
                                               ?>
-                                              <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
+                                              <?php while ($result = mysqli_fetch_assoc($actresult1)) { ?>
                                                   <option value=" <?php echo $result['department'] ?>"> <?php echo $result['department'] ?></option>
                                               <?php } ?>
                                           </select>
