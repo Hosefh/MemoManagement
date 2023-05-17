@@ -212,248 +212,235 @@ include "../dbcon.php";
                 while ($result = mysqli_fetch_assoc($actresult)) {
                   ?>
 
-                            <tr>
-                              <td>
-                                <?php echo $result['memo_number'] ?>
-                              </td>
-                              <!-- <td>
+                                                                                                                                                                                                                                                                      <tr>
+                                                                                                                                                                                                                                                                        <td>
+                                                                                                                                                                                                                                                                          <?php echo $result['memo_number'] ?>
+                                                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                                                        <!-- <td>
                                                       <?php echo $result['send_to'] ?>
                             </td> -->
-                              <td>
-                                <?php echo $result['from'] ?>
-                              </td>
-                              <td>
-                                <?php echo $result['subject'] ?>
-                              </td>
-                              <td>
-                                <?php echo $result['date'] ?>
-                              </td>
-                              <td>
-                                <div class="d-grid gap-2 d-md-flex">
-                                  <a href="./generateMemo.php?id=<?php echo $result['id'] ?>" target=”_blank”
-                                    class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i
-                                        class="bi bi-folder2-open"></i></span> View Memo</a>
-                                  ||
-                                  <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal"
-                                    class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-pen"></i></span>
-                                    Edit</a>
-                                  ||
-                                  <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span
-                                      class="me-2"><i class="bi bi-trash"></i></span> Delete
-                                  </a>
-                                </div>
-                              </td>
-                            </tr>
+                                                                                                                                                                                                                                                                        <td>
+                                                                                                                                                                                                                                                                          <?php echo $result['from'] ?>
+                                                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                                                        <td>
+                                                                                                                                                                                                                                                                          <?php echo $result['subject'] ?>
+                                                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                                                        <td>
+                                                                                                                                                                                                                                                                          <?php echo $result['date'] ?>
+                                                                                                                                                                                                                                                                        </td>
+                                                                                                                                                                                                                                                                        <td>
+                                                                                                                                                                                                                                                                          <div class="d-grid gap-2 d-md-flex">
+                                                                                                                                                                                                                                                                            <a href="./generateMemo.php?id=<?php echo $result['id'] ?>" target=”_blank”
+                                                                                                                                                                                                                                                                              class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i
+                                                                                                                                                                                                                                                                                  class="bi bi-folder2-open"></i></span> View Memo</a>
+                                                                                                                                                                                                                                                                            ||
+                                                                                                                                                                                                                                                                            <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal"
+                                                                                                                                                                                                                                                                              class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-pen"></i></span>
+                                                                                                                                                                                                                                                                              Edit</a>
+                                                                          ||
+                                                                          <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span
+                                                                          class="me-2"><i class="bi bi-trash"></i></span> Delete
+                                                                          </a>
+                                                                          </div>
+                                                                          </td>
+                                                                          </tr>
 
-                            <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog"
-                              aria-labelledby="myModalLabel" aria-hidden="true">
-                              <div class="modal-dialog">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <center>
-                                      <h4 class="modal-title" id="myModalLabel">Delete</h4>
-                                    </center>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <?php
-                                    $del = mysqli_query($conn, "select * from memo where id='" . $result['id'] . "'");
-                                    $drow = mysqli_fetch_array($del);
-                                    ?>
-                                    <div class="container-fluid">
-                                      <h5>
-                                        <center>Are you sure to delete <strong>
-                                            <?php echo ucwords($drow['subject']); ?>
-                                          </strong> from Memo list? This method cannot be undone.</center>
-                                      </h5>
-                                    </div>
-                                  </div>
-                                  <form method="POST">
-                                    <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>"
-                                      class="form-control" required>
-                                    <div class="modal-footer">
-                                      <button type="button" class="btn btn-default" data-dismiss="modal"><span
-                                          class="glyphicon glyphicon-remove"></span> Cancel</button>
-                                      <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
-                                        Delete</button>
-                                    </div>
-                                    <?php
-                                    if (isset($_POST['deleteid'])) {
-                                      $sql = "DELETE FROM memo WHERE id='" . $_POST['deleteid'] . "'";
-                                      if ($conn->query($sql) === TRUE) {
-                                        echo '<script>alert("Deleted Successfully!") 
-                                      window.location.href="memo.php"</script>';
-                                      } else {
-                                        echo '<script>alert("Deleting Memo Details Failed!\n Please Check SQL Connection String!") 
-                                      window.location.href="memo.php"</script>';
-                                      }
-                                    }
-                                    ?>
-                                  </form>
-                                </div>
-                              </div>
-                            </div>
-                            <!-- /.modal -->
-                          <div id="edit<?php echo $result['id']; ?>" class="modal fade" data-bs-backdrop="static" tabindex="-1">
-                        <div class="modal-dialog modal-xl">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title">Create Memo</h5>
-                              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
+                                                                          <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog"
+                                                                          aria-labelledby="myModalLabel" aria-hidden="true">
+                                                                          <div class="modal-dialog">
+                                                                          <div class="modal-content">
+                                                                          <div class="modal-header">
+                                                                          <center>
+                                                                          <h4 class="modal-title" id="myModalLabel">Delete</h4>
+                                                                          </center>
+                                                                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                          </div>
+                                                                          <div class="modal-body">
+                                                                          <?php
+                                                                          $del = mysqli_query($conn, "select * from memo where id='" . $result['id'] . "'");
+                                                                          $drow = mysqli_fetch_array($del);
+                                                                          ?>
+                                                                          <div class="container-fluid">
+                                                                          <h5>
+                                                                          <center>Are you sure to delete <strong>
+                                                                          <?php echo ucwords($drow['subject']); ?>
+                                                                          </strong> from Memo list? This method cannot be undone.</center>
+                                                                          </h5>
+                                                                          </div>
+                                                                          </div>
+                                                                          <form method="POST">
+                                                                          <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>"
+                                                                          class="form-control" required>
+                                                                          <div class="modal-footer">
+                                                                          <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                                                                          class="glyphicon glyphicon-remove"></span> Cancel</button>
+                                                                          <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
+                                                                          Delete</button>
+                                                                          </div>
+                                                                          <?php
+                                                                          if (isset($_POST['deleteid'])) {
+                                                                            $sql = "DELETE FROM memo WHERE id='" . $_POST['deleteid'] . "'";
+                                                                            if ($conn->query($sql) === TRUE) {
+                                                                              echo '<script>alert("Deleted Successfully!") 
+window.location.href="memo.php"</script>';
+                                                                            } else {
+                                                                              echo '<script>alert("Deleting Memo Details Failed!\n Please Check SQL Connection String!") 
+window.location.href="memo.php"</script>';
+                                                                            }
+                                                                          }
+                                                                          ?>
+                                                                          </form>
+                                                                          </div>
+                                                                          </div>
+                                                                          </div>
+                                                                          <!-- /.modal -->
+                                                                          <div id="edit<?php echo $result['id']; ?>" class="modal fade" data-bs-backdrop="static" tabindex="-1">
+                                                                          <div class="modal-dialog modal-xl">
+                                                                          <div class="modal-content">
+                                                                          <div class="modal-header">
+                                                                          <h5 class="modal-title">Edit Memo</h5>
+                                                                          <?php
+                                                                          $edit = mysqli_query($conn, "select *,date(`date`) as `date` from memo where id='" . $result['id'] . "'");
+                                                                          $erow = mysqli_fetch_array($edit);
+                                                                          ?>
+                                                                          </div>
+                                                                          <div class="modal-body">
 
-                              <form class="needs-validation" method="POST" enctype="multipart/form-data">
-                                <div class="form-row">
-                                  <div class="row">
-                                    <?php
-                                    $getcount = mysqli_query($conn, "select count(*) as count from memo;");
-                                    $count = mysqli_fetch_array($getcount);
-                                    $number = $count['count'] + 1;
-                                    $number = "000" . $number;
-                                    ?>
-                                    <div class="col-md-6 mb-2">
-                                      <label for="validationCustom01">Memo Number:</label>
-                                      <input type="number" class="form-control" id="" name="memo_number"
-                                        value="<?php echo $number; ?>" readonly>
-                                      <div class="valid-feedback">
-                                        Looks good!
-                                      </div>
-                                    </div>
-                                    <div class="col-md-6 mb-2">
-                                      <label for="validationCustom01">Date Created:</label>
-                                      <input type="date" class="form-control" id="" name="date" required>
-                                      <div class="valid-feedback">
-                                        Looks good!
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-12 mb-2">
-                                    <label for="validationCustom01">Subject:</label>
-                                    <input type="text" class="form-control" id="" name="subject" autocomplete="off" required>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                  </div>
-                                  <div class="col-md-12 mb-2">
-                                    <label for="validationCustom01">Content(Activity, Date, Place)</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                      name="content"></textarea>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                  </div>
-                                  <div class="col-md-12 mb-2">
-                                    <label for="validationCustom01">Additional Information:</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
-                                      name="add_info"></textarea>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <!-- <div class="col-md-4 mb-2">
-                                    <label for="validationCustom01">From:</label>
-                                    <input type="text" class="form-control" id="" name="from" autocomplete="off" required>
-                                    <div class="valid-feedback">
-                                      Looks good!
-                                    </div>
-                                  </div> -->
-                                  <div class="dropdown col-md-6 mb-2">
-                                    <label for="validationCustom01">From:</label>
-                                    <select class="form-select" placeholder="Select Admin" name="from">
-                                      <option value=" " selected disabled>Select Admin</option>
-                                      <option value="University President">University President</option>
-                                      <option value="University V-President">University V-President</option>
-                                      <option value="BISU-MC Director">BISU-MC Director</option>
-                                      <option value="College of Engineering, Dean">College of Engineering, Dean</option>
-                                    </select>
-                                  </div>
+                                                                          <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                                                                          <div class="form-row">
+                                                                          <div class="row">
 
-                                  <div class="dropdown col-md-6 mb-2">
-                                    <label for="validationCustom01">To:</label>
-                                    <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty"
-                                      aria-label="Default select example" name="sendtofac[]">
-                                      <?php
-                                      $sql1 = "SELECT * FROM `faculty`;";
-                                      $actresult1 = mysqli_query($conn, $sql1);
-                                      ?>
-                                      <?php while ($result = mysqli_fetch_assoc($actresult1)) { ?>
-                                                  <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
-                                      <?php } ?>
-                                    </select>
-                                  </div>
-                                  <div class="modal-footer">
-                                    <input type="reset" class="btn btn-secondary">
-                                    <button class="btn btn-primary">Save</button>
-                                  </div>
-                              </form>
-                              <!-- php code here -->
-                              <?php
-                              if (isset($_POST['memo_number'])) {
-                                // print_r($_POST['facdepartment']);
-                                // foreach ($_POST['facdepartment'] as  $department)
-                                // {
-                                //   echo $department;
-                                //   $sql2 = "INSERT INTO "
-                                // }
-                                $checkermemo = "SELECT * FROM `memo` m WHERE m.`memo_number` = " . $_POST['memo_number'] . ";";
-                                $resultcheckermemo = mysqli_query($conn, $checkermemo);
-                                $rowcountmemo = mysqli_num_rows($resultcheckermemo);
-                                echo $rowcountmemo;
-                                if ($rowcountmemo == 0) {
-                                  $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
-                                     VALUES ('" . $_POST['memo_number'] . "','" . trim($_POST['from']) . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
-                                  if ($conn->query($sql) === TRUE) {
+                                                                          <input type="number" class="form-control" id="" name="edit_id"
+                                                                          value="<?php echo $result['id']; ?>" hidden>
+                                                                          <div class="col-md-6 mb-2">
+                                                                          <label for="validationCustom01">Memo Number:</label>
+                                                                          <input type="number" class="form-control" id="" name="edit_memo_number"
+                                                                          value="<?php echo $erow['memo_number']; ?>" placeholder="<?php echo $erow['memo_number']; ?>" readonly>
+                                                                          <div class="valid-feedback">
+                                                                          Looks good!
+                                                                          </div>
+                                                                          </div>
+                                                                          <div class="col-md-6 mb-2">
+                                                                          <label for="validationCustom01">Date Created:</label>
+                                                                          <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $erow['date']; ?>" required>
+                                                                          <div class="valid-feedback">
+                                                                          Looks good!
+                                                                          </div>
+                                                                          </div>
+                                                                          </div>
+                                                                          <div class="col-md-12 mb-2">
+                                                                          <label for="validationCustom01">Subject:</label>
+                                                                          <input type="text" class="form-control" id="" name="edit_subject" autocomplete="off" value="<?php echo $erow['subject']; ?>" required>
+                                                                          <div class="valid-feedback">
+                                                                          Looks good!
+                                                                          </div>
+                                                                          </div>
+                                                                          <div class="col-md-12 mb-2">
+                                                                          <label for="validationCustom01">Content(Activity, Date, Place)</label>
+                                                                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                                          name="edit_content"><?php echo $erow['content']; ?></textarea>
+                                                                          <div class="valid-feedback">
+                                                                          Looks good!
+                                                                          </div>
+                                                                          </div>
+                                                                          <div class="col-md-12 mb-2">
+                                                                          <label for="validationCustom01">Additional Information:</label>
+                                                                          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                                          name="edit_add_info"><?php echo $erow['additional_info']; ?></textarea>
+                                                                          <div class="valid-feedback">
+                                                                          Looks good!
+                                                                          </div>
+                                                                          </div>
+                                                                          </div>
+                                                                          <div class="row">
+                                                                          <div class="dropdown col-md-6 mb-2">
+                                                                          <label for="validationCustom01">From:</label>
+                                                                          <select class="form-select" placeholder="<?php echo $erow['from'] ?>" name="edit_from" value="">
+                                                                          <!-- <option value="" selected disabled><?php echo $erow['from'] ?><option> -->
+                                                                          <option value="University President">University President</option>
+                                                                          <option value="University V-President">University V-President</option>
+                                                                          <option value="BISU-MC Director">BISU-MC Director</option>
+                                                                          <option value="College of Engineering, Dean">College of Engineering and Architecture, Dean</option>
+                                                                          </select>
+                                                                          </div>
 
-                                    $getid = "SELECT id FROM `memo` ORDER BY id DESC LIMIT 1;";
-                                    $resultid = mysqli_query($conn, $getid);
-                                    $id = mysqli_fetch_array($resultid);
-                                    echo $id['id'];
-                                    foreach ($_POST['sendtofac'] as $facname) {
-                                      $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
-                                    VALUES (" . $id['id'] . ",'" . $facname . "');";
-                                      if ($conn->query($sqlroute) === FALSE) {
-                                        echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                      window.location.href="memo.php"</script>';
-                                      }
-                                    }
+                                                                          <div class="dropdown col-md-6 mb-2">
+                                                                          <label for="validationCustom01">To:</label>
+                                                                          <select class="form-select" multiple placeholder="Select Faculty"
+                                                                          aria-label="Default select example" name="editsendtofac[]">
+                                                                          <?php
+                                                                          $sql5 = "SELECT * FROM `faculty`;";
+                                                                          $actresult5 = mysqli_query($conn, $sql5);
+                                                                          ?>
+                                                                          <?php while ($result5 = mysqli_fetch_assoc($actresult5)) { ?>
+                                                                                                          <option value=" <?php echo $result5['name'] ?>"> <?php echo $result5['name'] ?></option>
+                                                                          <?php } ?>
+                                                                          </select>
+                                                                          </div>
+                                                                          <div class="modal-footer">
+                                                                          <input type="reset" class="btn btn-secondary">
+                                                                          <button class="btn btn-primary">Save</button>
+                                                                          </div>
+                                                                          </form>
+                                                                          <!-- php code here -->
+                                                                          <?php
+                                                                          if (isset($_POST['edit_memo_number'])) {
+                                                                            $query = mysqli_query($conn, "SELECT id FROM memo m WHERE m.memo_number = '" . trim($_POST['edit_memo_number']) . "';");
+                                                                            $id = mysqli_fetch_array($query);
 
-                                    echo '<script>alert("Memo Addedd Successfully!") 
-                                                  window.location.href="memo.php"</script>';
-                                  } else {
-                                    echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                                    window.location.href="memo.php"</script>';
-                                  }
+                                                                            $querygetmemoroute = "SELECT * FROM memo_route mr WHERE mr.memo_id = " . trim($id['id']) . ";";
+                                                                            $resultmemoroute = mysqli_query($conn, $querygetmemoroute);
+                                                                            $memoroute = mysqli_fetch_array($resultmemoroute);
 
+                                                                            // while ($memoroute = mysqli_fetch_assoc($resultmemoroute)) {
+                                                                            // //   $add = false;
+                                                                            // //   $facname;
+                                                                            // //   foreach ($_POST['editsendtofac'] as $editfacu) {
+                                                                            // //     $add = true;
+                                                                            // //     $facname = $editfacu;
+                                                                            // //     if ($editfacu == $memoroute['faculty_name']) {
+                                                                            // //       $add = false;
+                                                                            // //       break;
+                                                                            // //     }
+                                                                            // //   }
+                                                                            // //   if ($add === true) {
+                                                                            // //     $add === false;
+                                                                            // //     echo $facname;
+                                                                            // //     $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
+                                                                            // // VALUES (" . $id['id'] . ",'" . $facname . "');";
+                                                                            // //     if ($conn->query($sqlroute) === FALSE) {
+                                                                            // //       echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                                                                            // //   window.location.href="memo.php"</script>';
+                                                                            // //     }
+                                                                            //   $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
+                                                                            //   $number = mysqli_fetch_array($query);
+                                                                        
 
-                                  // //   if ($rowcount == 0)
-                                  // //   {
-                                  //       $sql = "INSERT INTO memo (memo_number,send_to, `from`, `date`, `subject`, content, additional_info) 
-                                  //       VALUES ('" . $_POST['memo_number'] . "','" . trim($_POST['facdepartment']) . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
-                                  //       if ($conn->query($sql) === TRUE) {
-                                  //         echo '<script>alert("Memo Addedd Successfully!") 
-                                  //                         window.location.href="memo.php"</script>';
-                                  //       } else {
-                                  //         echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                  //                         window.location.href="memo.php"</script>';
-                                  //       }
-                                  //   // }
-                                  //   // else{
-                                  //   // echo '<script>alert("Date Not Available for Memo Dissemination.") 
-                                  //   //                 window.location.href="memo.php"</script>';
-                                  //   // }
-                                } else {
-                                  echo '<script>alert("Memo number not available.") 
-                                                window.location.href="memo.php"</script>';
-                                }
-                              }
+                                                                            //   }
+                                                                            $sqlroutedelete = "DELETE FROM memo_route where memo_id = " . $_POST['edit_id'] . ";";
+                                                                            $conn->query($sqlroutedelete);
+                                                                            foreach ($_POST['editsendtofac'] as $editfacu) {
+                                                                              $query1 = mysqli_query($conn, "SELECT count(*) as `count` FROM `memo_route` WHERE faculty_name='" . trim($editfacu) . "' and memo_id=" . $_POST['edit_id'] . ";");
+                                                                              $number2 = mysqli_fetch_array($query1);
+                                                                              $countchecker = $number2['count'];
+                                                                              if ($countchecker == 0) {
+                                                                                $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
+                                                                            VALUES (" . $_POST['edit_id'] . ",'" . trim($editfacu) . "');";
+                                                                                $conn->query($sqlroute);
+                                                                                $countchecker = 1;
+                                                                                //                   if ($conn->query($sqlroute) === TRUE) {
+                                                                                //                     echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                                                                                // window.location.href="memo.php"</script>';
+                                                                                //                   }
+                                                                              }
+                                                                            }
 
-                              ?>
+                                                                          }
+
+                                                                          ?>
 
 
-                            <!-- Delete -->
+                                                                                                                                                                                                                                                                      <!-- Delete -->
 
                 <?php } ?>
               </tbody>
@@ -547,7 +534,7 @@ include "../dbcon.php";
                               $actresult = mysqli_query($conn, $sql);
                               ?>
                               <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
-                                          <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
+                                                                                                                      <option value=" <?php echo $result['name'] ?>"> <?php echo $result['name'] ?></option>
                               <?php } ?>
                             </select>
                           </div>

@@ -122,36 +122,33 @@ include "../dbcon.php";
                                 <th>From</th>
                                 <th>To</th>
                                 <th>Subject</th>
-                                <th>Additional Info</th>
+                                <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php
-                            $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') as `date` FROM `memo`;";
+                            $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') AS `date`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m;";
                             $actresult = mysqli_query($conn, $sql);
 
                             while ($result = mysqli_fetch_assoc($actresult)) {
                                 ?>
-                                                                                                                    <tr>
-                                                                                                                    <td>
-                                                                                                                  <?php echo $result['memo_number'] ?>
-                                                                                                                    </td>
-                                                                                                                    <!-- <td>
-                                <?php echo $result['send_to'] ?>
-                                </td> -->
-                                                                                                                    <td>
-                                                                                                                    <?php echo $result['from'] ?>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                    <?php echo $result['send_to'] ?>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                    <?php echo $result['subject'] ?>
-                                                                                                                    </td>
-                                                                                                                    <td>
-                                                                                                                    <?php echo $result['additional_info'] ?>
-                                                                                                                    </td>
-                                                                                                                    </tr>
+                                            <tr>
+                                            <td>
+                                            <?php echo $result['memo_number'] ?>
+                                            </td>
+                                            <td>
+                                            <?php echo $result['from'] ?>
+                                            </td>
+                                            <td>
+                                            <?php echo $result['to'] ?>
+                                            </td>
+                                            <td>
+                                            <?php echo $result['subject'] ?>
+                                            </td>
+                                            <td>
+                                            <?php echo $result['additional_info'] ?>
+                                            </td>
+                                            </tr>
                                 <?php } ?>
                             </tbody>
                     </table>
