@@ -443,7 +443,7 @@ include "../dbcon.php";
                                 </div>
                                   <div class="col-md-12 mb-2">
                                     <label for="validationCustom01">Subject:</label>
-                                    <input type="text" class="form-control" id="" name="subject" required>
+                                    <input type="text" class="form-control" id="" name="subject" autocomplete="off" required>
                                     <div class="valid-feedback">
                                       Looks good!
                                     </div>
@@ -511,7 +511,7 @@ include "../dbcon.php";
                               if($rowcountmemo == 0)
                               {
                                 $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
-                                     VALUES ('" . $_POST['memo_number'] . "','" . $_POST['from'] . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                                     VALUES ('" . $_POST['memo_number'] . "','" . trim($_POST['from']) . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
                                 if ($conn->query($sql) === TRUE) {
 
                                   $getid = "SELECT id FROM `memo` ORDER BY id DESC LIMIT 1;";

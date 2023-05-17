@@ -79,7 +79,7 @@ $GetData = mysqli_query($conn, "select *, DATE_FORMAT(`date`, '%M %D, %Y ') as `
 $Datas = mysqli_fetch_array($GetData);
 
 $memo_no = $Datas['memo_number'];
-$from = $Datas['from'];
+$from = trim($Datas['from']);
 $date = $Datas['Edit_Date'];
 $subject = $Datas['subject'];
 $content = $Datas['content'];
@@ -157,7 +157,52 @@ $fotr = <<<EOD
 
 
 EOD;
-$pdf->writeHTML($fotr, true, false, false, false, '');
+$fotrpres = <<<EOD
+
+
+
+
+<h4>Approved By:</h4></br>
+<img src="./pres.png" />
+
+
+EOD;
+$fotrmc = <<<EOD
+
+
+
+
+<h4>Approved By:</h4></br>
+<img src="./director.png" />
+
+
+EOD;
+$fotrid = <<<EOD
+
+
+
+
+<h4>Approved By:</h4></br>
+<img src="./iddean.png" />
+
+
+EOD;
+
+if ($from=="University - President")
+{
+    $pdf->writeHTML($fotrpres, true, false, false, false, '');
+}
+else if ($from=="BISU-MC Director")
+{
+    $pdf->writeHTML($fotrmc, true, false, false, false, '');
+}
+else if ($from=="CEA-ID Dean")
+{
+    $pdf->writeHTML($fotrid, true, false, false, false, '');
+}
+else{
+    $pdf->writeHTML($fotrpres, true, false, false, false, '');
+}
 
 // -----------------------------------------------------------------------------
 
