@@ -237,90 +237,86 @@ include "../dbcon.php";
                                   <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
                                 </div>
                                 <div class="modal-body">
-
-                                  <form class="needs-validation" method="POST" enctype="multipart/form-data">
+                                    <form class="needs-validation" method="POST" enctype="multipart/form-data">
                                     <div class="form-row">
-                                      <input type="number" class="form-control" id="" name="edit_id" value="<?php echo $result['id']; ?>" hidden>
-                                      <?php
-                                      $id = $result['id'];
-                                      $edit = mysqli_query($conn, "select *, date(`date`) as Edit_Date from memo where id=" . $result['id'] . "");
-                                      $erow = mysqli_fetch_array($edit);
-                                      ?>
                                       <div class="row">
+                                        
+                                      <input type="number" class="form-control" id="" name="edit_id" value="<?php echo $result['id'];?>" hidden>
+                                        <?php
+                                          $getedit = mysqli_query($conn, "select * from memo where id = ".$result['id'].";");
+                                          $edit = mysqli_fetch_array($getedit);
+                                        ?>
                                       <div class="col-md-6 mb-2">
                                         <label for="validationCustom01">Memo Number:</label>
-                                        <input type="number" class="form-control" id="" name="edit_memo_number" value="<?php echo $erow['memo_number'] ?>" required>
+                                        <input type="number" class="form-control" id="" name="edit_memo_number" value="<?php echo $edit['memo_number'];?>" readonly>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
                                       </div>
                                       <div class="col-md-6 mb-2">
                                         <label for="validationCustom01">Date:</label>
-                                        <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $erow['Edit_Date'] ?>" required>
+                                        <input type="date" class="form-control" id="" name="edit_date" required value="<?php echo $edit['date'];?>"></input>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
                                       </div>
                                       </div>
-                                      <div class="row">
-                                        <div class="dropdown col-md-8 mb-2">
-                                            <label for="validationCustom01">To:</label>
-                                              <select class="form-select1" id="multiple-checkboxes1" aria-label="Default select example" name="edit_to">
-                                                <option value=" <?php echo $erow['send_to'] ?>"> <?php echo $erow['send_to'] ?></option>
-                                                <?php
-                                                $faculty_name = trim($erow['send_to']);
-                                                $sql2 = "SELECT * FROM `faculty` WHERE `name`!='" . $faculty_name . "';";
-                                                $actresult1 = mysqli_query($conn, $sql2);
-                                                ?>
-                                                <?php while ($result1 = mysqli_fetch_assoc($actresult1)) { ?>
-                                                    <option value=" <?php echo $result1['name'] ?>"> <?php echo $result1['name'] ?></option>
-                                                <?php } ?>
-                                              
-                                                <!-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
-                                              <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
-                                              </select>
-                                        </div>
-                                        <div class="col-md-4 mb-2">
-                                          <label for="validationCustom01">From:</label>
-                                          <input type="text" class="form-control" id="" name="edit_from" value="<?php echo $erow['from'] ?>" required>
+                                        <div class="col-md-12 mb-2">
+                                          <label for="validationCustom01">Subject:</label>
+                                          <input type="text" class="form-control" id="" name="edit_subject" value="<?php echo $edit['subject'];?>" required>
                                           <div class="valid-feedback">
                                             Looks good!
                                           </div>
                                         </div>
-                                      </div>
-                                      <div class="col-md-12 mb-2">
-                                        <label for="validationCustom01">Subject:</label>
-                                        <input type="text" class="form-control" id="" name="edit_subject" value="<?php echo $erow['subject'] ?>" required>
-                                        <div class="valid-feedback">
-                                          Looks good!
-                                        </div>
-                                      </div>
                                       <div class="col-md-12 mb-2">
                                         <label for="validationCustom01">Content:</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_content" ><?php echo $erow['content'] ?></textarea>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_content" value="<?php echo $edit['content'];?>"><?php echo $edit['content'];?></textarea>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
                                       </div>
                                       <div class="col-md-12 mb-2">
                                         <label for="validationCustom01">Additional Information:</label>
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_add_info" ><?php echo $erow['content'] ?></textarea>
+                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_add_info" value="<?php echo $edit['additional_info'];?>"><?php echo $edit['additional_info'];?></textarea>
                                           <div class="valid-feedback">
                                             Looks good!
                                           </div>
                                       </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-4 mb-2">
+                                          <label for="validationCustom01">From:</label>
+                                          <input type="text" class="form-control" id="" name="edit_from" value="<?php echo $edit['from'];?>" required>
+                                          <div class="valid-feedback">
+                                            Looks good!
+                                          </div>
+                                        </div>
+                                        <div class="dropdown col-md-4 mb-2">
+                                          <label for="validationCustom01">To:</label>
+                                          <select class="form-select" placeholder="Select Faculty" aria-label="Default select example" name="edit_facdepartment">
+                                            <option value=" <?php echo $edit['send_to'] ?>"> <?php echo $edit['send_to'] ?></option>
+                                            <?php
+                                              $sql = "SELECT distinct(department) as department FROM `faculty` where department != '".$edit['send_to']."';";
+                                              $actresult = mysqli_query($conn, $sql);
+                                              ?>
+                                              <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
+                                                  <option value=" <?php echo $result['department'] ?>"> <?php echo $result['department'] ?></option>
+                                              <?php } ?>
+                                          </select>
+                                        </div>
+                                      </div>
                                     <div class="modal-footer">
                                       <input type="reset" class="btn btn-secondary">
                                       <button class="btn btn-primary">Save</button>
                                     </div>  
                                   </form>
+                                  
                                   <!-- php code here -->
                                   <?php
                                   if (isset($_POST['edit_memo_number'])) {
                                    //echo $test;
                                     $sql = "UPDATE `memo` SET memo_number = '" . $_POST['edit_memo_number'] . "' ,
-                                   send_to = '" . $_POST['edit_to'] . "',
+                                   send_to = '" . $_POST['edit_facdepartment'] . "',
                                    `from` = '" . $_POST['edit_from'] . "',
                                    `date` = '" . $_POST['edit_date'] . "',
                                    `subject` = '" . $_POST['edit_subject'] . "',
@@ -328,7 +324,7 @@ include "../dbcon.php";
                                    additional_info = '" . $_POST['edit_add_info'] . "'
                                    WHERE id  = " . $_POST['edit_id'] . ";";
                                     if ($conn->query($sql) === TRUE) {
-                                      echo '<script>alert("Memo Addedd Successfully!") 
+                                      echo '<script>alert("Memo Edited Successfully!") 
                                                     window.location.href="memo.php"</script>';
                                     } else {
                                       echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
