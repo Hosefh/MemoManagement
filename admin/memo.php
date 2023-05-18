@@ -440,7 +440,6 @@ window.location.href="memo.php"</script>';
                 {
                   if ($flag == false)
                   {
-                    echo "adsfasdfasf";
                     $sqledit  = "UPDATE `memo` SET `from` = '".$_POST['edit_from']."', `date` = '".$_POST['edit_date']."', `subject` = '".$_POST['edit_subject']."',
                     additional_info= '".$_POST['edit_add_info']."' WHERE id = ".$_POST['edit_id'].";";
                     $sqledit1  = "UPDATE `memo` SET content='".$_POST['edit_content']."' WHERE id = ".$_POST['edit_id'].";";
@@ -456,7 +455,6 @@ window.location.href="memo.php"</script>';
                 { 
                   if ($flag == false) 
                   {
-                    echo "1231231";
                     $getcount = mysqli_query($conn, "SELECT count(*) as count FROM memo WHERE `from` = '".trim($_POST['edit_from'])."';");
                     $count = mysqli_fetch_array($getcount);
                     $number = $count['count'] + 1;
