@@ -148,20 +148,20 @@ include "../dbcon.php";
                                         $edit = mysqli_query($conn, "select * from faculty where id='" . $result['id'] . "'");
                                         $erow = mysqli_fetch_array($edit);
                                         ?>
-                                        <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control" required>
+                                        <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control"
                                         <div class="form-group">
                                           <label>Name</label>
-                                          <input type="text" id="username_u" name="editname" value="<?php echo $result['name']; ?>" class="form-control"
+                                          <input type="text" id="username_u" name="editname" value="<?php echo $result['name']; ?>" class="form-control" autocomplete="off"
                                             required>
                                         </div>
                                         <div class="form-group">
                                           <label>Course Abbreviation</label>
-                                          <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control"
+                                          <input type="text" id="password_u" name="editcourse" value="<?php echo $result['course_abb']; ?>" class="form-control" autocomplete="off"
                                             required>
                                         </div>
                                         <div class="form-group">
                                           <label>Department</label>
-                                          <input type="text" id="password_u" name="editcourse" value="<?php echo $result['department']; ?>" class="form-control"
+                                          <input type="text" id="password_u" name="editdepartment" value="<?php echo $result['department']; ?>" class="form-control" autocomplete="off"
                                             required>
                                         </div>
                                         <!-- <div class="form-check col-md-12 mt-3">
@@ -182,7 +182,7 @@ include "../dbcon.php";
                                     </form>
                                     <?php
                                     if (isset($_POST['editid'])) {
-                                      $sql = "UPDATE `faculty` f SET f.`name` = '" . $_POST['editname'] . "', f.`course_abb` = '" . $_POST['editcourse'] . "' 
+                                      $sql = "UPDATE `faculty` f SET f.`name` = '" . $_POST['editname'] . "', f.`course_abb` = '" . $_POST['editcourse'] . "', f.`department` = '" . $_POST['editdepartment'] . "' 
                             WHERE f.`id` = " . $_POST['editid'] . ";";
                                       //$sql = "UPDATE `users` SET user_id =12 WHERE id = 1; ";
                                       if ($conn->query($sql) === TRUE) {
