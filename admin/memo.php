@@ -391,20 +391,11 @@ window.location.href="memo.php"</script>';
                           </form>
                           <!-- php code here -->
                           <?php
-                          if (isset($_POST['editsendtofac'])) {
-                            $sqlroutedelete = "DELETE FROM memo_route where memo_id = " . $_POST['edit_id'] . ";";
-                            $conn->query($sqlroutedelete);
-                            foreach ($_POST['editsendtofac'] as $editfacu) {
-                                $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
-                                      VALUES (" . $_POST['edit_id'] . ",'" . trim($editfacu) . "');";
-                                if ($conn->query($sqlroute) === FALSE) {
-                                  echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-              window.location.href="memo.php"</script>';
-                                }
-                              }
-
-                              if (strcmp($_POST['from_before'],$_POST['edit_from']) == 1)
+                          if (isset($_POST['edit_from'])) {
+                              if (strcmp($_POST['from_before'],$_POST['edit_from']) != 0)
                               {
+                                echo '<script>alert("Memo Edited Successfully!") 
+                                                      window.location.href="memo.php"</script>';
                                 $number = 1;
                                 $getall = "SELECT * FROM memo WHERE `from` = '".trim($_POST['edit_from'])."';";
                                 $actall = mysqli_query($conn, $getall);
@@ -432,17 +423,32 @@ window.location.href="memo.php"</script>';
                                 }
                               }
 
+                              $sqlroutedelete = "DELETE FROM memo_route where memo_id = " . $_POST['edit_id'] . ";";
+                              $conn->query($sqlroutedelete);
+                              foreach ($_POST['editsendtofac'] as $editfacu) {
+                                  $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
+                                        VALUES (" . $_POST['edit_id'] . ",'" . trim($editfacu) . "');";
+                                  if ($conn->query($sqlroute) === FALSE) {
+                                    echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+                window.location.href="memo.php"</script>';
+                                  }
+                              }
                               $sqledit = "UPDATE `memo` SET `from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
                               content='" . $_POST['edit_content'] . "',additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";      
                               if ($conn->query($sqledit) === true) {
                                 echo '<script>alert("Memo Edited Successfully!") 
                                                       window.location.href="memo.php"</script>';
+                                unset($_POST['edit_from']);
                               }
                             }
                           
-                          ?>
+                          ?>	
                           <!-- Delete -->
-                        <?php } ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              <?php } ?>
               </tbody>
               <tfoot></tfoot>
               </table>
