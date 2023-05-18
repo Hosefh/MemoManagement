@@ -53,16 +53,8 @@ include "../dbcon.php";
                             <form class="needs-validation" method="POST">
                               <div class="form-row">
                                 <div class="col-md-12 mb-2">
-                                  <label for="validationCustom01">Faculty ID</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="facid"
-                                    placeholder="Enter  ID" required>
-                                  <div class="valid-feedback">
-                                    Looks good!
-                                  </div>
-                                </div>
-                                <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Name</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="name"
+                                  <input type="text" class="form-control" id="validationCustom01" name="name" autocomplete="off"
                                     placeholder="Enter Name" required>
                                   <div class="valid-feedback">
                                     Looks good!
@@ -70,15 +62,15 @@ include "../dbcon.php";
                                 </div>
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Course Abbreviation</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="course_abb"
-                                    placeholder="Enter Type" required>
+                                  <input type="text" class="form-control" id="validationCustom01" name="course_abb" autocomplete="off"
+                                    placeholder="Enter Course Abbreviation" required>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Department</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="department"
+                                  <input type="text" class="form-control" id="validationCustom01" name="department" autocomplete="off"
                                     placeholder="Enter Department" required>
                                   <div class="valid-feedback">
                                     Looks good!
@@ -91,8 +83,8 @@ include "../dbcon.php";
                               </div>
                             </form>
                             <?php
-                            if (isset($_POST['facid'])) {
-                              $sql = "INSERT INTO `faculty` (faculty_id, `name`, course_abb, department) VALUES ('" . $_POST['facid'] . "','" . $_POST['name'] . "','" . $_POST['course_abb'] . "','" . $_POST['department'] . "');";
+                            if (isset($_POST['name'])) {
+                              $sql = "INSERT INTO `faculty` (`name`, course_abb, department) VALUES ('" . $_POST['name'] . "','" . $_POST['course_abb'] . "','" . $_POST['department'] . "');";
                               if ($conn->query($sql) === TRUE) {
                                 echo '<script>alert("Faculty Addedd Successfully!") 
                                                 window.location.href="faculty.php"</script>';
