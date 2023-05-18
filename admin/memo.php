@@ -310,7 +310,7 @@ window.location.href="memo.php"</script>';
               <div class="form-row">
               <div class="row">
 
-              <input type="number" class="form-control" id="" name="edit_id"
+              <!-- <input type="number" class="form-control" id="" name="edit_id"
               value="<?php echo $result['id']; ?>" hidden>
               <div class="col-md-6 mb-2">
               <label for="validationCustom01">Memo Number:</label>
@@ -319,7 +319,7 @@ window.location.href="memo.php"</script>';
               <div class="valid-feedback">
               Looks good!
               </div>
-              </div>
+              </div> -->
               <div class="col-md-6 mb-2">
               <label for="validationCustom01">Date Created:</label>
               <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $erow['date']; ?>" required>
@@ -467,21 +467,15 @@ window.location.href="memo.php"</script>';
                       <form class="needs-validation" method="POST" enctype="multipart/form-data">
                         <div class="form-row">
                           <div class="row">
-                            <?php
-                            $getcount = mysqli_query($conn, "select count(*) as count from memo;");
-                            $count = mysqli_fetch_array($getcount);
-                            $number = $count['count'] + 1;
-                            $number = "000" . $number;
-                            ?>
-                            <div class="col-md-6 mb-2">
+                            <!-- <div class="col-md-6 mb-2">
                               <label for="validationCustom01">Memo Number:</label>
                               <input type="number" class="form-control" id="" name="memo_number"
                                 value="<?php echo $number; ?>" readonly>
                               <div class="valid-feedback">
                                 Looks good!
                               </div>
-                            </div>
-                            <div class="col-md-6 mb-2">
+                            </div> -->
+                            <div class="col-md-12` mb-2">
                               <label for="validationCustom01">Date Created:</label>
                               <input type="date" class="form-control" id="" name="date" required>
                               <div class="valid-feedback">
@@ -571,20 +565,24 @@ window.location.href="memo.php"</script>';
                       </form>
                       <!-- php code here -->
                       <?php
-                      if (isset($_POST['memo_number'])) {
+                      if (isset($_POST['from'])) {
                         // print_r($_POST['facdepartment']);
                         // foreach ($_POST['facdepartment'] as  $department)
                         // {
                         //   echo $department;
                         //   $sql2 = "INSERT INTO "
                         // }
+                        $getcount = mysqli_query($conn, "SELECT count(*) as count FROM memo WHERE `from` = '".trim($_POST['from'])."';");
+                        $count = mysqli_fetch_array($getcount);
+                        $number = $count['count'] + 1;
+                        $number = "000" . $number;
                         $checkermemo = "SELECT * FROM `memo` m WHERE m.`memo_number` = " . $_POST['memo_number'] . ";";
                         $resultcheckermemo = mysqli_query($conn, $checkermemo);
                         $rowcountmemo = mysqli_num_rows($resultcheckermemo);
                         echo $rowcountmemo;
                         if ($rowcountmemo == 0) {
                           $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
-                                     VALUES ('" . $_POST['memo_number'] . "','" . trim($_POST['from']) . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                                     VALUES ('$number','" . trim($_POST['from']) . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
                           if ($conn->query($sql) === TRUE) {
 
                             $getid = "SELECT id FROM `memo` ORDER BY id DESC LIMIT 1;";

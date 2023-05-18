@@ -73,7 +73,7 @@ if (@file_exists(dirname(__FILE__) . '/lang/eng.php')) {
 // ---------------------------------------------------------
 
 // set font
-$pdf->SetFont('times', 'B', 12);
+$pdf->SetFont('times', '', 12);
 
 // add a page
 $pdf->AddPage();
@@ -103,10 +103,10 @@ $tbl = <<<EOD
 
 
 <h4>Memorandum No. : $memo_no</h4>
-<h5>Series of 2023</h6>
+Series of 2023
+<br><br>
 
-
-<h4>TO: </h4>
+To:
 EOD;
 
 $pdf->writeHTML($tbl, true, false, false, false, '');
@@ -118,16 +118,16 @@ $actresult = mysqli_query($conn, $sqlget);
 while ($result = mysqli_fetch_assoc($actresult)) {
     $to = $result['name'] . " - " . $result['course_abb'] . " Faculty";
     $tbl2 = <<<EOD
-    <h4 style="text-align: left"> $to</h4>
+    <p style="text-align: left"> $to</p>
     EOD;
 
     $pdf->writeHTML($tbl2, true, false, false, false, '');
 }
 
 $tbl3 = <<<EOD
-&nbsp;<h4>FROM: $from</h4></br>
-<h4>Subject: $subject</h4>
-<h4>Date: $date</h4></br>
+<br><br>From: $from</br> <br><br>
+Subject: $subject<br><br>
+Date: $date</br>
 EOD;
 $pdf->writeHTML($tbl3, true, false, false, false, '');
 
