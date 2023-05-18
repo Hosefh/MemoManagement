@@ -310,7 +310,7 @@ window.location.href="memo.php"</script>';
               <div class="form-row">
               <div class="row">
 
-              <!-- <input type="number" class="form-control" id="" name="edit_id"
+              <input type="number" class="form-control" id="" name="edit_id"
               value="<?php echo $result['id']; ?>" hidden>
               <div class="col-md-6 mb-2">
               <label for="validationCustom01">Memo Number:</label>
@@ -319,7 +319,7 @@ window.location.href="memo.php"</script>';
               <div class="valid-feedback">
               Looks good!
               </div>
-              </div> -->
+              </div>
               <div class="col-md-6 mb-2">
               <label for="validationCustom01">Date Created:</label>
               <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $erow['date']; ?>" required>
@@ -518,7 +518,7 @@ window.location.href="memo.php"</script>';
                           <div class="dropdown col-md-6 mb-2">
                             <label for="validationCustom01">From:</label>
                             <select class="form-select" placeholder="Select Admin" name="from">
-                              <option value=" " selected disabled>Select Admin</option>
+                              <option value=" " selected disabled>---------------</option>
                               <option value="University President">University President</option>
                               <option value="University V-President">University V-President</option>
                               <option value="BISU-MC Director">BISU-MC Director</option>

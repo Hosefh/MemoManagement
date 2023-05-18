@@ -118,7 +118,7 @@ $actresult = mysqli_query($conn, $sqlget);
 while ($result = mysqli_fetch_assoc($actresult)) {
     $to = $result['name'] . " - " . $result['course_abb'] . " Faculty";
     $tbl2 = <<<EOD
-    <p style="text-align: left"> $to</p>
+    <p style="text-align: left; text-indent: -10px">             $to</p>
     EOD;
 
     $pdf->writeHTML($tbl2, true, false, false, false, '');
