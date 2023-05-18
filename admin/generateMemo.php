@@ -155,7 +155,7 @@ $fotr = <<<EOD
 
 
 
-<h4>Approved By:</h4></br>
+<h4>Approved:</h4></br>
 <img src="./sign.png" />
 
 
@@ -165,7 +165,7 @@ $fotrpres = <<<EOD
 
 
 
-<h4>Approved By:</h4></br>
+<h4>Approved:</h4></br>
 <img src="./pres.png" />
 
 
@@ -175,7 +175,7 @@ $fotrVpres = <<<EOD
 
 
 
-<h4>Approved By:</h4></br>
+<h4>Approved:</h4></br>
 <img src="./v-pres.png" />
 
 
@@ -185,7 +185,7 @@ $fotrmc = <<<EOD
 
 
 
-<h4>Approved By:</h4></br>
+<h4>Approved:</h4></br>
 <img src="./director.png" />
 
 
@@ -195,7 +195,7 @@ $fotrid = <<<EOD
 
 
 
-<h4>Approved By:</h4></br>
+<h4>Approved:</h4></br>
 <img src="./dean.png" />
 
 
