@@ -127,7 +127,7 @@ include "../dbcon.php";
                             </thead>
                             <tbody>
                             <?php
-                            $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') AS `date`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m;";
+                            $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') AS `date`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m order by memo_number asc;";
                             $actresult = mysqli_query($conn, $sql);
 
                             while ($result = mysqli_fetch_assoc($actresult)) {
