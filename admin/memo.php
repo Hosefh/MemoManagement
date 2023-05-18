@@ -436,7 +436,8 @@ window.location.href="memo.php"</script>';
                 }
                 
                 $flag = false;
-                if (trim($erow['from'])==trim($_POST['edit_from']))
+                $counter = strlen($erow['from'])-strlen($_POST['edit_from']);
+                if ($counter==0)
                 {
                   if ($flag == false)
                   {
@@ -457,14 +458,23 @@ window.location.href="memo.php"</script>';
                   {
                     $getcount = mysqli_query($conn, "SELECT count(*) as count FROM memo WHERE `from` = '".trim($_POST['edit_from'])."';");
                     $count = mysqli_fetch_array($getcount);
+                    echo $count['count'];
+                    if($count['count']!=0)
+                    {
                     $number = $count['count'] + 1;
                     $number = "000" . $number;
-                    $sqledit  = "UPDATE `memo` SET `memo_number` = '$number',`from` = '".$_POST['edit_from']."', `date` = '".$_POST['edit_date']."', `subject` = '".$_POST['edit_subject']."',
-                    content='".$_POST['edit_content']."', additional_info= '".$_POST['edit_add_info']."' WHERE id = ".$_POST['edit_id'].";";
-                    if ($conn->query($sqledit) === true){
-                            echo '<script>alert("Editing Memo Successful!") 
-                        window.location.href="memo.php"</script>';
                     }
+                    else
+                    {
+                      $number = "0001";
+                    }
+
+                    // $sqledit  = "UPDATE `memo` SET `memo_number` = '$number',`from` = '".$_POST['edit_from']."', `date` = '".$_POST['edit_date']."', `subject` = '".$_POST['edit_subject']."',
+                    // content='".$_POST['edit_content']."', additional_info= '".$_POST['edit_add_info']."' WHERE id = ".$_POST['edit_id'].";";
+                    // if ($conn->query($sqledit) === true){
+                    //         echo '<script>alert("Editing Memo Successful!") 
+                    //     window.location.href="memo.php"</script>';
+                    // }
                     $flag = true;
                   }
                 }
