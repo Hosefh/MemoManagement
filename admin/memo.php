@@ -309,6 +309,8 @@ window.location.href="memo.php"</script>';
                           <form class="needs-validation" method="POST" enctype="multipart/form-data">
                             <div class="form-row">
                               <div class="row">
+                                <input type="text" class="form-control" id="" name="from_before"
+                                  value="<?php echo $erow['from']; ?>" hidden>
 
                                 <input type="number" class="form-control" id="" name="edit_id"
                                   value="<?php echo $result['id']; ?>" hidden>
@@ -390,98 +392,56 @@ window.location.href="memo.php"</script>';
                           <!-- php code here -->
                           <?php
                           if (isset($_POST['editsendtofac'])) {
-                            // $query = mysqli_query($conn, "SELECT id FROM memo m WHERE m.memo_number = '" . trim($_POST['edit_memo_number']) . "';");
-                            // $id = mysqli_fetch_array($query);
-                        
-                            // $querygetmemoroute = "SELECT * FROM memo_route mr WHERE mr.memo_id = " . trim($id['id']) . ";";
-                            // $resultmemoroute = mysqli_query($conn, $querygetmemoroute);
-                            // $memoroute = mysqli_fetch_array($resultmemoroute);
-                        
-                            // while ($memoroute = mysqli_fetch_assoc($resultmemoroute)) {
-                            // //   $add = false;
-                            // //   $facname;
-                            // //   foreach ($_POST['editsendtofac'] as $editfacu) {
-                            // //     $add = true;
-                            // //     $facname = $editfacu;
-                            // //     if ($editfacu == $memoroute['faculty_name']) {
-                            // //       $add = false;
-                            // //       break;
-                            // //     }
-                            // //   }
-                            // //   if ($add === true) {
-                            // //     $add === false;
-                            // //     echo $facname;
-                            // //     $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
-                            // // VALUES (" . $id['id'] . ",'" . $facname . "');";
-                            // //     if ($conn->query($sqlroute) === FALSE) {
-                            // //       echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                            // //   window.location.href="memo.php"</script>';
-                            // //     }
-                            //   $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
-                            //   $number = mysqli_fetch_array($query);
-                        
-
-                            //   }
                             $sqlroutedelete = "DELETE FROM memo_route where memo_id = " . $_POST['edit_id'] . ";";
                             $conn->query($sqlroutedelete);
                             foreach ($_POST['editsendtofac'] as $editfacu) {
-                              $query1 = mysqli_query($conn, "SELECT count(*) as `count` FROM `memo_route` WHERE faculty_name='" . trim($editfacu) . "' and memo_id=" . $_POST['edit_id'] . ";");
-                              $number2 = mysqli_fetch_array($query1);
-                              $countchecker = $number2['count'];
-                              if ($countchecker == 0) {
                                 $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
-                VALUES (" . $_POST['edit_id'] . ",'" . trim($editfacu) . "');";
-                                $conn->query($sqlroute);
-                                $countchecker = 1;
-                                //                   if ($conn->query($sqlroute) === TRUE) {
-                                //                     echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                // window.location.href="memo.php"</script>';
-                                //                   }
+                                      VALUES (" . $_POST['edit_id'] . ",'" . trim($editfacu) . "');";
+                                if ($conn->query($sqlroute) === FALSE) {
+                                  echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
+              window.location.href="memo.php"</script>';
+                                }
+                              }
+
+                              if (strcmp($_POST['from_before'],$_POST['edit_from']) == 1)
+                              {
+                                $number = 1;
+                                $getall = "SELECT * FROM memo WHERE `from` = '".trim($_POST['edit_from'])."';";
+                                $actall = mysqli_query($conn, $getall);
+                                $true = true;
+                                while ($true == true) {
+                                  $getcount = mysqli_query($conn, "SELECT count(*) as count FROM memo WHERE `from` = '".trim($_POST['edit_from'])."' and memo_number ='000".trim($number)."';");
+                                  $count = mysqli_fetch_array($getcount); 
+                                  echo $number;
+                                  if($count['count']==0)
+                                  { 
+                                    $true = false;
+                                    $sqlmemonumedit = "UPDATE `memo` SET memo_number = '000$number' WHERE id = " . $_POST['edit_id'] . ";"; 
+                                    $conn->query($sqlmemonumedit);
+                                  }
+                                  $number = $number + 1; 
+                                  // $concat = '000'.$number;
+                                  // if (strcmp($concat,$all['memo_number']) == 1){
+                                  //   $sqlmemonumedit = "UPDATE `memo` SET memo_number = '000$number' WHERE id = " . $_POST['edit_id'] . ";"; 
+                                  //   if ($conn->query($sqlmemonumedit) === true) {
+                                  //     echo '<script>alert("'.$_POST['from_before'].'") 
+                                  //     alert("'.$_POST['edit_from'].'") 
+                                  //           window.location.href="memo.php"</script>';
+                                  //   }
+                                  
+                                }
+                              }
+
+                              $sqledit = "UPDATE `memo` SET `from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
+                              content='" . $_POST['edit_content'] . "',additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";      
+                              if ($conn->query($sqledit) === true) {
+                                echo '<script>alert("Memo Edited Successfully!") 
+                                                      window.location.href="memo.php"</script>';
                               }
                             }
-
-                            $flag = false;
-                            $counter = strlen($erow['from']) - strlen($_POST['edit_from']);
-                            if ($counter == 0) {
-                              if ($flag == false) {
-                                $sqledit = "UPDATE `memo` SET `from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
-                    additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
-                                $sqledit1 = "UPDATE `memo` SET content='" . $_POST['edit_content'] . "' WHERE id = " . $_POST['edit_id'] . ";";
-                                $conn->query($sqledit);
-                                if ($conn->query($sqledit1) === true) {
-                                  echo '<script>alert("Memo Addedd Successfully!") 
-                                                        window.location.href="memo.php"</script>';
-                                }
-                                $flag = true;
-                              }
-                            } else {
-                              $getcount = mysqli_query($conn, "SELECT count(*) as count FROM memo WHERE `from` = '" . trim($_POST['edit_from']) . "';");
-                              $count = mysqli_fetch_array($getcount);
-                              if ($count['count'] == 0) {
-                                $sqledit = "UPDATE `memo` SET `memo_number` = '0001',`from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
-                                     content='" . $_POST['edit_content'] . "', additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
-                                if ($conn->query($sqledit) === true) {
-                                  echo '<script>alert("Memo Addedd Successfully!") 
-                                                        window.location.href="memo.php"</script>';
-                                }
-                              } else {
-                                $number = "000" . $count['count'];
-                                $sqledit = "UPDATE `memo` SET `memo_number` = '$number',`from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
-                                content='" . $_POST['edit_content'] . "', additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
-                                if ($conn->query($sqledit) === true) {
-                                  echo '<script>alert("Memo Addedd Successfully!") 
-                                                        window.location.href="memo.php"</script>';
-                                }
-                              }
-                            }
-
-                          }
-
+                          
                           ?>
-
-
                           <!-- Delete -->
-
                         <?php } ?>
               </tbody>
               <tfoot></tfoot>
