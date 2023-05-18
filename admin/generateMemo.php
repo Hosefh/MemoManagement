@@ -139,7 +139,7 @@ $contnt = <<<EOD
 
 <p style="text-indent: 1cm;">$content </p></br>
 
-<p style="text-indent: 1cm;">$additional_info</p>
+<p style="text-indent: 1cm;">Other Details: $additional_info</p>
 
 
 EOD;
