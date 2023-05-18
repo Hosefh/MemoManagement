@@ -356,7 +356,7 @@ window.location.href="memo.php"</script>';
               <div class="dropdown col-md-6 mb-2">
               <label for="validationCustom01">From:</label>
               <select class="form-select" placeholder="<?php echo $erow['from'] ?>" name="edit_from" value="">
-              <!-- <option value="" selected disabled><?php echo $erow['from'] ?><option> -->
+              <option value=" " selected disabled>---------------</option>
               <option value="University President">University President</option>
               <option value="University V-President">University V-President</option>
               <option value="BISU-MC Director">BISU-MC Director</option>
