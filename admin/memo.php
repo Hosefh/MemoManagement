@@ -369,7 +369,7 @@ window.location.href="memo.php"</script>';
               <select class="form-select" multiple placeholder="Select Faculty"
               aria-label="Default select example" name="editsendtofac[]">
               <?php
-              $sql5 = "SELECT * FROM `faculty`;";
+              $sql5 = "SELECT * FROM `faculty` order by `name` asc;";
               $actresult5 = mysqli_query($conn, $sql5);
               ?>
               <?php while ($result5 = mysqli_fetch_assoc($actresult5)) { ?>
@@ -537,7 +537,7 @@ window.location.href="memo.php"</script>';
                             <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty"
                               aria-label="Default select example" name="sendtofac[]">
                               <?php
-                              $sql = "SELECT * FROM `faculty`;";
+                              $sql = "SELECT * FROM `faculty` order by `name` asc;";
                               $actresult = mysqli_query($conn, $sql);
                               ?>
                               <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>

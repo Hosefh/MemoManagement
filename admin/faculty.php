@@ -27,7 +27,7 @@ include "../dbcon.php";
         <div class="col-md-12 mb-3">
           <div class="card">
             <div class="card-header">
-              <span><i class="bi bi-people-fill me-2"></i></span> Faculty
+              <span><i class="bi bi-people-fill me-2"></i></span> List of Faculty
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -103,21 +103,21 @@ include "../dbcon.php";
 
                   <thead class>
                     <tr>
-                      <th>Faculty ID</th>
+                      <th>#</th>
                       <th>Name</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $sql = "SELECT * FROM `faculty`;";
+                    $sql = "SELECT * FROM `faculty` order by `name` asc;";
                     $actresult = mysqli_query($conn, $sql);
-
+                    $number = 1;             
                     while ($result = mysqli_fetch_assoc($actresult)) {
                       ?>
                               <tr>
                                 <td>
-                                  <?php echo $result['id']; ?>
+                                  <?php echo $number; $number = $number + 1; ?>
                                 </td>
                                 <td>
                                   <?php echo $result['name']; ?>
