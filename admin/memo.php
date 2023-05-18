@@ -581,8 +581,8 @@ window.location.href="memo.php"</script>';
                         $rowcountmemo = mysqli_num_rows($resultcheckermemo);
                         echo $rowcountmemo;
                         if ($rowcountmemo == 0) {
-                          $sql = "INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
-                                     VALUES ('$number','" . trim($_POST['from']) . "','" . $_POST['date'] . "','" . $_POST['subject'] . "','" . $_POST['content'] . "','" . $_POST['add_info'] . "')";
+                          $sql = 'INSERT INTO memo (memo_number, `from`, `date`, `subject`, content, additional_info) 
+                                     VALUES ("'.$number.'","' . trim($_POST['from']) . '","' . $_POST['date'] . '","' . $_POST['subject'] . '","' . $_POST['content'] . '","' . $_POST['add_info'] . '")';
                           if ($conn->query($sql) === TRUE) {
 
                             $getid = "SELECT id FROM `memo` ORDER BY id DESC LIMIT 1;";
