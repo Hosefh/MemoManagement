@@ -148,7 +148,7 @@ include "../dbcon.php";
                                         $edit = mysqli_query($conn, "select * from faculty where id='" . $result['id'] . "'");
                                         $erow = mysqli_fetch_array($edit);
                                         ?>
-                                        <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control"
+                                        <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control">
                                         <div class="form-group">
                                           <label>Name</label>
                                           <input type="text" id="username_u" name="editname" value="<?php echo $result['name']; ?>" class="form-control" autocomplete="off"
