@@ -367,7 +367,7 @@ window.location.href="memo.php"</script>';
               <div class="dropdown col-md-6 mb-2">
               <label for="validationCustom01">To:</label>
               <select class="form-select" multiple placeholder="Select Faculty"
-              aria-label="Default select example" name="editsendtofac[]">
+              aria-label="Default select example" name="editsendtofac[]" required>
               <?php
               $sql5 = "SELECT * FROM `faculty` order by `name` asc;";
               $actresult5 = mysqli_query($conn, $sql5);
@@ -384,7 +384,7 @@ window.location.href="memo.php"</script>';
               </form>
               <!-- php code here -->
               <?php
-              if (isset($_POST['edit_memo_number'])) {
+              if (isset($_POST['editsendtofac'])) {
                 // $query = mysqli_query($conn, "SELECT id FROM memo m WHERE m.memo_number = '" . trim($_POST['edit_memo_number']) . "';");
                 // $id = mysqli_fetch_array($query);
 
@@ -434,12 +434,42 @@ window.location.href="memo.php"</script>';
                     //                   }
                   }
                 }
-                $sqledit  = "UPDATE `memo` SET `from` = '".$_POST['edit_from']."', `date` = '".$_POST['edit_date']."', `subject` = '".$_POST['edit_subject']."',
-                content='".$_POST['edit_content']."', additional_info= '".$_POST['edit_add_info']."' WHERE id = ".$_POST['edit_id'].";";
-                if ($conn->query($sqledit) === true){
-                        echo '<script>alert("Editing Memo Successful!") 
-                    window.location.href="memo.php"</script>';
-
+                
+                $flag = false;
+                if ($erow['from']==$_POST['edit_from'])
+                {
+                  if ($flag == false)
+                  {
+                    echo "adsfasdfasf";
+                    $sqledit  = "UPDATE `memo` SET `from` = '".$_POST['edit_from']."', `date` = '".$_POST['edit_date']."', `subject` = '".$_POST['edit_subject']."',
+                    additional_info= '".$_POST['edit_add_info']."' WHERE id = ".$_POST['edit_id'].";";
+                    $sqledit1  = "UPDATE `memo` SET content='".$_POST['edit_content']."' WHERE id = ".$_POST['edit_id'].";";
+                    $conn->query($sqledit);
+                    if ($conn->query($sqledit1) === true){
+                            echo '<script>alert("Editing Memo Successful!") 
+                        window.location.href="memo.php"</script>';
+                    }
+                    $flag = true;
+                 }
+                }
+                else
+                { 
+                  if ($flag == false) 
+                  {
+                    echo "1231231";
+                    $getcount = mysqli_query($conn, "SELECT count(*) as count FROM memo WHERE `from` = '".trim($_POST['edit_from'])."';");
+                    $count = mysqli_fetch_array($getcount);
+                    $number = $count['count'] + 1;
+                    $number = "000" . $number;
+                    echo $_POST['edit_id'];
+                    $sqledit  = "UPDATE `memo` SET `memo_number` = '$number',`from` = '".$_POST['edit_from']."', `date` = '".$_POST['edit_date']."', `subject` = '".$_POST['edit_subject']."',
+                    content='".$_POST['edit_content']."', additional_info= '".$_POST['edit_add_info']."' WHERE id = ".$_POST['edit_id'].";";
+                    if ($conn->query($sqledit) === true){
+                            echo '<script>alert("Editing Memo Successful!") 
+                        window.location.href="memo.php"</script>';
+                    }
+                    $flag = true;
+                  }
                 }
 
               }
