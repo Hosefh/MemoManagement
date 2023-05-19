@@ -52,13 +52,13 @@ include "../dbcon.php";
 
                             <form class="needs-validation" method="POST">
                               <div class="form-row">
-                                <div class="col-md-12 mb-2">
+                                <!-- <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">User ID</label>
                                   <input type="text" class="form-control" id="validationCustom01" name="empid" placeholder="Enter  ID" required>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
-                                </div>
+                                </div> -->
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Username</label>
                                   <input type="text" class="form-control" id="validationCustom01" name="username" placeholder="Enter  Username" required>
@@ -86,14 +86,14 @@ include "../dbcon.php";
                               </div>
                             </form>
                             <?php
-                            if (isset($_POST['empid'])) {
+                            if (isset($_POST['username'])) {
                               if (isset($_POST['isadmin'])) {
                                 $newisadmin = "admin";
                               } else {
                                 $newisadmin = "user";
                               }
-                              $sql = "INSERT INTO `users` (user_id,`username`,`password`,privilege)
-                                            VALUES ('" . $_POST['empid'] . "','" . $_POST['username'] . "','" . $_POST['password'] . "','" . $newisadmin . "')";
+                              $sql = "INSERT INTO `users` (`username`,`password`,privilege)
+                                            VALUES ('" . $_POST['username'] . "','" . $_POST['password'] . "','" . $newisadmin . "')";
                               if ($conn->query($sql) === TRUE) {
                                 echo '<script>alert("User Addedd Successfully!") 
                                                 window.location.href="users.php"</script>';
@@ -165,10 +165,10 @@ include "../dbcon.php";
                                 $erow = mysqli_fetch_array($edit);
                                 ?>
                                 <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control" required>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                   <label>Faculty ID</label>
                                   <input type="text" id="name_u" name="editempid" value="<?php echo $result['user_id']; ?>" class="form-control" required>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                   <label>Username</label>
                                   <input type="text" id="username_u" name="editusername" value="<?php echo $result['username']; ?>" class="form-control" required>
@@ -200,7 +200,7 @@ include "../dbcon.php";
                               } else {
                                 $isadmin = "user";
                               }
-                              $sql = "UPDATE `users` SET user_id = '" . $_POST['editempid'] . "', username = '" . $_POST['editusername'] . "',
+                              $sql = "UPDATE `users` SET username = '" . $_POST['editusername'] . "',
                              password = '" . $_POST['editpassword'] . "'
                              WHERE id='" . $_POST['editid'] . "';";
                               //$sql = "UPDATE `users` SET user_id =12 WHERE id = 1; ";
