@@ -705,8 +705,6 @@ window.location.href="memo.php"</script>';
                                 echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
                                                         window.location.href="memo.php"</script>';
                               }
-                              echo '<script>alert("Dli una ang president") 
-                                                      window.location.href="memo.php"</script>';
                             }
                           } else {
                             echo '<script>alert("Date Conflict with another memo!") 
