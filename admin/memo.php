@@ -295,7 +295,7 @@ window.location.href="memo.php"</script>';
                         <div class="modal-header">
                           <h5 class="modal-title">Edit Memo</h5>
                           <?php
-                          $edit = mysqli_query($conn, "select *,date(`date`) as `date` from memo where id='" . $result['id'] . "'");
+                          $edit = mysqli_query($conn, "select *,date(`date_created`) as `date`,date(`date_from`) as `date_from`,date(`date_to`) as `date_to` from memo where id='" . $result['id'] . "'");
                           $erow = mysqli_fetch_array($edit);
                           ?>
                         </div>
@@ -306,16 +306,30 @@ window.location.href="memo.php"</script>';
                               <div class="row">
 
                                 <input type="number" class="form-control" id="" name="edit_id" value="<?php echo $result['id']; ?>" hidden>
-                                <div class="col-md-6 mb-2">
+                                <!-- <div class="col-md-6 mb-2">
                                   <label for="validationCustom01">Memo Number:</label>
                                   <input type="number" class="form-control" id="" name="edit_memo_number" value="<?php echo $erow['memo_number']; ?>" placeholder="<?php echo $erow['memo_number']; ?>" readonly>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
-                                </div>
-                                <div class="col-md-6 mb-2">
+                                </div> -->
+                                <div class="col-md-4 mb-2">
                                   <label for="validationCustom01">Date Created:</label>
-                                  <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $erow['date']; ?>" required>
+                                  <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $erow['date']; ?>" readonly>
+                                  <div class="valid-feedback">
+                                    Looks good!
+                                  </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                  <label for="validationCustom01">Date From:</label>
+                                  <input type="date" class="form-control" id="" name="edit_date_from" value="<?php echo $erow['date_from']; ?>" readonly>
+                                  <div class="valid-feedback">
+                                    Looks good!
+                                  </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                  <label for="validationCustom01">Date To:</label>
+                                  <input type="date" class="form-control" id="" name="edit_date_to" value="<?php echo $erow['date_to']; ?>" readonly>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
@@ -429,7 +443,7 @@ window.location.href="memo.php"</script>';
                             $counter = strlen($erow['from']) - strlen($_POST['edit_from']);
                             if ($counter == 0) {
                               if ($flag == false) {
-                                $sqledit  = "UPDATE `memo` SET `from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
+                                $sqledit  = "UPDATE `memo` SET `from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
                     additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
                                 $sqledit1  = "UPDATE `memo` SET content='" . $_POST['edit_content'] . "' WHERE id = " . $_POST['edit_id'] . ";";
                                 $conn->query($sqledit);
@@ -448,13 +462,13 @@ window.location.href="memo.php"</script>';
                                 if ($counterget != 0) {
                                   $number = $count['count'] + 1;
                                   $number = "000" . $number;
-                                  $sqledit  = "UPDATE `memo` SET `memo_number` = '$number',`from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
+                                  $sqledit  = "UPDATE `memo` SET `memo_number` = '$number',`from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
                       content='" . $_POST['edit_content'] . "', additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
                                   if ($conn->query($sqledit) === true) {
                                     echo $counterget;
                                   }
                                 } else {
-                                  $sqledit  = "UPDATE `memo` SET `memo_number` = '0001',`from` = '" . $_POST['edit_from'] . "', `date` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
+                                  $sqledit  = "UPDATE `memo` SET `memo_number` = '0001',`from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
                       content='" . $_POST['edit_content'] . "', additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
                                   if ($conn->query($sqledit) === true) {
                                     echo $counterget;
@@ -464,6 +478,8 @@ window.location.href="memo.php"</script>';
 
                                 $flag = true;
                               }
+                              echo '<script>alert("Editing Memo Successful!") 
+                    window.location.href="memo.php"</script>';
                             }
                           }
 
