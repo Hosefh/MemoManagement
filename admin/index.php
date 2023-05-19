@@ -7,8 +7,8 @@ include "../dbcon.php";
 
 <head>
     <script language="javascript" type="text/javascript">
-    window.history.forward();
-  </script>
+        window.history.forward();
+    </script>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,16 +41,16 @@ include "../dbcon.php";
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Memo Created</h5><?php
-                                $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `memo`;");
-                                $number = mysqli_fetch_array($query);
-                                ?>
+                                                                        $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `memo`;");
+                                                                        $number = mysqli_fetch_array($query);
+                                                                        ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
                             </div>
                         </div>
                     </div>
                 </div>
             </div> -->
-            <!-- <div class="col">
+        <!-- <div class="col">
                 <div class="card mb-3 shadow-lg" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4" style="background-color: #04293A;">
@@ -70,7 +70,7 @@ include "../dbcon.php";
                     </div>
                 </div>
             </div> -->
-            <!-- <div class="col">
+        <!-- <div class="col">
                 <div class="card mb-3 shadow-lg" style="max-width: 540px;">
                     <div class="row g-0">
                         <div class="col-md-4" style="background-color: #04293A;">
@@ -80,9 +80,9 @@ include "../dbcon.php";
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Faculty</h5> <?php
-                                $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
-                                $number = mysqli_fetch_array($query);
-                                ?>
+                                                                    $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
+                                                                    $number = mysqli_fetch_array($query);
+                                                                    ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
                             </div>
                         </div>
@@ -95,14 +95,13 @@ include "../dbcon.php";
         <div class="card shadow-lg" style="background-color: #04293A; border-radius: 8px;">
             <div class="card-body" style="background-color: #04293A; border-radius: 8px; ">
                 <div class="row g-0">
-                        <div class="col-md-4" style="background-color: #04293A;">
-                            <img src="./includes/logo.png" class="img-fluid"
-                                alt="..." style="width: 50px; height:50px;">
-                        </div>
-                        <div class="col-md-4 fw-bold">
-                            <h4 style="color: white">BISU Memo Management</h4>
-                        </div>
+                    <div class="col-md-4" style="background-color: #04293A;">
+                        <img src="./includes/logo.png" class="img-fluid" alt="..." style="width: 50px; height:50px;">
                     </div>
+                    <div class="col-md-4 fw-bold">
+                        <h4 style="color: white">BISU Memo Management</h4>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- end of header -->
@@ -118,37 +117,37 @@ include "../dbcon.php";
                         <div class="m-2">
                             <thead class>
                                 <tr>
-                                <th>Memo #</th>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>Subject</th>
-                                <th>Description</th>
+                                    <th>Memo #</th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Subject</th>
+                                    <th>Description</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <?php
-                            $sql = "SELECT *, DATE_FORMAT(`date`, '%M %D, %Y ') AS `date`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m order by memo_number asc;";
-                            $actresult = mysqli_query($conn, $sql);
+                                <?php
+                                $sql = "SELECT *, DATE_FORMAT(`date_created`, '%M %D, %Y ') AS `date`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m where is_void = 0 order by memo_number asc;";
+                                $actresult = mysqli_query($conn, $sql);
 
-                            while ($result = mysqli_fetch_assoc($actresult)) {
+                                while ($result = mysqli_fetch_assoc($actresult)) {
                                 ?>
-                                            <tr>
-                                            <td>
+                                    <tr>
+                                        <td>
                                             <?php echo $result['memo_number'] ?>
-                                            </td>
-                                            <td>
+                                        </td>
+                                        <td>
                                             <?php echo $result['from'] ?>
-                                            </td>
-                                            <td>
+                                        </td>
+                                        <td>
                                             <?php echo $result['to'] ?>
-                                            </td>
-                                            <td>
+                                        </td>
+                                        <td>
                                             <?php echo $result['subject'] ?>
-                                            </td>
-                                            <td>
+                                        </td>
+                                        <td>
                                             <?php echo $result['additional_info'] ?>
-                                            </td>
-                                            </tr>
+                                        </td>
+                                    </tr>
                                 <?php } ?>
                             </tbody>
                     </table>
@@ -171,8 +170,8 @@ include "../dbcon.php";
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        $(document).ready(function () {
-            $("#myBtn").click(function () {
+        $(document).ready(function() {
+            $("#myBtn").click(function() {
                 $("#myModal").modal("toggle");
             });
         });
