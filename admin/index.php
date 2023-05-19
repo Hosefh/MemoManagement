@@ -96,11 +96,11 @@ include "../dbcon.php";
             <div class="card-body" style="background-color: #04293A; border-radius: 8px; ">
                 <div class="row g-0">
                         <div class="col-md-4" style="background-color: #04293A;">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" class="img-fluid"
+                            <img src="./includes/logo.png" class="img-fluid"
                                 alt="..." style="width: 50px; height:50px;">
                         </div>
                         <div class="col-md-4 fw-bold">
-                            <h4 style="color: white">Memorandum Management</h4>
+                            <h4 style="color: white">BISU Memo Management</h4>
                         </div>
                     </div>
             </div>
