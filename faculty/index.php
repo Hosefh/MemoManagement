@@ -28,18 +28,18 @@ include "../dbcon.php";
 
     <main class="mt-5 pt-3 px-4">
         <div class="row">
-            <div class="col">
-                <div class="card mb-3 shadow-lg" style="max-width: 540px;">
+            <div class="col-md-18 mb-2">
+                <div class="card mb-3 shadow-lg" >
                     <div class="row g-0">
-                        <div class="col-md-4" style="background-color: #04293A;">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" class="img-fluid"
+                        <div class="col-md-1" style="background-color: #04293A;">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" class="img-fluid" width="100" height="150" center 
                                 alt="...">
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-md-4">
                             <div class="card-body">
                                 <h5 class="card-title">Memo Recieved</h5>
                                 <?php 
-                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from disseminate where forwarded_to = ".$_SESSION['userid'].";");
+                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memo_route where faculty_name = '".$_SESSION['user_name']."';");
                                 $number = mysqli_fetch_array($query);
                                 ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count']?></h1>
@@ -48,44 +48,6 @@ include "../dbcon.php";
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card mb-3 shadow-lg" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4" style="background-color: #04293A;">
-                            <img src="https://cdn-icons-png.flaticon.com/512/7108/7108187.png"
-                                class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Signed Memo</h5>
-                                <?php 
-                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from disseminate where forwarded_to = ".$_SESSION['userid']." and received = 1;");
-                                $number = mysqli_fetch_array($query);
-                                ?>
-                                <h1 class="card-text fw-bold"><?php echo $number['count']?></h1>
-                                <!-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="col">
-                <div class="card mb-3 shadow-lg" style="max-width: 540px;">
-                    <div class="row g-0">
-                        <div class="col-md-4" style="background-color: #04293A;">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3239/3239147.png"
-                                class="img-fluid rounded-start" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">Users</h5>
-                                <h1 class="card-text fw-bold">9</h1>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
 
         <!-- Datatable for memo records -->
@@ -99,28 +61,40 @@ include "../dbcon.php";
                         <div class="m-2">
                             <thead class>
                                 <tr>
-                                    <th>Filename</th>
-                                    <th>Date Created</th>
-                                    <th>Signed?</th>
-                                    <th>Memo For:</th>
+                                    <th>Memo #</th>
+                                    <th>From</th>
+                                    <th>Subject</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                $sql = "SELECT DISTINCT(m.`id`),(m.`from`),(m.`subject`),(m.`content`),(m.`additional_info`),(m.`memo_number`) FROM `memo` m
+                                INNER JOIN `memo_route` mr ON mr.`memo_id` = m.`id`
+                                WHERE m.`is_void` = 0 AND mr.`faculty_name`= '".$_SESSION['user_name']."';";
+                                $actresult = mysqli_query($conn, $sql);
 
-                                <tr>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                    <td>
-
-                                    </td>
-                                </tr>
+                                while ($result = mysqli_fetch_assoc($actresult)) {
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $result['memo_number'] ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $result['from'] ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $result['subject'] ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $result['additional_info'] ?>
+                                        </td>
+                                        <td>
+                                            <a href="./generateMemo.php?id=<?php echo $result['id'] ?>" target=”_blank” class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-folder2-open"></i></span> View Memo</a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
                             </tbody>
                     </table>
                 </div>

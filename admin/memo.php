@@ -74,125 +74,7 @@ include "../dbcon.php";
                           Add Memo
                         </button>
                       </div>
-                      <!-- <div class="col-sm-2">
-                        <select class="form-select" aria-label="Default select example">
-                          <option selected>Department</option>
-                          <option value="1">Department 1</option>
-                          <option value="2">Department 2</option>
-                          <option value="3">Department 3</option>
-                        </select>
-                      </div>
-                      <div class="col-sm-2">
-                        <select class="form-select" aria-label="Default select example">
-                          <option selected>Course</option>
-                          <option value="1">Of Course</option>
-                          <option value="2">Two Course</option>
-                          <option value="3">Inter Course</option>
-                        </select>
-                      </div> -->
                     </div>
-
-                    <!-- Modal 1 -->
-                    <!-- <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Select Department</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-
-                            <form class="needs-validation" method="POST" enctype="multipart/form-data">
-                            <div class="dropdown mb-2">
-                                    <label for="validationCustom01">Select Department:</label>
-                                      <select class="department-select" aria-label="Default select example" name="department">
-                                        <option value=""></option>
-                                        <?php
-                                        $sql = "SELECT DISTINCT(department) as `department` FROM `faculty`;";
-                                        $actresultd = mysqli_query($conn, $sql);
-                                        ?>
-                                        <?php while ($resultdep = mysqli_fetch_assoc($actresultd)) { ?>
-                                            <option value=" <?php echo $resultdep['department'] ?>"> <?php echo $resultdep['department'] ?></option>
-                                        <?php } ?>
-                                        
-                                      </select>
-                                  </div>
-                              <div class="modal-footer">
-                                <input type="reset" class="btn btn-secondary">
-                                <button class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#courseModal">
-                                  Next
-                                </button>
-                              </div>  
-                            </form>
-                            <-- php code here  -->
-                    <!-- <script>
-                              $(document).ready(function() {
-                                  $("select.department-select").change(function() {
-                                      let selectedItem = $(this).children("option:selected").val();
-                                      document.cookie = "department="+selectedItem;
-                                    });
-                                });
-                            </script>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
-                    <!-- End of Modal 1 -->
-
-                    <!-- Modal 2 -->
-                    <!-- <div id="courseModal" class="modal fade" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title">Select Course</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                          </div>
-                          <div class="modal-body">
-
-                            <form class="needs-validation" method="POST" enctype="multipart/form-data">
-                            <div class="dropdown mb-2">
-                                    <label for="validationCustom01">Select Course:</label>
-                                      <select class="course-select" aria-label="Default select example" name="course">
-                                        <?php
-                                        $sql = "SELECT DISTINCT (course_abb) as course_abb FROM `faculty` WHERE department = '" . $_COOKIE['department'] . "';";
-                                        $actresultc = mysqli_query($conn, $sql);
-                                        ?>
-                                        <?php while ($resultcourse = mysqli_fetch_assoc($actresultc)) { ?>
-                                            <option value=" <?php echo $resultcourse['course_abb'] ?>"> <?php echo $resultcourse['course_abb'] ?></option>
-                                        <?php } ?>
-                                        
-                                        <-- <option value="Roselle P. Cimagala">Roselle P. Cimagala</option>
-                                        <option value="Dr. Edward C. Anuta">Dr. Edward C. Anuta</option> -->
-                    <!-- </select>
-                                  </div>
-                              <div class="modal-footer">
-                                <input type="reset" class="btn btn-secondary">
-                                <button class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#memoModal">
-                                  Next
-                                </button>
-                              </div>  
-                            </form> -->
-                    <!-- php code here -->
-                    <!-- <script>
-                              $(document).ready(function() {
-                                  $("select.course-select").change(function() {
-                                      let selectedCourse = $(this).children("option:selected").val();
-                                      // alert("You have selected the name - " + selectedCourse);
-                                      document.cookie = "course="+selectedCourse;
-                                    });
-                                });
-                            </script>
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
-                    <!-- End of Modal 2 -->
-
-                    <!-- Modal HTML -->
-
                   </div>
               </div>
 
@@ -208,12 +90,12 @@ include "../dbcon.php";
               </thead>
               <tbody style="cursor: pointer" id="myBtn">
                 <?php
-                $sql = "SELECT *, DATE_FORMAT(`date_created`, '%M %d, %Y ') as `date_created` FROM `memo` where is_void = 0 order by memo_number asc;";
+                //query sa table nga kuhaon tanan memo nga same ug from sa user_name
+                $sql = "SELECT *, DATE_FORMAT(`date_created`, '%M %d, %Y ') as `date_created` FROM `memo` where is_void = 0 and `from` = '" . $_SESSION['user_name'] . "' order by memo_number asc;";
                 $actresult = mysqli_query($conn, $sql);
 
                 while ($result = mysqli_fetch_assoc($actresult)) {
                 ?>
-
                   <tr>
                     <td>
                       <?php echo $result['memo_number'] ?>
@@ -358,17 +240,11 @@ window.location.href="memo.php"</script>';
                               </div>
                             </div>
                             <div class="row">
+
                               <div class="dropdown col-md-6 mb-2">
                                 <label for="validationCustom01">From:</label>
-                                <select class="form-select" placeholder="<?php echo $erow['from'] ?>" name="edit_from" value="">
-                                  <option value=" " selected disabled>---------------</option>
-                                  <option value="University President">University President</option>
-                                  <option value="University V-President">University V-President</option>
-                                  <option value="BISU-MC Director">BISU-MC Director</option>
-                                  <option value="College of Engineering, Dean">College of Engineering and Architecture, Dean</option>
-                                </select>
+                                <input type="text" class="form-control" id="" name="edit_from" readonly value="<?php echo $_SESSION['user_name'] ?>">
                               </div>
-
                               <div class="dropdown col-md-6 mb-2">
                                 <label for="validationCustom01">To:</label>
                                 <select class="form-select" multiple placeholder="Select Faculty" aria-label="Default select example" name="editsendtofac[]" required>
@@ -386,41 +262,9 @@ window.location.href="memo.php"</script>';
                                 <button class="btn btn-primary">Save</button>
                               </div>
                           </form>
-                          <!-- php code here -->
+                          <!-- php code here backend sa edit nga modal -->
                           <?php
                           if (isset($_POST['editsendtofac'])) {
-                            // $query = mysqli_query($conn, "SELECT id FROM memo m WHERE m.memo_number = '" . trim($_POST['edit_memo_number']) . "';");
-                            // $id = mysqli_fetch_array($query);
-
-                            // $querygetmemoroute = "SELECT * FROM memo_route mr WHERE mr.memo_id = " . trim($id['id']) . ";";
-                            // $resultmemoroute = mysqli_query($conn, $querygetmemoroute);
-                            // $memoroute = mysqli_fetch_array($resultmemoroute);
-
-                            // while ($memoroute = mysqli_fetch_assoc($resultmemoroute)) {
-                            // //   $add = false;
-                            // //   $facname;
-                            // //   foreach ($_POST['editsendtofac'] as $editfacu) {
-                            // //     $add = true;
-                            // //     $facname = $editfacu;
-                            // //     if ($editfacu == $memoroute['faculty_name']) {
-                            // //       $add = false;
-                            // //       break;
-                            // //     }
-                            // //   }
-                            // //   if ($add === true) {
-                            // //     $add === false;
-                            // //     echo $facname;
-                            // //     $sqlroute = "INSERT INTO `memo_route` (memo_id, faculty_name)
-                            // // VALUES (" . $id['id'] . ",'" . $facname . "');";
-                            // //     if ($conn->query($sqlroute) === FALSE) {
-                            // //       echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                            // //   window.location.href="memo.php"</script>';
-                            // //     }
-                            //   $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
-                            //   $number = mysqli_fetch_array($query);
-
-
-                            //   }
                             $sqlroutedelete = "DELETE FROM memo_route where memo_id = " . $_POST['edit_id'] . ";";
                             $conn->query($sqlroutedelete);
                             foreach ($_POST['editsendtofac'] as $editfacu) {
@@ -432,10 +276,6 @@ window.location.href="memo.php"</script>';
                 VALUES (" . $_POST['edit_id'] . ",'" . trim($editfacu) . "');";
                                 $conn->query($sqlroute);
                                 $countchecker = 1;
-                                //                   if ($conn->query($sqlroute) === TRUE) {
-                                //                     echo '<script>alert("Adding Memo Failed!\n Please Check SQL Connection String!") 
-                                // window.location.href="memo.php"</script>';
-                                //                   }
                               }
                             }
 
@@ -568,13 +408,7 @@ window.location.href="memo.php"</script>';
                                   </div> -->
                           <div class="dropdown col-md-6 mb-2">
                             <label for="validationCustom01">From:</label>
-                            <select class="form-select" placeholder="Select Admin" name="from">
-                              <option value=" " selected disabled>---------------</option>
-                              <option value="University President">University President</option>
-                              <option value="University V-President">University V-President</option>
-                              <option value="BISU-MC Director">BISU-MC Director</option>
-                              <option value="College of Engineering, Dean">College of Engineering, Dean</option>
-                            </select>
+                            <input type="text" class="form-control" id="" name="from" readonly value="<?php echo $_SESSION['user_name'] ?>">
                           </div>
 
                           <div class="dropdown col-md-6 mb-2">
@@ -589,39 +423,14 @@ window.location.href="memo.php"</script>';
                               <?php } ?>
                             </select>
                           </div>
-                          <!-- <div class="dropdown col-md-4 mb-2">
-                                    <label for="validationCustom01">Department:</label>
-                                    <select class="form-select" placeholder="Select Faculty" aria-label="Default select example" name="facdep" id="facdep">
-                                      <option value="" disabled selected> Select Name</option>
-                                      <?php
-                                      $sql = "SELECT distinct(`department`) as `department` FROM `faculty`;";
-                                      $actresult = mysqli_query($conn, $sql);
-                                      ?>
-                                        <?php while ($result = mysqli_fetch_assoc($actresult)) { ?>
-                                              <option value=" <?php echo $result['department'] ?>"> <?php echo $result['department'] ?></option>
-                                        <?php } ?>
-                                    </select>
-                                  </div>
-                                  <div class="dropdown col-md-4 mb-2">
-                                    <label for="validationCustom01">To:</label>
-                                    <select class="form-select" multiple placeholder="Select Faculty" aria-label="Default select example" name="facnames[]" id="facnames">
-                                    </select>
-                                  </div>
-                                </div> -->
                           <div class="modal-footer">
                             <input type="reset" class="btn btn-secondary">
                             <button class="btn btn-primary">Save</button>
                           </div>
                       </form>
-                      <!-- php code here -->
+                      <!-- Backend sa add with flagging -->
                       <?php
-                      if (isset($_POST['from'])) {
-                        // print_r($_POST['facdepartment']);
-                        // foreach ($_POST['facdepartment'] as  $department)
-                        // {
-                        //   echo $department;
-                        //   $sql2 = "INSERT INTO "
-                        // }
+                      if (isset($_POST['date_created'])) {
 
                         if ($_POST['date_from'] <= $_POST['date_to']) {
                           $checker = 0;

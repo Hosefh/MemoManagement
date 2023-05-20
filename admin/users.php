@@ -40,7 +40,7 @@ include "../dbcon.php";
                       Add User
                     </button>
 
-                    <!-- Modal HTML -->
+                    <!-- add user Modal HTML -->
                     <div id="myModal" class="modal fade" data-bs-backdrop="static" tabindex="-1">
                       <div class="modal-dialog">
                         <div class="modal-content">
@@ -59,6 +59,23 @@ include "../dbcon.php";
                                     Looks good!
                                   </div>
                                 </div> -->
+                              <div class="dropdown col-md-12 mb-2">
+                                <label for="validationCustom01">From:</label>
+                                <select class="form-select" placeholder="Select Admin" name="user_name">
+                                  <option value=" " selected disabled>---------------</option>
+                                  <?php
+                                    $sqlfac = "SELECT * FROM `faculty` order by `name` asc;";
+                                    $actresultfac = mysqli_query($conn, $sqlfac);
+                                    while ($resultfac = mysqli_fetch_assoc($actresultfac)) { ?>
+                                      <option value="<?php echo $resultfac['name'];?>"><?php echo $resultfac['name'];?></option>
+                                   <?php } 
+                                  ?>
+                                  <!-- <option value="University President">University President</option>
+                                  <option value="University V-President">University V-President</option>
+                                  <option value="BISU-MC Director">BISU-MC Director</option>
+                                  <option value="College of Engineering, Dean">College of Engineering, Dean</option> -->
+                                </select>
+                              </div>
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Username</label>
                                   <input type="text" class="form-control" id="validationCustom01" name="username" placeholder="Enter  Username" required>
@@ -73,32 +90,38 @@ include "../dbcon.php";
                                     Looks good!
                                   </div>
                                 </div>
-                                <div class="form-check col-md-12 mt-3">
+                                <!-- <div class="form-check col-md-12 mt-3">
                                   <input class="form-check-input" type="checkbox" name="isadmin" value="" id="flexCheckIndeterminate">
                                   <label class="form-check-label" for="flexCheckIndeterminate">
                                     Admin?
                                   </label>
-                                </div>
+                                </div> -->
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                                <button class="btn btn-success">Save</button>
+                                <button class="btn btn-succ ess">Save</button>
                               </div>
                             </form>
                             <?php
                             if (isset($_POST['username'])) {
-                              if (isset($_POST['isadmin'])) {
-                                $newisadmin = "admin";
-                              } else {
-                                $newisadmin = "user";
+                              $checker = mysqli_query($conn, "SELECT count(*) as count FROM users WHERE `user_name` = '" . $_POST['user_name'] . "';");
+                              $countchecker = mysqli_fetch_array($checker);
+                              
+                              if ($countchecker['count'] == 0)
+                              {
+                                $sql = "INSERT INTO `users` (`username`,`user_name`,`password`,privilege)
+                                              VALUES ('" . $_POST['username'] . "','" . $_POST['user_name'] . "',PASSWORD('" . $_POST['password'] . "'),'user')";
+                                if ($conn->query($sql) === TRUE) {
+                                  echo '<script>alert("User Addedd Successfully!") 
+                                                  window.location.href="users.php"</script>';
+                                } else {
+                                  echo '<script>alert("Adding User Failed!\n Please Check SQL Connection String!") 
+                                                  window.location.href="users.php"</script>';
+                                }
                               }
-                              $sql = "INSERT INTO `users` (`username`,`password`,privilege)
-                                            VALUES ('" . $_POST['username'] . "','" . $_POST['password'] . "','" . $newisadmin . "')";
-                              if ($conn->query($sql) === TRUE) {
-                                echo '<script>alert("User Addedd Successfully!") 
-                                                window.location.href="users.php"</script>';
-                              } else {
-                                echo '<script>alert("Adding User Failed!\n Please Check SQL Connection String!") 
+                              else
+                              {
+                                echo '<script>alert("Account already exists for this Faculty!") 
                                                 window.location.href="users.php"</script>';
                               }
                             }
@@ -114,14 +137,13 @@ include "../dbcon.php";
                     <tr>
                       <th>#</th>
                       <th>Username</th>
-                      <th>Password</th>
                       <th>Privilege</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php
-                    $sql = "SELECT * FROM `users` order by `username` asc;";
+                    $sql = "SELECT * FROM `users` where privilege = 'user' order by `username` asc;";
                     $actresult = mysqli_query($conn, $sql);
                     $counter = 1;
                     while ($result = mysqli_fetch_assoc($actresult)) {
@@ -133,9 +155,6 @@ include "../dbcon.php";
                         </td>
                         <td>
                           <?php echo $result['username']; ?>
-                        </td>
-                        <td>
-                          <?php echo $result['password']; ?>
                         </td>
                         <td>
                           <?php echo $result['privilege']; ?>
@@ -177,15 +196,7 @@ include "../dbcon.php";
                                   <label>Password</label>
                                   <input type="password" id="password_u" name="editpassword" value="<?php echo $result['password']; ?>" class="form-control" required>
                                 </div>
-                                <div class="form-check col-md-12 mt-3">
-
-                                  <input class="form-check-input" type="checkbox" name="isadmin" <?php if ($result['privilege'] === "admin") {
-                                                                                                    echo 'checked=""';
-                                                                                                  } ?> id="flexCheckIndeterminate">
-                                  <label class="form-check-label" for="flexCheckIndeterminate">
-                                    Admin?
-                                  </label>
-                                </div>
+                                
                               </div>
                               <div class="modal-footer">
                                 <input type="hidden" value="2" name="type">
@@ -193,13 +204,10 @@ include "../dbcon.php";
                                 <button class="btn btn-info" id="update">Update</button>
                               </div>
                             </form>
+
+                            <!-- backend sa editusers -->
                             <?php
                             if (isset($_POST['editusername'])) {
-                              if (isset($_POST['isadmin'])) {
-                                $isadmin = "admin";
-                              } else {
-                                $isadmin = "user";
-                              }
                               $sql = "UPDATE `users` SET username = '" . $_POST['editusername'] . "',
                              password = '" . $_POST['editpassword'] . "'
                              WHERE id='" . $_POST['editid'] . "';";

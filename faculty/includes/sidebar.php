@@ -34,54 +34,15 @@
                 <span class="me-2"><i class="bi bi-speedometer2"></i></span>
                 <span>Dashboard</span>
               </a>
-            </li>
-            <li class="my-4"><hr class="dropdown-divider bg-light" /></li>
+            <!-- </li>
             <li>
-              <div class="text-muted small fw-bold text-uppercase px-3 mb-3">
-                Main
-              </div>
-            </li>
-            <li>
-              <a
-                class="nav-link px-3 sidebar-link"
-                data-bs-toggle="collapse"
-                href="#view"
-              >
-                <span class="me-2"><i class="bi bi-chat-right-text"></i></span>
-                <span>Memo</span>
-                <span class="ms-auto">
-                  <span class="right-icon">
-                    <i class="bi bi-chevron-down"></i>
-                  </span>
-                </span>
+              <a href="./memo.php" class="nav-link px-3">
+                <span class="me-2"
+                  ><i class="bi bi-book"></i
+                ></span>
+                <span>View Memo</span>
               </a>
-              <div class="collapse" id="view">
-                <ul class="navbar-nav ps-3">
-                  <!-- <li>
-                    <a href="./toSign.php" class="nav-link px-3">
-                      <span class="me-2"
-                        ><i class="bi bi-pen"></i
-                      ></span>
-                      <span>For Signature</span>
-                    </a>
-                  </li> -->
-                  <li>
-                    <a href="./memo.php" class="nav-link px-3">
-                      <span class="me-2"
-                        ><i class="bi bi-book"></i
-                      ></span>
-                      <span>View Memo</span>
-                    </a>
-                  </li>
-                  <li>
-                    <a href="./calendar.php" class="nav-link px-3">
-                      <span class="me-2"
-                        ><i class="bi bi-calendar-event"></i
-                      ></span>
-                      <span>View Calendar</span>
-                    </a>
-                  </li>
-                </ul>
+            </li> -->
               </div>
             </li>
           </ul>

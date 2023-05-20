@@ -57,7 +57,7 @@
         </button>
         <div class="collapse navbar-collapse" id="topNavBar">
           <form class="d-flex ms-auto my-3 my-lg-0"></form>
-          <span class="text-white fw-bold"><?php echo $_SESSION['username']; ?></span>
+          <span class="text-white fw-bold"><?php echo $_SESSION['user_name']; ?></span>
           <ul class="navbar-nav">
             <li class="nav-item dropdown">
               <a

@@ -126,7 +126,9 @@ include "../dbcon.php";
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT *, DATE_FORMAT(`date_created`, '%M %D, %Y ') AS `date`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m where is_void = 0 order by memo_number asc;";
+                                $sql = "SELECT DISTINCT(m.`id`),(m.`from`),(m.`subject`),(m.`content`),(m.`additional_info`),(m.memo_number) FROM `memo` m
+                                INNER JOIN `memo_route` mr ON mr.`memo_id` = m.`id`
+                                WHERE m.`is_void` = 0 AND mr.`faculty_name`= '".$_SESSION['user_name']."';";
                                 $actresult = mysqli_query($conn, $sql);
 
                                 while ($result = mysqli_fetch_assoc($actresult)) {

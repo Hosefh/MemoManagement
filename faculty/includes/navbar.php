@@ -65,7 +65,7 @@ session_start();
               <ul class="dropdown-menu dropdown-menu-end" style="background-color: #064663;">
                 <li class="dropdown-header text-white">
                   <span class="me-2"><i class="bi bi-person-circle"></i></span>
-                  Welcome <?php echo $_SESSION['username']; ?> !
+                  Welcome <?php echo $_SESSION['user_name']; ?> !
                 </li>
                 <li>
                   <a class="dropdown-item text-white" href="./update_acc.php">
