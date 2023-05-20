@@ -209,7 +209,7 @@ include "../dbcon.php";
                             <?php
                             if (isset($_POST['editusername'])) {
                               $sql = "UPDATE `users` SET username = '" . $_POST['editusername'] . "',
-                             password = '" . $_POST['editpassword'] . "'
+                             password = PASSWORD('" . $_POST['editpassword'] . "')
                              WHERE id='" . $_POST['editid'] . "';";
                               //$sql = "UPDATE `users` SET user_id =12 WHERE id = 1; ";
                               if ($conn->query($sql) === TRUE) {
