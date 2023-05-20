@@ -69,10 +69,10 @@ if (isset($_SESSION['username']))
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" name="user_password" id="password" placeholder="Enter password" required>
                     </div>
-                    <!-- <div class="d-grid gap-2">
+                    <div class="d-grid gap-2">
                         <button class="btn btn text-white mb-2" onclick="loading()" style="background-color: #064663; width: full-width">Sign in</button>
-                        <a class="btn mt-2 text-white text-center" href="./register.php">No account yet? Sign up here.</a>
-                    </div> -->
+                        <!-- <a class="btn mt-2 text-white text-center" href="./register.php">No account yet? Sign up here.</a> -->
+                    </div>
                    
                 </form>
             </div>
