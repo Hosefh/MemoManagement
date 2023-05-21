@@ -41,9 +41,9 @@ include "../dbcon.php";
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Memo Created</h5><?php
-                                                                        $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `memo`;");
-                                                                        $number = mysqli_fetch_array($query);
-                                                                        ?>
+                                $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `memo`;");
+                                $number = mysqli_fetch_array($query);
+                                ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
                             </div>
                         </div>
@@ -80,9 +80,9 @@ include "../dbcon.php";
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title">Faculty</h5> <?php
-                                                                    $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
-                                                                    $number = mysqli_fetch_array($query);
-                                                                    ?>
+                                $query = mysqli_query($conn, "SELECT count(*) as `count` FROM `faculty`;");
+                                $number = mysqli_fetch_array($query);
+                                ?>
                                 <h1 class="card-text fw-bold"><?php echo $number['count'] ?></h1>
                             </div>
                         </div>
@@ -120,18 +120,20 @@ include "../dbcon.php";
                                     <th>Memo #</th>
                                     <th>From</th>
                                     <th>To</th>
+                                    <th>Date From</th>
+                                    <th>Date To</th>
                                     <th>Subject</th>
-                                    <th>Description</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT *, DATE_FORMAT(`date_created`, '%M %D, %Y ') AS `date`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m 
-                                where is_void = 0 and m.from = '".$_SESSION['user_name']."' order by memo_number asc;";
+                                $sql = "SELECT *, DATE_FORMAT(`date_from`, '%M %d, %Y ') AS `date`, DATE_FORMAT(`date_to`, '%M %d, %Y ') AS `date2`,(SELECT faculty_name FROM memo_route WHERE memo_id = m.id LIMIT 1) AS `to` FROM `memo` m 
+                                where is_void = 0 and m.from = '" . $_SESSION['user_name'] . "' order by memo_number asc;";
                                 $actresult = mysqli_query($conn, $sql);
 
                                 while ($result = mysqli_fetch_assoc($actresult)) {
-                                ?>
+                                    ?>
                                     <tr>
                                         <td>
                                             <?php echo $result['memo_number'] ?>
@@ -143,10 +145,14 @@ include "../dbcon.php";
                                             <?php echo $result['to'] ?>
                                         </td>
                                         <td>
-                                            <?php echo $result['subject'] ?>
+                                            <?php echo $result['date'] ?>
                                         </td>
                                         <td>
-                                            <?php echo $result['additional_info'] ?>
+                                            <?php echo $result['date2'] ?>
+                                        </td>
+                                        <td class="text-truncate" style="max-width: 300px;">
+                                        
+                                            <?php echo $result['subject'] ?>
                                         </td>
                                     </tr>
                                 <?php } ?>
@@ -171,8 +177,8 @@ include "../dbcon.php";
     <!-- Bootstrap JS -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $("#myBtn").click(function() {
+        $(document).ready(function () {
+            $("#myBtn").click(function () {
                 $("#myModal").modal("toggle");
             });
         });

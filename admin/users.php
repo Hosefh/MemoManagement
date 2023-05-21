@@ -59,33 +59,36 @@ include "../dbcon.php";
                                     Looks good!
                                   </div>
                                 </div> -->
-                              <div class="dropdown col-md-12 mb-2">
-                                <label for="validationCustom01">From:</label>
-                                <select class="form-select" placeholder="Select Admin" name="user_name">
-                                  <option value=" " selected disabled>---------------</option>
-                                  <?php
+                                <div class="dropdown col-md-12 mb-2">
+                                  <label for="validationCustom01"></label>
+                                  <select class="form-select" placeholder="Select Admin" name="user_name">
+                                    <option value=" " selected disabled>List of Faculty</option>
+                                    <?php
                                     $sqlfac = "SELECT * FROM `faculty` order by `name` asc;";
                                     $actresultfac = mysqli_query($conn, $sqlfac);
                                     while ($resultfac = mysqli_fetch_assoc($actresultfac)) { ?>
-                                      <option value="<?php echo $resultfac['name'];?>"><?php echo $resultfac['name'];?></option>
-                                   <?php } 
-                                  ?>
-                                  <!-- <option value="University President">University President</option>
+                                      <option value="<?php echo $resultfac['name']; ?>"><?php echo $resultfac['name']; ?>
+                                      </option>
+                                    <?php }
+                                    ?>
+                                    <!-- <option value="University President">University President</option>
                                   <option value="University V-President">University V-President</option>
                                   <option value="BISU-MC Director">BISU-MC Director</option>
                                   <option value="College of Engineering, Dean">College of Engineering, Dean</option> -->
-                                </select>
-                              </div>
+                                  </select>
+                                </div>
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom01">Username</label>
-                                  <input type="text" class="form-control" id="validationCustom01" name="username" placeholder="Enter  Username" required>
+                                  <input type="text" class="form-control" id="validationCustom01" name="username"
+                                    placeholder="Enter  Username" autocomplete="off" required>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
                                 </div>
                                 <div class="col-md-12 mb-2">
                                   <label for="validationCustom02">Password</label>
-                                  <input type="password" class="form-control" id="validationCustom02" name="password" placeholder="Enter Password" required>
+                                  <input type="password" class="form-control" id="validationCustom02" name="password"
+                                    placeholder="Enter Password" required>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
@@ -106,9 +109,8 @@ include "../dbcon.php";
                             if (isset($_POST['username'])) {
                               $checker = mysqli_query($conn, "SELECT count(*) as count FROM users WHERE `user_name` = '" . $_POST['user_name'] . "';");
                               $countchecker = mysqli_fetch_array($checker);
-                              
-                              if ($countchecker['count'] == 0)
-                              {
+
+                              if ($countchecker['count'] == 0) {
                                 $sql = "INSERT INTO `users` (`username`,`user_name`,`password`,privilege)
                                               VALUES ('" . $_POST['username'] . "','" . $_POST['user_name'] . "',PASSWORD('" . $_POST['password'] . "'),'user')";
                                 if ($conn->query($sql) === TRUE) {
@@ -118,9 +120,7 @@ include "../dbcon.php";
                                   echo '<script>alert("Adding User Failed!\n Please Check SQL Connection String!") 
                                                   window.location.href="users.php"</script>';
                                 }
-                              }
-                              else
-                              {
+                              } else {
                                 echo '<script>alert("Account already exists for this Faculty!") 
                                                 window.location.href="users.php"</script>';
                               }
@@ -147,7 +147,7 @@ include "../dbcon.php";
                     $actresult = mysqli_query($conn, $sql);
                     $counter = 1;
                     while ($result = mysqli_fetch_assoc($actresult)) {
-                    ?>
+                      ?>
                       <tr>
                         <td>
                           <?php echo $counter;
@@ -161,8 +161,11 @@ include "../dbcon.php";
                         </td>
                         <td>
                           <div class="d-grid gap-2 d-md-flex">
-                            <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-pencil"></i></span> Edit</a> ||
-                            <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span class="me-2"><i class="bi bi-trash"></i></span>
+                            <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal"
+                              class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i
+                                  class="bi bi-pencil"></i></span> Edit</a> ||
+                            <a href="#del<?php echo $result['id']; ?>" data-toggle="modal"
+                              class="btn btn-danger btn-sm"><span class="me-2"><i class="bi bi-trash"></i></span>
                               Delete</a>
                           </div>
                         </td>
@@ -175,7 +178,8 @@ include "../dbcon.php";
                             <form id="update_form" method="POST">
                               <div class="modal-header">
                                 <h4 class="modal-title">Edit Faculty</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="modal"
+                                  aria-hidden="true">&times;</button>
                               </div>
                               <div class="modal-body">
                                 <?php
@@ -183,20 +187,23 @@ include "../dbcon.php";
                                 $edit = mysqli_query($conn, "select * from users where id='" . $result['id'] . "'");
                                 $erow = mysqli_fetch_array($edit);
                                 ?>
-                                <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>" class="form-control" required>
+                                <input type="hidden" id="id_u" name="editid" value="<?php echo $result['id']; ?>"
+                                  class="form-control" required>
                                 <!-- <div class="form-group">
                                   <label>Faculty ID</label>
                                   <input type="text" id="name_u" name="editempid" value="<?php echo $result['user_id']; ?>" class="form-control" required>
                                 </div> -->
                                 <div class="form-group">
                                   <label>Username</label>
-                                  <input type="text" id="username_u" name="editusername" value="<?php echo $result['username']; ?>" class="form-control" required>
+                                  <input type="text" id="username_u" name="editusername"
+                                    value="<?php echo $result['username']; ?>" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                   <label>Password</label>
-                                  <input type="password" id="password_u" name="editpassword" value="<?php echo $result['password']; ?>" class="form-control" required>
+                                  <input type="password" id="password_u" name="editpassword"
+                                    value="<?php echo $result['password']; ?>" class="form-control" required>
                                 </div>
-                                
+
                               </div>
                               <div class="modal-footer">
                                 <input type="hidden" value="2" name="type">
@@ -228,7 +235,8 @@ include "../dbcon.php";
                       <!-- End of Edit Modal -->
 
                       <!-- Delete -->
-                      <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog"
+                        aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                           <div class="modal-content">
                             <div class="modal-header">
@@ -251,9 +259,11 @@ include "../dbcon.php";
                               </div>
                             </div>
                             <form method="POST">
-                              <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>" class="form-control" required>
+                              <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>"
+                                class="form-control" required>
                               <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                                    class="glyphicon glyphicon-remove"></span> Cancel</button>
                                 <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
                                   Delete</button>
                               </div>
@@ -301,8 +311,8 @@ include "../dbcon.php";
   <!-- Bootstrap JS -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-    $(document).ready(function() {
-      $("#myBtn").click(function() {
+    $(document).ready(function () {
+      $("#myBtn").click(function () {
         $("#myModal").modal("toggle");
       });
     });

@@ -20,8 +20,8 @@ include "../dbcon.php";
   <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script type="text/javascript">
-    $(document).ready(function() {
-      $('#facdep').change(function() {
+    $(document).ready(function () {
+      $('#facdep').change(function () {
         var facdepartment = $(this).val();
         $.ajax({
           url: "action.php",
@@ -29,7 +29,7 @@ include "../dbcon.php";
           data: {
             department: facdepartment
           },
-          success: function(data) {
+          success: function (data) {
             $("#facnames").html(data);
           }
         });
@@ -95,7 +95,7 @@ include "../dbcon.php";
                 $actresult = mysqli_query($conn, $sql);
 
                 while ($result = mysqli_fetch_assoc($actresult)) {
-                ?>
+                  ?>
                   <tr>
                     <td>
                       <?php echo $result['memo_number'] ?>
@@ -106,7 +106,7 @@ include "../dbcon.php";
                     <td>
                       <?php echo $result['from'] ?>
                     </td>
-                    <td>
+                    <td class="text-truncate" style="max-width: 500px;">
                       <?php echo $result['subject'] ?>
                     </td>
                     <td>
@@ -114,18 +114,23 @@ include "../dbcon.php";
                     </td>
                     <td>
                       <div class="d-grid gap-2 d-md-flex">
-                        <a href="./generateMemo.php?id=<?php echo $result['id'] ?>" target=”_blank” class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-folder2-open"></i></span> View Memo</a>
+                        <a href="./generateMemo.php?id=<?php echo $result['id'] ?>" target=”_blank”
+                          class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i
+                              class="bi bi-folder2-open"></i></span> View Memo</a>
                         ||
-                        <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-pen"></i></span>
+                        <a href="#edit<?php echo $result['id']; ?>" data-toggle="modal"
+                          class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-pen"></i></span>
                           Edit</a>
                         ||
-                        <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span class="me-2"><i class="bi bi-trash"></i></span> Delete
+                        <a href="#del<?php echo $result['id']; ?>" data-toggle="modal" class="btn btn-danger btn-sm"><span
+                            class="me-2"><i class="bi bi-trash"></i></span> Delete
                         </a>
                       </div>
                     </td>
                   </tr>
 
-                  <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal fade" id="del<?php echo $result['id']; ?>" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -148,9 +153,11 @@ include "../dbcon.php";
                           </div>
                         </div>
                         <form method="POST">
-                          <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>" class="form-control" required>
+                          <input type="hidden" id="id_u" name="deleteid" value="<?php echo $drow['id']; ?>"
+                            class="form-control" required>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal"><span
+                                class="glyphicon glyphicon-remove"></span> Cancel</button>
                             <button class="btn btn-danger"><span class="glyphicon glyphicon-trash"></span>
                               Delete</button>
                           </div>
@@ -187,7 +194,8 @@ window.location.href="memo.php"</script>';
                             <div class="form-row">
                               <div class="row">
 
-                                <input type="number" class="form-control" id="" name="edit_id" value="<?php echo $result['id']; ?>" hidden>
+                                <input type="number" class="form-control" id="" name="edit_id"
+                                  value="<?php echo $result['id']; ?>" hidden>
                                 <!-- <div class="col-md-6 mb-2">
                                   <label for="validationCustom01">Memo Number:</label>
                                   <input type="number" class="form-control" id="" name="edit_memo_number" value="<?php echo $erow['memo_number']; ?>" placeholder="<?php echo $erow['memo_number']; ?>" readonly>
@@ -197,21 +205,24 @@ window.location.href="memo.php"</script>';
                                 </div> -->
                                 <div class="col-md-4 mb-2">
                                   <label for="validationCustom01">Date Created:</label>
-                                  <input type="date" class="form-control" id="" name="edit_date" value="<?php echo $erow['date']; ?>" readonly>
+                                  <input type="date" class="form-control" id="" name="edit_date"
+                                    value="<?php echo $erow['date']; ?>" readonly>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                   <label for="validationCustom01">Date From:</label>
-                                  <input type="date" class="form-control" id="" name="edit_date_from" value="<?php echo $erow['date_from']; ?>" readonly>
+                                  <input type="date" class="form-control" id="" name="edit_date_from"
+                                    value="<?php echo $erow['date_from']; ?>" readonly>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
                                 </div>
                                 <div class="col-md-4 mb-2">
                                   <label for="validationCustom01">Date To:</label>
-                                  <input type="date" class="form-control" id="" name="edit_date_to" value="<?php echo $erow['date_to']; ?>" readonly>
+                                  <input type="date" class="form-control" id="" name="edit_date_to"
+                                    value="<?php echo $erow['date_to']; ?>" readonly>
                                   <div class="valid-feedback">
                                     Looks good!
                                   </div>
@@ -219,21 +230,24 @@ window.location.href="memo.php"</script>';
                               </div>
                               <div class="col-md-12 mb-2">
                                 <label for="validationCustom01">Subject:</label>
-                                <input type="text" class="form-control" id="" name="edit_subject" autocomplete="off" value="<?php echo $erow['subject']; ?>" required>
+                                <input type="text" class="form-control" id="" name="edit_subject" autocomplete="off"
+                                  value="<?php echo $erow['subject']; ?>" required>
                                 <div class="valid-feedback">
                                   Looks good!
                                 </div>
                               </div>
                               <div class="col-md-12 mb-2">
                                 <label for="validationCustom01">Content(Activity, Date, Place)</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_content"><?php echo $erow['content']; ?></textarea>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                  name="edit_content"><?php echo $erow['content']; ?></textarea>
                                 <div class="valid-feedback">
                                   Looks good!
                                 </div>
                               </div>
                               <div class="col-md-12 mb-2">
                                 <label for="validationCustom01">Additional Information:</label>
-                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="edit_add_info"><?php echo $erow['additional_info']; ?></textarea>
+                                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                  name="edit_add_info"><?php echo $erow['additional_info']; ?></textarea>
                                 <div class="valid-feedback">
                                   Looks good!
                                 </div>
@@ -243,11 +257,13 @@ window.location.href="memo.php"</script>';
 
                               <div class="dropdown col-md-6 mb-2">
                                 <label for="validationCustom01">From:</label>
-                                <input type="text" class="form-control" id="" name="edit_from" readonly value="<?php echo $_SESSION['user_name'] ?>">
+                                <input type="text" class="form-control" id="" name="edit_from" readonly
+                                  value="<?php echo $_SESSION['user_name'] ?>">
                               </div>
                               <div class="dropdown col-md-6 mb-2">
                                 <label for="validationCustom01">To:</label>
-                                <select class="form-select" multiple placeholder="Select Faculty" aria-label="Default select example" name="editsendtofac[]" required>
+                                <select class="form-select" multiple placeholder="Select Faculty"
+                                  aria-label="Default select example" name="editsendtofac[]" required>
                                   <?php
                                   $sql5 = "SELECT * FROM `faculty` order by `name` asc;";
                                   $actresult5 = mysqli_query($conn, $sql5);
@@ -283,9 +299,9 @@ window.location.href="memo.php"</script>';
                             $counter = strlen($erow['from']) - strlen($_POST['edit_from']);
                             if ($counter == 0) {
                               if ($flag == false) {
-                                $sqledit  = "UPDATE `memo` SET `from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
+                                $sqledit = "UPDATE `memo` SET `from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
                     additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
-                                $sqledit1  = "UPDATE `memo` SET content='" . $_POST['edit_content'] . "' WHERE id = " . $_POST['edit_id'] . ";";
+                                $sqledit1 = "UPDATE `memo` SET content='" . $_POST['edit_content'] . "' WHERE id = " . $_POST['edit_id'] . ";";
                                 $conn->query($sqledit);
                                 if ($conn->query($sqledit1) === true) {
                                   echo '<script>alert("Editing Memo Successful!") 
@@ -302,13 +318,13 @@ window.location.href="memo.php"</script>';
                                 if ($counterget != 0) {
                                   $number = $count['count'] + 1;
                                   $number = "000" . $number;
-                                  $sqledit  = "UPDATE `memo` SET `memo_number` = '$number',`from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
+                                  $sqledit = "UPDATE `memo` SET `memo_number` = '$number',`from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
                       content='" . $_POST['edit_content'] . "', additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
                                   if ($conn->query($sqledit) === true) {
                                     echo $counterget;
                                   }
                                 } else {
-                                  $sqledit  = "UPDATE `memo` SET `memo_number` = '0001',`from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
+                                  $sqledit = "UPDATE `memo` SET `memo_number` = '0001',`from` = '" . $_POST['edit_from'] . "', `date_created` = '" . $_POST['edit_date'] . "', `subject` = '" . $_POST['edit_subject'] . "',
                       content='" . $_POST['edit_content'] . "', additional_info= '" . $_POST['edit_add_info'] . "' WHERE id = " . $_POST['edit_id'] . ";";
                                   if ($conn->query($sqledit) === true) {
                                     echo $counterget;
@@ -385,14 +401,16 @@ window.location.href="memo.php"</script>';
                           </div>
                           <div class="col-md-12 mb-2">
                             <label for="validationCustom01">Content(Activity, Date, Place)</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="content"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                              name="content"></textarea>
                             <div class="valid-feedback">
                               Looks good!
                             </div>
                           </div>
                           <div class="col-md-12 mb-2">
                             <label for="validationCustom01">Additional Information:</label>
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="add_info"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                              name="add_info"></textarea>
                             <div class="valid-feedback">
                               Looks good!
                             </div>
@@ -408,12 +426,14 @@ window.location.href="memo.php"</script>';
                                   </div> -->
                           <div class="dropdown col-md-6 mb-2">
                             <label for="validationCustom01">From:</label>
-                            <input type="text" class="form-control" id="" name="from" readonly value="<?php echo $_SESSION['user_name'] ?>">
+                            <input type="text" class="form-control" id="" name="from" readonly
+                              value="<?php echo $_SESSION['user_name'] ?>">
                           </div>
 
                           <div class="dropdown col-md-6 mb-2">
                             <label for="validationCustom01">To:</label>
-                            <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty" aria-label="Default select example" name="sendtofac[]">
+                            <select class="form-select" multiple id="multiple-checkboxes" placeholder="Select Faculty"
+                              aria-label="Default select example" name="sendtofac[]">
                               <?php
                               $sql = "SELECT * FROM `faculty` order by `name` asc;";
                               $actresult = mysqli_query($conn, $sql);
@@ -571,15 +591,15 @@ window.location.href="memo.php"</script>';
 
   <script>
     // function modalOpen(){
-    $(document).ready(function() {
-      $("#myBtn").click(function() {
+    $(document).ready(function () {
+      $("#myBtn").click(function () {
         $("#myModal").modal("toggle");
       });
     });
     // }
   </script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
 
       var multipleCancelButton = new Choices('#multiple-checkboxes', {
         removeItemButton: true,
@@ -617,7 +637,7 @@ window.location.href="memo.php"</script>';
     //     if (e.hasAttribute('data-show-modal')) {
     //       showModal(e.getAttribute('data-show-modal'));
     //     }
-    //   }); 
+    //   });
     // });
     // // Show modal dialog
     // function showModal(modal) {
@@ -629,7 +649,7 @@ window.location.href="memo.php"</script>';
   </script>
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('#multiple-checkboxes').multiselect({
         includeSelectAllOption: true,
       });
