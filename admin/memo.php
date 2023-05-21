@@ -456,14 +456,16 @@ window.location.href="memo.php"</script>';
                           $checker = 0;
                           $checkerforpres = 0;
                           $presid = 0;
-                          if ($_POST['from'] == "College of Engineering, Dean") {
+                          if ($_POST['from'] == "BISU-MC Director") {
                             $mysql_date1 = date('Y-m-d', strtotime($_POST['date_from']));
                             $mysql_date2 = date('Y-m-d', strtotime($_POST['date_to']));
                             foreach ($_POST['sendtofac'] as $facname) {
                               $getcountflag1 = mysqli_query($conn, "SELECT COUNT(*) AS `count` FROM `memo` m INNER JOIN 
                               `memo_route` mr ON mr.`memo_id` = m.`id` WHERE m.`from` = 'University President' 
-                              AND mr.`faculty_name` = '$facname' AND (DATE('" . $mysql_date1 . "') BETWEEN m.`date_from` AND m.`date_to` or DATE('" . $mysql_date2 . "') BETWEEN m.`date_from` AND m.`date_to`);");
-                              $countflag1 = mysqli_fetch_array($getcountflag1);
+                              AND mr.`faculty_name` = '$facname' AND 
+                              (m.`date_from` BETWEEN DATE('$mysql_date1') AND DATE('$mysql_date2') OR
+                               m.`date_to` BETWEEN DATE('$mysql_date1') AND DATE('$mysql_date2'));");
+                              $countflag1 = mysqli_fetch_array($getcountflag1); 
                               if ($countflag1['count'] != 0) {
                                 $checker = 1;
                               }
@@ -474,11 +476,28 @@ window.location.href="memo.php"</script>';
                             foreach ($_POST['sendtofac'] as $facname) {
                               $getcountflag1 = mysqli_query($conn, "SELECT COUNT(*) AS `count`, m.`id` FROM `memo` m INNER JOIN 
                               `memo_route` mr ON mr.`memo_id` = m.`id` WHERE m.`from` != 'University President' 
-                              AND mr.`faculty_name` = '$facname' AND (DATE('" . $mysql_date1 . "') BETWEEN m.`date_from` AND m.`date_to` or DATE('" . $mysql_date2 . "') BETWEEN m.`date_from` AND m.`date_to`);");
+                              AND mr.`faculty_name` = '$facname' AND 
+                              (m.`date_from` BETWEEN DATE('$mysql_date1') AND DATE('$mysql_date2') OR
+                               m.`date_to` BETWEEN DATE('$mysql_date1') AND DATE('$mysql_date2'))");
                               $countflag1 = mysqli_fetch_array($getcountflag1);
                               if ($countflag1['count'] != 0) {
                                 $checkerforpres = 1;
                                 $presid = $countflag1['id'];
+                              }
+                            }
+                          }
+                          else if ($_POST['from'] == "College of Engineering, Dean") {
+                            $mysql_date1 = date('Y-m-d', strtotime($_POST['date_from']));
+                            $mysql_date2 = date('Y-m-d', strtotime($_POST['date_to']));
+                            foreach ($_POST['sendtofac'] as $facname) {
+                              $getcountflag1 = mysqli_query($conn, "SELECT COUNT(*) AS `count` FROM `memo` m INNER JOIN 
+                              `memo_route` mr ON mr.`memo_id` = m.`id` WHERE m.`from` != 'College of Engineering, Dean' 
+                              AND mr.`faculty_name` = '$facname' AND 
+                              (m.`date_from` BETWEEN DATE('$mysql_date1') AND DATE('$mysql_date2') OR
+                               m.`date_to` BETWEEN DATE('$mysql_date1') AND DATE('$mysql_date2'));");
+                              $countflag1 = mysqli_fetch_array($getcountflag1); 
+                              if ($countflag1['count'] != 0) {
+                                $checker = 1;
                               }
                             }
                           }
@@ -552,7 +571,7 @@ window.location.href="memo.php"</script>';
                               }
                             }
                           } else {
-                            echo '<script>alert("Date Conflict with another memo!") 
+                            echo '<script>alert("Another Memo issued of '.$mysql_date1.' to '.$mysql_date2.'!") 
                             window.location.href="memo.php"</script>';
                           }
                         } else {
