@@ -459,7 +459,7 @@ window.location.href="memo.php"</script>';
                                m.`date_to` BETWEEN DATE('$mysql_date1') AND DATE('$mysql_date2'))");
                               $countflag2 = mysqli_fetch_array($getcountflag2);
                               if ($countflag2['count'] != 0) {
-                                $checkerforpres = 1;
+                                $checkformc = 1;
                                 $mcid = $countflag2['id'];
                               }
                             }
