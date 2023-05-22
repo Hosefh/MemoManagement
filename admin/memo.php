@@ -106,7 +106,7 @@ include "../dbcon.php";
                     <td>
                       <?php echo $result['from'] ?>
                     </td>
-                    <td class="text-truncate" style="max-width: 500px;">
+                    <td class="text-truncate" style="max-width: 300px;">
                       <?php echo $result['subject'] ?>
                     </td>
                     <td>

@@ -171,15 +171,6 @@ $fotrpres = <<<EOD
 <img src="./pres.png" />
 
 
-EOD;
-$fotrVpres = <<<EOD
-
-
-
-
-<h4>Approved:</h4></br>
-<img src="./v-pres.png" />
-
 
 EOD;
 $fotrmc = <<<EOD
@@ -205,14 +196,11 @@ EOD;
 
 if ($from == "University President") {
     $pdf->writeHTML($fotrpres, true, false, false, false, '');
-} else if ($from == "University V-President") {
-    $pdf->writeHTML($fotrVpres, true, false, false, false, '');
 } else if ($from == "BISU-MC Director") {
     $pdf->writeHTML($fotrmc, true, false, false, false, '');
-} else if ($from == "College of Engineering and Architecture, Dean") {
-    $pdf->writeHTML($fotrid, true, false, false, false, '');
 } else {
-    $pdf->writeHTML($fotrpres, true, false, false, false, '');
+    ($from == "College of Engineering and Architecture, Dean");
+    $pdf->writeHTML($fotrid, true, false, false, false, '');
 }
 
 // -----------------------------------------------------------------------------

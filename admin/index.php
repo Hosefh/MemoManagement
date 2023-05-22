@@ -151,7 +151,7 @@ include "../dbcon.php";
                                             <?php echo $result['date2'] ?>
                                         </td>
                                         <td class="text-truncate" style="max-width: 300px;">
-                                        
+
                                             <?php echo $result['subject'] ?>
                                         </td>
                                     </tr>

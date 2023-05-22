@@ -63,7 +63,7 @@ if (isset($_SESSION['username']))
                 <form class="px-4 py-3" action="login.php" method="POST">
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" autocomplete= "off" required>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Enter username" required>
                     </div>
                     <div class="mb-3"> 
                         <label for="password" class="form-label">Password</label>

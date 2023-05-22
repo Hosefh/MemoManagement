@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "../dbcon.php";
 
 ?>
@@ -29,20 +29,22 @@ include "../dbcon.php";
     <main class="mt-5 pt-3 px-4">
         <div class="row">
             <div class="col-md-18 mb-2">
-                <div class="card mb-3 shadow-lg" >
+                <div class="card mb-3 shadow-lg">
                     <div class="row g-0">
                         <div class="col-md-1" style="background-color: #04293A;">
-                            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" class="img-fluid" width="100" height="150" center 
-                                alt="...">
+                            <img src="https://cdn-icons-png.flaticon.com/512/3209/3209265.png" class="img-fluid"
+                                width="100" height="150" center alt="...">
                         </div>
                         <div class="col-md-4">
                             <div class="card-body">
                                 <h5 class="card-title">Memo Recieved</h5>
-                                <?php 
-                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memo_route where faculty_name = '".$_SESSION['user_name']."';");
+                                <?php
+                                $query = mysqli_query($conn, "SELECT COUNT(*) as `count` from memo_route where faculty_name = '" . $_SESSION['user_name'] . "';");
                                 $number = mysqli_fetch_array($query);
                                 ?>
-                                <h1 class="card-text fw-bold"><?php echo $number['count']?></h1>
+                                <h1 class="card-text fw-bold">
+                                    <?php echo $number['count'] ?>
+                                </h1>
                             </div>
                         </div>
                     </div>
@@ -64,19 +66,20 @@ include "../dbcon.php";
                                     <th>Memo #</th>
                                     <th>From</th>
                                     <th>Subject</th>
-                                    <th>Description</th>
+                                    <th>Date From</th>
+                                    <th>Date To</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $sql = "SELECT DISTINCT(m.`id`),(m.`from`),(m.`subject`),(m.`content`),(m.`additional_info`),(m.`memo_number`) FROM `memo` m
+                                $sql = "SELECT DISTINCT(m.`id`),(m.`from`),(m.`subject`),(m.`content`),(m.`additional_info`),(m.`memo_number`), DATE_FORMAT(`date_from`, '%M %d, %Y ') AS `date`, DATE_FORMAT(`date_to`, '%M %d, %Y ') AS `date2` FROM `memo` m
                                 INNER JOIN `memo_route` mr ON mr.`memo_id` = m.`id`
-                                WHERE m.`is_void` = 0 AND mr.`faculty_name`= '".$_SESSION['user_name']."';";
+                                WHERE m.`is_void` = 0 AND mr.`faculty_name`= '" . $_SESSION['user_name'] . "';";
                                 $actresult = mysqli_query($conn, $sql);
 
                                 while ($result = mysqli_fetch_assoc($actresult)) {
-                                ?>
+                                    ?>
                                     <tr>
                                         <td>
                                             <?php echo $result['memo_number'] ?>
@@ -84,14 +87,20 @@ include "../dbcon.php";
                                         <td>
                                             <?php echo $result['from'] ?>
                                         </td>
-                                        <td>
+                                        <td class="text-truncate" style="max-width: 300px;">
                                             <?php echo $result['subject'] ?>
                                         </td>
                                         <td>
-                                            <?php echo $result['additional_info'] ?>
+                                            <?php echo $result['date'] ?>
                                         </td>
                                         <td>
-                                            <a href="./generateMemo.php?id=<?php echo $result['id'] ?>" target=”_blank” class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i class="bi bi-folder2-open"></i></span> View Memo</a>
+                                            <?php echo $result['date2'] ?>
+                                        </td>
+                                        
+                                        <td>
+                                            <a href="./generateMemo.php?id=<?php echo $result['id'] ?>" target=”_blank”
+                                                class="btn btn-primary btn-sm me-md-2"><span class="me-2"><i
+                                                        class="bi bi-folder2-open"></i></span> View Memo</a>
                                         </td>
                                     </tr>
                                 <?php } ?>
