@@ -549,10 +549,10 @@ window.location.href="memo.php"</script>';
                                   }
                                 }
 
-                                $sqledit = "UPDATE `memo` m SET m.`is_void` = 1 WHERE m.`id` = $mcid;";
+                                $sqledit = "UPDATE `memo` m SET m.`is_void` = 1 WHERE m.`id` = $presid;";
                                 $conn->query($sqledit);
 
-                                $getdetails = "SELECT * FROM `memo` m where m.`id` = $mcid;";
+                                $getdetails = "SELECT * FROM `memo` m where m.`id` = $presid;";
                                 $actgetdetails = mysqli_query($conn, $getdetails);
                                 $details = mysqli_fetch_array($actgetdetails);
                                 echo '<script>alert("Memo Addedd Successfully! Memo from ' . $details['from'] . ' for ' . $details['date_from'] . ' to ' . $details['date_to'] . ' has been voided!") 
@@ -585,10 +585,10 @@ window.location.href="memo.php"</script>';
                                   }
                                 }
 
-                                $sqledit = "UPDATE `memo` m SET m.`is_void` = 1 WHERE m.`id` = $presid;";
+                                $sqledit = "UPDATE `memo` m SET m.`is_void` = 1 WHERE m.`id` = $mcid;";
                                 $conn->query($sqledit);
 
-                                $getdetails = "SELECT * FROM `memo` m where m.`id` = $presid;";
+                                $getdetails = "SELECT * FROM `memo` m where m.`id` = $mcid;";
                                 $actgetdetails = mysqli_query($conn, $getdetails);
                                 $details = mysqli_fetch_array($actgetdetails);
                                 echo '<script>alert("Memo Addedd Successfully! Memo from ' . $details['from'] . ' for ' . $details['date_from'] . ' to ' . $details['date_to'] . ' has been voided!") 
